@@ -13,7 +13,7 @@ const focus = "focus-visible:outline focus-visible:outline-[3px] focus-visible:o
 
 export default function CustomLumber() {
     return (
-        <main className="bg-[#eef0e8] font-body leading-relaxed text-[#17241d] overflow-x-clip [&_p]:max-w-[62ch] [&_p]:text-pretty">
+        <div className="bg-[#eef0e8] font-body leading-relaxed text-[#17241d] [&_p]:max-w-[62ch] [&_p]:text-pretty">
             {/* <section
                 className={`${padX} grid grid-cols-1 gap-6 bg-[#17241d] pt-8 pb-12 text-[#eef0e8] md:gap-10 md:pt-14 md:pb-24 lg:grid-cols-[5fr_6fr] lg:items-stretch`}
                 aria-labelledby="cl-title"
@@ -67,7 +67,7 @@ export default function CustomLumber() {
                 ))}
             </section>
 
-            <section className={`${padX} ${padY} grid gap-8 md:gap-16 lg:grid-cols-[6fr_5fr] lg:items-start`}>
+            <section className={`${padX} ${padY} relative grid gap-8 md:gap-16 lg:grid-cols-[6fr_5fr] lg:items-start`}>
                 <div className="grid content-start gap-5 text-[#3a2f26]">
                     <span className={eyebrow}>ROOTED IN THE ISLAND</span>
                     <h2 className={`${h2} text-[#17241d]`}>Rooted on Vancouver Island.<br />Growing with Every Cut.</h2>
@@ -76,8 +76,12 @@ export default function CustomLumber() {
                     <div className="cl-zoom relative mt-3 aspect-[4/3] overflow-hidden rounded-md bg-[#3a2f26]">
                         <Image className="object-cover" src="/Images/pageImg/img8.png" alt="Craftsperson working with timber in the Island Beam & Timber workshop" fill sizes="(max-width: 800px) 100vw, 50vw" />
                     </div>
+                    <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-[#17241d]/15 pt-3 text-xs font-semibold tracking-wider text-[#17241d]/75 uppercase">
+                        <span>Hand-Selected Island Logs</span>
+                        <span>Comox Valley Facility</span>
+                    </div>
                 </div>
-                <div className="grid content-start lg:sticky lg:top-8">
+                <div className="grid content-start self-start lg:sticky lg:top-24 xl:top-28">
                     {values.map((value) => (
                         <article key={value.title} className="grid grid-cols-[auto_1fr] gap-4 border-t border-[#17241d]/15 py-6 last:border-b">
                             <span className="grid size-10 place-items-center rounded-full bg-[#17241d] text-[1.1rem] text-[#c98a2b]">✳</span>
@@ -103,7 +107,7 @@ export default function CustomLumber() {
                     Contact our team <span className="cl-arrow">↗</span>
                 </Link>
             </section>
-        </main>
+        </div>
     );
 }
 
