@@ -265,7 +265,7 @@ function CraftedCard({
 
                     {/* Icon */}
                     <span
-                        className="absolute right-5 top-5 grid size-9 place-items-center rounded-full border border-[#09271B]/20 text-base transition-[background-color,border-color,color] duration-300 group-hover:border-[#F4B323] group-hover:bg-[#F4B323] group-hover:text-[#09271B]"
+                        className="absolute right-5 top-5 grid size-9 place-items-center rounded-full border border-[#09271B]/20 text-base transition-[background-color,border-color,color] duration-300 group-hover:border-[#F4B323] group-hover:bg-[#18452F] group-hover:text-[#F4B323]"
                         aria-hidden="true"
                     >
                         ↗
@@ -492,7 +492,7 @@ export default function Cards({
         items ?? (type === "services" ? SERVICE_CARDS : DEFAULT_CARDS);
 
     return (
-        <section className={`w-full py-10 px-6 sm:px-8 md:px-12 ${className}`}>
+        <section className={`w-full max-w-full overflow-hidden py-6 sm:py-10 px-0 sm:px-6 md:px-12 ${className}`}>
             <div className="mx-auto max-w-7xl">
 
                 {type === "crafted" ? (

@@ -21,7 +21,7 @@ export default function AboutSawmill({
 
     return (
         <section
-            className={`w-full bg-[#F4EFEA] py-16 md:py-28 px-6 sm:px-10 lg:px-16 ${className}`}
+            className={`w-full max-w-full overflow-hidden bg-[#F4EFEA] py-14 md:py-28 px-4 sm:px-10 lg:px-16 ${className}`}
         >
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-center">
 

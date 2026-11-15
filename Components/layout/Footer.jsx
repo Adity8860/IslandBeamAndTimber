@@ -30,8 +30,8 @@ export default function Footer() {
     ];
 
     return (
-        <footer className="border-t-2 border-[#F4B323] bg-[#061A11] text-[#B7CDBF] font-sans">
-            <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-10 sm:pt-20">
+        <footer className="w-full max-w-full overflow-hidden border-t-2 border-[#F4B323] bg-[#061A11] text-[#B7CDBF] font-sans">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-14 pb-10 sm:pt-20">
                 {/* Main Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 pb-14 border-b border-white/10">
 
@@ -50,7 +50,7 @@ export default function Footer() {
                                 )}
                             </div>   <div className="flex flex-col">
                                 <span className="text-white font-extrabold text-base tracking-wider uppercase leading-tight group-hover:text-[#F4B323] transition-colors">
-                                    Island Beam &amp; Timber
+                                    {siteConfig?.name} &amp; {siteConfig?.name1}
                                 </span>
                                 <span className="text-[#F4B323] text-[11px] font-bold tracking-[0.2em] uppercase leading-tight mt-1">
                                     Lumber Yard &amp; Sawmill
@@ -104,22 +104,21 @@ export default function Footer() {
                                     href="tel:2507033473"
                                     className={`${focusRing} text-xl font-bold tabular-nums text-white transition-colors duration-200 hover:text-[#F4B323]`}
                                 >
-                                    250-703-3473
+                                    {siteConfig?.phone}
                                 </a>
                             </div>
 
                             <div>
                                 <a
-                                    href="mailto:info@islandbeamandtimber.com"
+                                    href={`mailto:${siteConfig?.email}`}
                                     className={`${navLink} break-words`}
                                 >
-                                    info@islandbeamandtimber.com
+                                    {siteConfig?.email}
                                 </a>
                             </div>
 
                             <address className="not-italic text-[#B7CDBF]/80 leading-relaxed pt-1">
-                                5110 Dove Crk Rd<br />
-                                Comox Valley, BC V9J 1P4
+                                {siteConfig?.address}
                             </address>
 
                             <div className="pt-2">

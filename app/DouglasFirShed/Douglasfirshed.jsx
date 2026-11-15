@@ -1,237 +1,475 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Clock3, Folder, MapPin, TreePine, Wrench, ArrowUpRight } from "lucide-react";
+import {
+  Clock3,
+  Folder,
+  MapPin,
+  TreePine,
+  Wrench,
+  ArrowUpRight,
+  CheckCircle2,
+  ShieldCheck,
+  Ruler,
+  Truck,
+  Sparkles,
+  Phone
+} from "lucide-react";
 import Cards from "@/Components/Ui/Cards";
 import ScrollReveal from "@/Components/Ui/ScrollReveal";
-import { journalCards, services, steps, posts } from "@/lib/DouglasFirShedConst";
+import { journalCards } from "@/lib/DouglasFirShedConst";
+import { siteConfig } from "@/lib/siteConfig";
 
-const cardClass = "!min-h-[220px] !bg-white !p-7 sm:!p-8";
+const shedFeatures = [
+  {
+    icon: TreePine,
+    tag: "Native Species",
+    title: "100% Coastal Douglas Fir",
+    description: "Milled on-site from sustainably sourced Vancouver Island timber with dense grain and natural outdoor resilience.",
+  },
+  {
+    icon: Wrench,
+    tag: "Crafted Framework",
+    title: "Traditional Joinery & Heavy Bents",
+    description: "Built with true timber posts, rafters, and interlocking mortise-and-tenon bents designed to stand for generations.",
+  },
+  {
+    icon: Truck,
+    tag: "Skid Mounted",
+    title: "Delivered Fully Built or Flat-Packed",
+    description: "Constructed on heavy rot-resistant skids for simple delivery, minimal ground prep, and future portability.",
+  },
+];
 
+const popularModels = [
+  {
+    name: "The Garden Studio & Retreat",
+    dimensions: "10' × 12'",
+    sqft: "120 sq ft",
+    bestFor: "Art studio, home office, or quiet backyard reading room",
+    specs: ["Vaulted timber ceiling", "Large window framing", "Insulation-ready framing", "Cedar or metal roof"],
+    popular: true,
+  },
+  {
+    name: "The Heavy Timber Workshop",
+    dimensions: "12' × 16'",
+    sqft: "192 sq ft",
+    bestFor: "Woodworking shop, power equipment, and heavy workbench setup",
+    specs: ["Reinforced double-subfloor", "8' wall height clearance", "Extra-wide double doors", "Overhead loft storage"],
+    popular: false,
+  },
+  {
+    name: "The Classic Woodshed & Storage",
+    dimensions: "8' × 12'",
+    sqft: "96 sq ft",
+    bestFor: "Seasoned firewood, mowers, bikes, and seasonal equipment",
+    specs: ["Air-flow slatted walls", "Heavy skid base", "Overhanging weather eave", "Quick delivery option"],
+    popular: false,
+  },
+];
 
+const stepsData = [
+  {
+    number: "01",
+    title: "Share your vision & site",
+    detail: "Tell us what you're building: square footage requirements, door and window placements, and delivery access on Vancouver Island.",
+  },
+  {
+    number: "02",
+    title: "Custom milling & pre-fit",
+    detail: "We mill each post, beam, and skid in our Comox Valley yard, pre-cutting and test-fitting every joint before finishing.",
+  },
+  {
+    number: "03",
+    title: "Delivered ready to position",
+    detail: "Your shed arrives fully built on solid skids, positioned directly on your level gravel pad or foundation blocks.",
+  },
+];
 
-const wrap = "mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-12";
-const secPad = "py-14 sm:py-20 lg:py-28";
-const h2 = "text-balance text-[clamp(2rem,4vw,3.25rem)] font-extrabold leading-[1] tracking-[-.04em] text-[#09271B]";
-const intro = "cards-in mt-5 max-w-[62ch] text-pretty text-base leading-[1.65] text-[#45564B] sm:text-lg";
-const placeholder = "bg-[#E4DFD2] ring-1 ring-[#09271B]/10 shadow-[0_24px_40px_-26px_rgba(9,39,27,0.5)]";
-// Full-width dark band: inner padding follows the 1280px page container
-const bleedPad = "px-[max(1.25rem,calc((100vw_-_1280px)/2_+_1.25rem))] sm:px-[max(2rem,calc((100vw_-_1280px)/2_+_2rem))] lg:px-[max(3rem,calc((100vw_-_1280px)/2_+_3rem))]";
-
-function Eyebrow({ children, gold = false }) {
+function Eyebrow({ children, light = false }) {
   return (
-    <p className={`mb-4 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[.14em] ${gold ? "text-[#F4B323]" : "text-[#A86F1C]"}`}>
-      <span className="size-1.5 shrink-0 rounded-full bg-[#F4B323]" />{children}
+    <p className={`flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] ${light ? "text-[#E5A84B]" : "text-[#A86F1C]"}`}>
+      <span className="size-2 rounded-full bg-[#E5A84B] ring-4 ring-[#E5A84B]/20" aria-hidden="true" />
+      {children}
     </p>
   );
 }
 
 export default function Douglasfirshed() {
   return (
-    <main className="overflow-x-clip bg-[#F7F3EB] text-[#09271B]">
+    <main className="w-full max-w-full overflow-x-hidden bg-[#FAF8F5] text-[#09271B] antialiased">
       <ScrollReveal />
-      <section className={`${wrap} pb-6 pt-12 sm:pt-16 lg:pt-24`}>
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
-          <div>
-            <Eyebrow>Island Beam &amp; Timber · Shed Journal</Eyebrow>
-            <h1 className="cl-rise cl-delay-120 text-balance text-[clamp(2rem,4.2vw,3.75rem)] font-extrabold leading-[1.02] tracking-[-.04em]">Douglas Fir Sheds: Built With Generational Timber &amp; Traditional Joinery</h1>
-            <p className="cl-rise cl-delay-240 mt-6 max-w-[58ch] text-pretty text-base leading-[1.65] text-[#45564B] sm:text-lg">Milled from coastal Vancouver Island Douglas fir, our timber-frame outbuilding packages, garden studios, and workshop sheds combine heavy structural bents, traditional mortise-and-tenon craftsmanship, and weather-tested resilience.</p>
-          </div>
-          <div className={`cl-wipe cl-delay-150 aspect-[4/3] w-full rounded-lg lg:aspect-[5/4] ${placeholder}`} role="img" aria-label="Douglas fir shed feature image placeholder" />
-        </div>
-        <div className="mt-8 flex items-center gap-3 border-t border-[#09271B]/15 pt-5 text-sm text-[#45564B]"><span className="inline-flex items-center gap-2 [&>svg]:size-4 [&>svg]:text-[#A86F1C]"><Folder />Craft journal</span><i className="not-italic text-[#F4B323]">·</i><span className="inline-flex items-center gap-2 [&>svg]:size-4 [&>svg]:text-[#A86F1C]"><Clock3 />6 min read</span></div>
-      </section>
-      <section className={`${wrap} ${secPad}`}>
-        <Eyebrow>Our shed service</Eyebrow>
-        <h2 className={`${h2} cards-in max-w-[20ch]`}>A Douglas fir shed, built around your life.</h2>
-        <p className={intro}>From practical garden storage to a dedicated workshop or a quiet backyard retreat, bring your space to life with a Douglas fir timber frame shaped around the way you want to use it.</p>
-        <Cards type="services" items={services} className="!px-0 !py-0 !mt-12" gridClassName="!grid-cols-1 !gap-6 md:!grid-cols-3" />
-        <figure className="cards-in mt-12 sm:mt-16">
-          <div className="group relative min-h-[660px] overflow-hidden rounded-xl bg-[#09271B] shadow-[0_28px_48px_-28px_rgba(9,39,27,0.55)] md:min-h-[580px] lg:min-h-[660px]">
-            <Image
-              src="/Images/DFSImg/img2.png"
-              alt="Traditional joinery and carefully prepared Douglas fir timbers in the workshop"
-              fill
-              sizes="(max-width: 640px) 100vw, 92vw"
-              className="object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-105 group-focus-within:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-focus-within:scale-100"
-            />
-            {/* Story panel: fills the whole image. Gradient at rest, solid overlay on hover/focus (md+); always solid on mobile */}
-            <div
-              className="group/story absolute inset-0 isolate flex flex-col justify-end bg-gradient-to-t from-[#09271B] via-[#09271B]/55 to-transparent p-6 text-white before:absolute before:inset-0 before:-z-10 before:bg-[#09271B] before:opacity-90 before:transition-opacity before:duration-500 sm:p-8 lg:p-12 md:before:opacity-0 md:group-hover:before:opacity-[0.94] md:group-focus-within:before:opacity-[0.94] md:after:absolute md:after:right-6 md:after:top-6 md:after:rounded-full md:after:border md:after:border-white/40 md:after:px-3.5 md:after:py-1.5 md:after:text-xs md:after:font-semibold md:after:tracking-wide md:after:content-['Details_+'] md:after:transition-opacity md:after:duration-300 md:group-hover:after:opacity-0 md:group-focus-within:after:opacity-0 [&>*]:max-w-[52rem] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[-6px] focus-visible:outline-[#F4B323] motion-reduce:before:transition-none"
-              role="group"
-              tabIndex={0}
-              aria-label="More about our timber frame craftsmanship"
-            >
-              <Eyebrow gold>Timber frame craftsmanship</Eyebrow>
-              <h3 className="text-balance text-3xl font-extrabold leading-[1.02] tracking-[-.035em] lg:text-5xl">Crafted in the Mill. Raised on Your Land.</h3>
-              <p className="mt-4 text-pretty text-base leading-[1.65] text-[#D3E2D9] sm:text-lg">Traditional mortise and tenon joinery pre-fit in our Comox Valley timber yard before delivery and raising.</p>
-              <div className="mt-6 grid gap-6 overflow-hidden border-t border-white/20 pt-6 transition-[max-height,opacity,margin,padding] duration-500 ease-out md:mt-0 md:max-h-0 md:border-t-0 md:pt-0 md:opacity-0 md:group-hover:mt-6 md:group-hover:max-h-[26rem] md:group-hover:border-t md:group-hover:pt-6 md:group-hover:opacity-100 md:group-focus-within:mt-6 md:group-focus-within:max-h-[26rem] md:group-focus-within:border-t md:group-focus-within:pt-6 md:group-focus-within:opacity-100 lg:grid-cols-[1.1fr_.9fr] lg:gap-10 motion-reduce:transition-none">
-                <p className="text-pretty text-sm leading-[1.7] text-[#B7CDBF] sm:text-base">Each frame is laid out and carefully prepared in our timber yard, so the pieces arrive ready to come together on your site.</p>
-                <ul className="space-y-3 text-sm font-medium text-white sm:text-base">
-                  <li className="flex items-center gap-3 border-b border-white/15 pb-3 before:size-2 before:shrink-0 before:rounded-full before:bg-[#F4B323] before:content-['']">Locally milled Douglas fir</li>
-                  <li className="flex items-center gap-3 border-b border-white/15 pb-3 before:size-2 before:shrink-0 before:rounded-full before:bg-[#F4B323] before:content-['']">Traditional mortise and tenon joinery</li>
-                  <li className="flex items-center gap-3 before:size-2 before:shrink-0 before:rounded-full before:bg-[#F4B323] before:content-['']">Prepared for a confident on-site raising</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <figcaption className="mt-4 text-sm text-[#45564B]">From the workshop to your garden: traditional joinery, carefully prepared timbers.</figcaption>
-        </figure>
-      </section>
-      {/* <section className={`${wrap} ${secPad}`}>
-        <Eyebrow>Our shed service</Eyebrow>
-        <h2 className={`${h2} cards-in max-w-[20ch]`}>A Douglas fir shed, built around your life.</h2>
-        <p className={intro}>From practical garden storage to a dedicated workshop or a quiet backyard retreat, bring your space to life with a Douglas fir timber frame shaped around the way you want to use it.</p>
-        <Cards type="services" items={services} className="!px-0 !py-0 !mt-12" gridClassName="!grid-cols-1 !gap-6 md:!grid-cols-3" />
-        <figure className="cards-in mt-12 sm:mt-16">
-          <div className="group relative min-h-[560px] overflow-hidden rounded-xl bg-[#09271B] shadow-[0_28px_48px_-28px_rgba(9,39,27,0.55)] sm:min-h-[560px] lg:min-h-[640px]">
-            <Image
-              src="/Images/DFSImg/img2.png"
-              alt="Traditional joinery and carefully prepared Douglas fir timbers in the workshop"
-              fill
-              sizes="(max-width: 640px) 100vw, 92vw"
-              className="object-cover object-center transition-transform duration-[900ms] ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-            />
-            <div className="group/story absolute inset-x-3 bottom-3 max-w-[560px] rounded-lg bg-[#09271B]/90 p-6 text-white backdrop-blur-sm sm:inset-x-auto sm:bottom-6 sm:left-6 sm:p-8 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#F4B323]" role="group" tabIndex={0} aria-label="More about our timber frame craftsmanship">
-              <Eyebrow gold>Timber frame craftsmanship</Eyebrow>
-              <h3 className="text-balance text-2xl font-extrabold leading-[1.05] tracking-[-.03em] sm:text-3xl">Crafted in the Mill. Raised on Your Land.</h3>
-              <p className="mt-3 text-pretty text-sm leading-[1.65] text-[#B7CDBF] sm:text-base">Traditional mortise and tenon joinery pre-fit in our Comox Valley timber yard before delivery and raising.</p>
-              <div className="mt-4 space-y-4 overflow-hidden border-t border-white/15 pt-4 transition-[max-height,opacity] duration-500 ease-out md:mt-0 md:max-h-0 md:border-t-0 md:pt-0 md:opacity-0 md:group-hover/story:mt-4 md:group-hover/story:max-h-80 md:group-hover/story:border-t md:group-hover/story:pt-4 md:group-hover/story:opacity-100 md:group-focus/story:mt-4 md:group-focus/story:max-h-80 md:group-focus/story:border-t md:group-focus/story:pt-4 md:group-focus/story:opacity-100 motion-reduce:transition-none">
-                <p className="text-pretty text-sm leading-[1.65] text-[#B7CDBF]">Each frame is laid out and carefully prepared in our timber yard, so the pieces arrive ready to come together on your site.</p>
-                <ul className="space-y-2 text-sm text-white">
-                  <li className="flex items-center gap-2.5 before:size-1.5 before:shrink-0 before:rounded-full before:bg-[#F4B323] before:content-['']">Locally milled Douglas fir</li>
-                  <li className="flex items-center gap-2.5 before:size-1.5 before:shrink-0 before:rounded-full before:bg-[#F4B323] before:content-['']">Traditional mortise and tenon joinery</li>
-                  <li className="flex items-center gap-2.5 before:size-1.5 before:shrink-0 before:rounded-full before:bg-[#F4B323] before:content-['']">Prepared for a confident on-site raising</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <figcaption className="mt-4 text-sm text-[#45564B]">From the workshop to your garden: traditional joinery, carefully prepared timbers.</figcaption>
-        </figure>
-      </section> */}
 
-      <section className={`${wrap} ${secPad} !pt-0`}>
-        <div className="story-from-left mb-10 sm:mb-12"><Eyebrow>The process</Eyebrow><h2 className={`${h2} max-w-[20ch]`}>From your first idea to a raised frame.</h2></div>
-        {/* <ol className="grid gap-4 md:grid-cols-3 md:gap-5">{steps.map(([title, text], index) => <li key={title} className="cards-in flex gap-5 rounded-lg border border-[#E4DAC6] bg-white p-6 shadow-sm sm:p-7"><span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#09271B] text-sm font-bold tabular-nums text-[#F4B323]">0{index + 1}</span><div><h3 className="text-lg font-bold leading-tight tracking-[-.01em]">{title}</h3><p className="mt-2 text-pretty text-sm leading-[1.65] text-[#45564B] sm:text-base">{text}</p></div></li>)}</ol> */}
-        <Cards type='stepCard' steps={steps} />
-      </section>
-
-      <section className={`${bleedPad} flex flex-col gap-8 bg-[#09271B] py-14 text-white sm:py-16 lg:flex-row lg:items-center lg:justify-between lg:py-20`}>
-        <div className="story-from-left"><Eyebrow gold>Start a conversation</Eyebrow><h2 className="text-balance text-[clamp(1.8rem,3.4vw,2.9rem)] font-extrabold leading-[1] tracking-[-.04em]">Let’s talk about your shed.</h2><p className="mt-4 max-w-[60ch] text-pretty text-base leading-[1.65] text-[#B7CDBF] sm:text-lg">Share your ideas, approximate size and location to start a conversation about<br className="hidden lg:inline" /> your project.</p></div>
-        <Link href="/Contact#form" className="cards-in inline-flex min-h-12 shrink-0 items-center justify-center gap-2 self-start rounded-full bg-[#F4B323] px-6 text-sm font-bold tracking-wide text-[#09271B] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-[#FFC53D] active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-white lg:self-center">Start an inquiry <ArrowUpRight size={21} /></Link>
-      </section>
-
-      <section className={`${wrap} ${secPad}`}>
-        <Eyebrow>Continue reading</Eyebrow><h2 className={`${h2} cards-in`}>Recent Posts</h2>
-        <p className={intro}>Stories from the forest, workshop and jobsite—made for people who care where wood comes from.</p>
-        <Cards
-          type="imagegrid"
-          items={journalCards}
-          className="!mt-10 !px-0 !py-0 sm:!mt-12"
-          gridClassName="!grid-cols-1 !gap-6 md:!grid-cols-3"
+      {/* Hero Section */}
+      <section className="relative overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28">
+        {/* Subtle decorative background glow */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 top-0 -z-10 h-96 w-96 rounded-full bg-[#E5A84B]/10 blur-3xl"
         />
-          {/* {posts.map(([category, title, text]) => <article className="cards-in overflow-hidden rounded-xl border border-[#E4DAC6] bg-white shadow-sm" key={title}>
-          <div className={`aspect-[4/3] w-full !shadow-none ${placeholder}`} role="img" aria-label={`${title} image placeholder`} />
-          <div className="p-6 sm:p-7"><Eyebrow>{category}</Eyebrow><h3 className="text-balance text-xl font-bold leading-[1.15] tracking-[-.02em]">{title}</h3><p className="mt-3 text-pretty text-sm leading-[1.65] text-[#45564B] sm:text-base">{text}</p></div>
-        </article>)} */}
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+            {/* Left Content */}
+            <div data-reveal="left" className="lg:col-span-7">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#09271B]/15 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-[#09271B] backdrop-blur-sm shadow-sm">
+                <Sparkles className="size-3.5 text-[#E5A84B]" />
+                <span>Hand-Crafted in Comox Valley, BC</span>
+              </div>
+
+              <h1 className="text-balance text-4xl font-black tracking-tight leading-[1.05] sm:text-5xl lg:text-6xl text-[#09271B]">
+                Douglas Fir Sheds: <br className="hidden sm:inline" />
+                <span className="italic font-serif font-medium text-[#B87A24]">
+                  Built Solid.
+                </span>{" "}
+                Raised to Endure.
+              </h1>
+
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-[#506056] sm:text-lg">
+                Milled from coastal Vancouver Island timber, our sheds combine heavy structural bents, traditional joinery, and skid-mounted portability. Built for garden studios, workshops, and lifetime backyard storage.
+              </p>
+
+              {/* Quick Specs Pill Row */}
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 border-y border-[#09271B]/10 py-4">
+                {[
+                  { label: "Wood", val: "Coastal Fir" },
+                  { label: "Base", val: "Heavy Skids" },
+                  { label: "Frame", val: "Timber Post & Beam" },
+                  { label: "Delivery", val: "Island-Wide" },
+                ].map((item) => (
+                  <div key={item.label} className="flex flex-col">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#A86F1C]">{item.label}</span>
+                    <span className="text-sm font-extrabold text-[#09271B]">{item.val}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Actions */}
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  href="/request-quote"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#E5A84B] px-7 py-3.5 text-sm font-bold tracking-wide text-[#09271B] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d8983e] hover:shadow-lg hover:shadow-[#E5A84B]/25 active:translate-y-0"
+                >
+                  <span>Request a shed quote</span>
+                  <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+
+                {siteConfig?.phone && (
+                  <a
+                    href={siteConfig.phoneLink}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-[#09271B]/20 bg-white/70 px-6 py-3.5 text-sm font-semibold text-[#09271B] transition-all duration-300 hover:border-[#09271B]/40 hover:bg-white"
+                  >
+                    <Phone className="size-4 text-[#A86F1C]" />
+                    <span>Talk with our builder</span>
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Right Feature Photo */}
+            <div data-reveal="right" className="lg:col-span-5">
+              <div className="group relative overflow-hidden rounded-2xl border border-[#09271B]/15 bg-stone-900 shadow-2xl transition-all duration-500 hover:shadow-[0_28px_50px_-20px_rgba(9,39,27,0.4)]">
+                <div className="relative aspect-[4/3] w-full sm:aspect-[5/4]">
+                  <Image
+                    src="/Images/pageImg/img8.png"
+                    alt="Hand-crafted Douglas fir garden shed on skids"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 45vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                </div>
+
+                {/* Floating Badge */}
+                <div className="absolute bottom-4 left-4 right-4 rounded-xl border border-white/20 bg-[#09271B]/90 p-4 text-white backdrop-blur-md">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#E5A84B]">
+                    Built Ready-To-Place
+                  </span>
+                  <p className="mt-1 text-sm font-bold text-white leading-snug">
+                    Heavy-duty skid frame eliminates the need for expensive poured concrete foundations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Shed Craft Features */}
+      <section className="border-t border-[#09271B]/10 bg-[#F4EFE6] py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <Eyebrow>Engineered for the West Coast</Eyebrow>
+            <h2 className="mt-3 text-3xl font-black tracking-tight leading-tight sm:text-4xl lg:text-5xl text-[#09271B]">
+              A solid wood shed, built around your life.
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-[#506056] sm:text-lg">
+              From backyard studios and potting sheds to heavy-equipment workshops, every shed is built with genuine timber framing tailored to the Island climate.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {shedFeatures.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <article
+                  key={item.title}
+                  data-reveal
+                  style={{ "--d": `${index * 120}ms` }}
+                  className="group relative flex flex-col justify-between rounded-2xl border border-[#09271B]/10 bg-white p-7 sm:p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#E5A84B]/70 hover:shadow-xl"
+                >
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#A86F1C]">
+                      {item.tag}
+                    </span>
+                    <div className="mt-4 grid size-12 place-items-center rounded-xl bg-[#09271B] text-[#E5A84B] transition-colors duration-300 group-hover:bg-[#E5A84B] group-hover:text-[#09271B]">
+                      <Icon className="size-6" />
+                    </div>
+                    <h3 className="mt-5 text-xl font-bold tracking-tight text-[#09271B]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-relaxed text-[#506056] sm:text-base">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-6 border-t border-[#09271B]/10 pt-4 text-xs font-bold uppercase tracking-wider text-[#09271B] transition-colors group-hover:text-[#A86F1C]">
+                    Milled at our yard ↗
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Workshop Joinery Showcase Section */}
+      <section className="w-full max-w-full overflow-hidden bg-[#09271B] py-16 sm:py-24 text-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+            {/* Left Image */}
+            <div data-reveal="left" className="lg:col-span-6">
+              <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden rounded-2xl border border-white/15 bg-stone-900 shadow-2xl">
+                <Image
+                  src="/Images/DFSImg/img2.png"
+                  alt="Traditional joinery and carefully prepared Douglas fir timbers in the workshop"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between text-xs text-white/80">
+                  <span className="font-semibold uppercase tracking-wider text-[#E5A84B]">Comox Valley Mill Yard</span>
+                  <span>Hand Mortise &amp; Tenon</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Story */}
+            <div data-reveal="right" className="lg:col-span-6 flex flex-col justify-center">
+              <Eyebrow light>Timber Frame Craftsmanship</Eyebrow>
+              <h2 className="mt-3 text-3xl font-black tracking-tight leading-tight sm:text-4xl lg:text-5xl text-white">
+                Crafted in the Mill. <br />
+                Raised on Your Land.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-[#B7CDBF] sm:text-lg">
+                Unlike mass-produced kit sheds made with thin 2x4 framing, each Douglas fir shed we produce features heavy timber structural posts and rafters cut from solid coastal logs.
+              </p>
+
+              <div className="mt-6 space-y-3.5 border-t border-white/15 pt-6 text-sm sm:text-base text-white">
+                {[
+                  "True 4x4, 4x6, and 6x6 Douglas fir structural bents",
+                  "Interlocking traditional joinery pre-fit in the mill before delivery",
+                  "Rot-resistant pressure-treated or native cedar skids on the ground",
+                  "Shipped fully assembled or as a labeled, pre-cut frame package",
+                ].map((spec) => (
+                  <div key={spec} className="flex items-center gap-3">
+                    <CheckCircle2 className="size-5 shrink-0 text-[#E5A84B]" />
+                    <span>{spec}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href="/request-quote"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#E5A84B] px-6 py-3 text-sm font-bold tracking-wide text-[#09271B] transition-all duration-300 hover:bg-[#d8983e]"
+                >
+                  <span>Inquire about custom sizing</span>
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Shed Configurations */}
+      <section className="py-16 sm:py-24 bg-[#FAF8F5]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <Eyebrow>Popular Shed Setups</Eyebrow>
+            <h2 className="mt-3 text-3xl font-black tracking-tight leading-tight sm:text-4xl text-[#09271B]">
+              Standard sizes or custom builds.
+            </h2>
+            <p className="mt-3 text-base text-[#506056]">
+              Choose from our most requested layout footprints, or talk with our sawmill team about custom lengths, overhangs, and window openings.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {popularModels.map((model, idx) => (
+              <div
+                key={model.name}
+                data-reveal
+                style={{ "--d": `${idx * 120}ms` }}
+                className={`relative flex flex-col justify-between rounded-2xl border p-7 sm:p-8 transition-all duration-300 ${
+                  model.popular
+                    ? "border-[#E5A84B] bg-white shadow-xl ring-2 ring-[#E5A84B]/20"
+                    : "border-[#09271B]/15 bg-white/70 hover:bg-white hover:shadow-lg"
+                }`}
+              >
+                {model.popular && (
+                  <span className="absolute -top-3.5 right-6 rounded-full bg-[#E5A84B] px-3.5 py-1 text-[10px] font-black uppercase tracking-wider text-[#09271B]">
+                    Most Popular
+                  </span>
+                )}
+
+                <div>
+                  <div className="flex items-baseline justify-between border-b border-[#09271B]/10 pb-4">
+                    <span className="text-2xl font-black text-[#09271B]">{model.dimensions}</span>
+                    <span className="text-xs font-semibold text-[#A86F1C] uppercase tracking-wider">{model.sqft}</span>
+                  </div>
+
+                  <h3 className="mt-4 text-xl font-bold text-[#09271B]">{model.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#506056]">{model.bestFor}</p>
+
+                  <div className="mt-6 space-y-2.5 border-t border-[#09271B]/10 pt-4 text-xs sm:text-sm text-[#09271B]/90">
+                    {model.specs.map((s) => (
+                      <div key={s} className="flex items-center gap-2">
+                        <CheckCircle2 className="size-4 shrink-0 text-[#E5A84B]" />
+                        <span>{s}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-[#09271B]/10">
+                  <Link
+                    href={`/request-quote?model=${encodeURIComponent(model.name)}`}
+                    className={`flex w-full items-center justify-center gap-2 rounded-full py-3 text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
+                      model.popular
+                        ? "bg-[#09271B] text-[#E5A84B] hover:bg-[#143e2c]"
+                        : "border border-[#09271B]/20 bg-transparent text-[#09271B] hover:bg-[#09271B] hover:text-white"
+                    }`}
+                  >
+                    <span>Request pricing</span>
+                    <ArrowUpRight className="size-3.5" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3-Step Process */}
+      <section className="border-t border-[#09271B]/10 bg-[#F4EFE6] py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-xl">
+            <Eyebrow>The Ordering Process</Eyebrow>
+            <h2 className="mt-3 text-3xl font-black tracking-tight leading-tight sm:text-4xl text-[#09271B]">
+              From first idea to a raised shed on your property.
+            </h2>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {stepsData.map((step) => (
+              <div
+                key={step.number}
+                className="relative flex flex-col justify-between rounded-2xl border border-[#09271B]/10 bg-white p-7 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-md"
+              >
+                <div>
+                  <span className="grid size-11 place-items-center rounded-xl bg-[#09271B] font-mono text-sm font-bold text-[#E5A84B]">
+                    {step.number}
+                  </span>
+                  <h3 className="mt-5 text-xl font-bold text-[#09271B]">{step.title}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-[#506056] sm:text-base">
+                    {step.detail}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* High-Impact CTA Banner */}
+      <section className="relative overflow-hidden bg-[#071D14] py-16 sm:py-24 text-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+            <div data-reveal className="max-w-2xl">
+              <Eyebrow light>Start a Conversation</Eyebrow>
+              <h2 className="mt-3 text-3xl font-black tracking-tight leading-tight sm:text-4xl lg:text-5xl">
+                Let’s plan your Douglas fir shed.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-[#D8E0DB] sm:text-lg">
+                Tell us your preferred dimensions, location, and storage requirements. We&apos;ll confirm current timber availability and delivery lead times for your property.
+              </p>
+              <p className="mt-4 font-mono text-xs text-[#A4BFB1]">
+                5110 Dove Crk Rd, Comox Valley, BC V9J 1P4
+              </p>
+            </div>
+
+            <div data-reveal="zoom" className="flex flex-col gap-3 sm:flex-row sm:items-center shrink-0 w-full sm:w-auto">
+              <Link
+                href="/request-quote"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#E5A84B] px-8 py-4 text-sm font-extrabold text-[#071D14] shadow-lg transition-all duration-300 hover:bg-[#d8983e] active:scale-[0.98]"
+              >
+                <span>Request a quote</span>
+                <ArrowUpRight className="size-4" />
+              </Link>
+              {siteConfig?.phone && (
+                <a
+                  href={siteConfig.phoneLink}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-4 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/20"
+                >
+                  <Phone className="size-4 text-[#E5A84B]" />
+                  <span>{siteConfig.phone}</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Shed & Timber Journal Posts */}
+      <section className="py-16 sm:py-24 bg-[#FAF8F5]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <Eyebrow>From the Timber Yard</Eyebrow>
+              <h2 className="mt-2 text-3xl font-black tracking-tight text-[#09271B] sm:text-4xl">
+                Recent Journal Entries
+              </h2>
+            </div>
+            <Link
+              href="/About"
+              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#A86F1C] hover:text-[#09271B] transition-colors"
+            >
+              <span>Explore sawmill story</span>
+              <ArrowUpRight className="size-3.5" />
+            </Link>
+          </div>
+
+          <Cards
+            type="imagegrid"
+            items={journalCards}
+            className="!px-0 !py-0"
+            gridClassName="!grid-cols-1 !gap-6 md:!grid-cols-3"
+          />
+        </div>
       </section>
     </main>
   );
 }
-
-
-
-// import Link from "next/link";
-// import Image from "next/image";
-// import { Clock3, Folder, MapPin, TreePine, Wrench, ArrowUpRight } from "lucide-react";
-// import Cards from "@/Components/Ui/Cards";
-
-// const services = [
-//   { title: "More than storage", description: "A thoughtful working space or retreat with the warmth of real timber.", icon: <TreePine />, className: "shed-component-card" },
-//   { title: "Made to last", description: "Traditional joinery and coastal-grade Douglas fir for decades outdoors.", icon: <Wrench />, className: "shed-component-card" },
-//   { title: "Rooted here", description: "Designed and prepared with Vancouver Island’s landscape in mind.", icon: <MapPin />, className: "shed-component-card" },
-// ];
-
-// const steps = [
-//   ["Share the site", "Tell us how you want the shed to work, where it will sit, and what it needs to hold."],
-//   ["Shape the structure", "We help define scale, details, and a timber package suited to your project."],
-//   ["Raise it with confidence", "Prepared components arrive ready for a clear, satisfying build."],
-// ];
-
-// const posts = [
-//   ["Sustainable craft", "The Eco-Conscious Guide to Woodworking", "Practical ways to make better choices in the workshop."],
-//   ["Forestry notes", "Responsible Wood Production Practices", "The care that starts long before a board reaches the mill."],
-//   ["Mill journal", "Journeying Through Conscious Wood Manufacturing", "Following material from a working forest to a finished build."],
-// ];
-
-// function Eyebrow({ children, gold = false }) {
-//   return <p className={`shed-eyebrow${gold ? " shed-eyebrow--gold" : ""}`}><span />{children}</p>;
-// }
-
-// export default function Douglasfirshed() {
-//   return (
-//     <main className="shed-page">
-//       <section className="shed-hero">
-//         <div className="shed-hero__copy">
-//           <div>
-//             <Eyebrow>Island Beam &amp; Timber · Shed Journal</Eyebrow>
-//             <h1>Douglas Fir Sheds: Built With Generational Timber &amp; Traditional Joinery</h1>
-//             <p className="shed-lede">Milled from coastal Vancouver Island Douglas fir, our timber-frame outbuilding packages, garden studios, and workshop sheds combine heavy structural bents, traditional mortise-and-tenon craftsmanship, and weather-tested resilience.</p>
-//           </div>
-//           <div className="shed-hero__image" role="img" aria-label="Douglas fir shed feature image placeholder" />
-//         </div>
-//         <div className="shed-meta"><span><Folder />Craft journal</span><i>·</i><span className="shed-meta__read"><Clock3 />6 min read</span></div>
-//       </section>
-
-//       <section className="shed-services shed-wrap">
-//         <Eyebrow>Our shed service</Eyebrow>
-//         <h2>A Douglas fir shed, built around your life.</h2>
-//         <p className="shed-section-intro">From practical garden storage to a dedicated workshop or a quiet backyard retreat, bring your space to life with a Douglas fir timber frame shaped around the way you want to use it.</p>
-//         <Cards type="services" items={services} className="!px-0 !py-0 !mt-12" gridClassName="!grid-cols-1 !gap-6 md:!grid-cols-3" />
-//         <figure className="shed-workshop">
-//           <div className="shed-workshop__placeholder">
-//             <Image
-//               src="/Images/DFSImg/img2.png"
-//               alt="Traditional joinery and carefully prepared Douglas fir timbers in the workshop"
-//               fill
-//               sizes="(max-width: 640px) 100vw, 92vw"
-//               className="shed-workshop__image"
-//             />
-//             <div className="shed-workshop__story" role="group" tabIndex={0} aria-label="More about our timber frame craftsmanship">
-//               <Eyebrow gold>Timber frame craftsmanship</Eyebrow>
-//               <h3>Crafted in the Mill. Raised on Your Land.</h3>
-//               <p>Traditional mortise and tenon joinery pre-fit in our Comox Valley timber yard before delivery and raising.</p>
-//               <div className="shed-workshop__details">
-//                 <p>Each frame is laid out and carefully prepared in our timber yard, so the pieces arrive ready to come together on your site.</p>
-//                 <ul>
-//                   <li>Locally milled Douglas fir</li>
-//                   <li>Traditional mortise and tenon joinery</li>
-//                   <li>Prepared for a confident on-site raising</li>
-//                 </ul>
-//               </div>
-//             </div>
-//           </div>
-//           <figcaption>From the workshop to your garden: traditional joinery, carefully prepared timbers.</figcaption>
-//         </figure>
-//       </section>
-
-//       <section className="shed-process shed-wrap">
-//         <div className="shed-process__heading"><Eyebrow>The process</Eyebrow><h2>From your first idea to a raised frame.</h2></div>
-//         <ol className="shed-steps">{steps.map(([title, text], index) => <li key={title}><span className="shed-step-number">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div></li>)}</ol>
-//       </section>
-
-//       <section className="shed-cta">
-//         <div><Eyebrow gold>Start a conversation</Eyebrow><h2>Let’s talk about your shed.</h2><p>Share your ideas, approximate size and location to start a conversation about<br className="shed-desktop-break" /> your project.</p></div>
-//         <Link href="/Contact#form" className="shed-cta__button">Start an inquiry <ArrowUpRight size={21} /></Link>
-//       </section>
-
-//       <section className="shed-recent shed-wrap">
-//         <Eyebrow>Continue reading</Eyebrow><h2>Recent Posts</h2>
-//         <p className="shed-section-intro">Stories from the forest, workshop and jobsite—made for people who care where wood comes from.</p>
-//         <div className="shed-post-grid">{posts.map(([category, title, text]) => <article className="shed-post" key={title}>
-//           <div className="shed-post__image" role="img" aria-label={`${title} image placeholder`} />
-//           <div className="shed-post__body"><Eyebrow>{category}</Eyebrow><h3>{title}</h3><p>{text}</p></div>
-//         </article>)}</div>
-//       </section>
-//     </main>
-//   );
-// }

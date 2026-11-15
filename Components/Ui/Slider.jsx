@@ -4,68 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 
 // Default slides matching your screenshot
-const DEFAULT_SLIDES = [
-    {
-        id: 1,
-        tagline: 'VANCOUVER ISLAND / LUMBER YARD & SAWMILL',
-        titleWhite: 'Island roots.',
-        titleGold: 'Endless possibilities.',
-        description:
-            "Douglas fir, red cedar and yellow cedar. Custom beams, everyday lumber and specialty cuts – made around what you're building.",
-        primaryBtn: {
-            text: 'Explore our lumber',
-            href: '/lumber',
-        },
-        secondaryBtn: {
-            text: 'Talk to our mill',
-            href: '/contact',
-        },
-        bottomLeft: 'QUALITY LUMBER, ROOTED ON VANCOUVER ISLAND.',
-        bottomRight: 'OUR SAWMILL - VANCOUVER ISLAND, BC',
-        bgImage:
-            'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=2000&q=80',
-    },
-    {
-        id: 2,
-        tagline: 'SUSTAINABLY SOURCED / LOCAL TIMBER',
-        titleWhite: 'Crafted with care.',
-        titleGold: 'Built to endure.',
-        description:
-            'Precision milling for residential, architectural, and heavy commercial timber frames. Sourced responsibly from Pacific Northwest forests.',
-        primaryBtn: {
-            text: 'View our products',
-            href: '/products',
-        },
-        secondaryBtn: {
-            text: 'Request a quote',
-            href: '/quote',
-        },
-        bottomLeft: 'PREMIUM PACIFIC TIMBER & CUSTOM CUTS.',
-        bottomRight: 'DISTRIBUTION & LOGGING - PACIFIC NW',
-        bgImage:
-            'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=2000&q=80',
-    },
-    {
-        id: 3,
-        tagline: 'CUSTOM TIMBER & ARCHITECTURAL BEAMS',
-        titleWhite: 'Rooted in heritage.',
-        titleGold: 'Milled for vision.',
-        description:
-            'From rough-cut structural timbers to fine-finish tongue and groove cedar, we turn raw logs into structural works of art.',
-        primaryBtn: {
-            text: 'Our mill capabilities',
-            href: '/capabilities',
-        },
-        secondaryBtn: {
-            text: 'Contact timber team',
-            href: '/contact',
-        },
-        bottomLeft: 'HERITAGE TIMBER CRAFT SINCE 1982.',
-        bottomRight: 'COWICHAN VALLEY, BC',
-        bgImage:
-            'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80',
-    },
-];
+
 
 /**
  * Reusable Hero Slider Component
@@ -77,7 +16,7 @@ const DEFAULT_SLIDES = [
  * @param {string} className - Additional CSS wrapper classes
  */
 export default function Slider({
-    slides = DEFAULT_SLIDES,
+    slides = [],
     autoPlay = true,
     autoPlayInterval = 7000,
     showControls = true,
@@ -141,7 +80,7 @@ export default function Slider({
 
     return (
         <section
-            className={`relative w-full min-h-screen flex flex-col justify-between overflow-hidden bg-stone-950 text-white select-none ${className}`}
+            className={`relative w-full min-h-[100svh] flex flex-col justify-between overflow-hidden bg-stone-950 text-white select-none ${className}`}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onTouchStart={handleTouchStart}
@@ -163,24 +102,26 @@ export default function Slider({
                             style={{ backgroundImage: `url(${slide.bgImage})` }}
                         />
                         {/* Atmospheric overlay: Dark forest vignette with warm undertone */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-stone-950/75 mix-blend-multiply" />
-                        <div className="absolute inset-0 bg-black/45" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-stone-950/50 to-transparent mix-blend-multiply" />
+                        <div className="absolute inset-0 bg-black/30" />
+                        {/* <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-stone-950/75 mix-blend-multiply" />
+                        <div className="absolute inset-0 bg-black/45" /> */}
                     </div>
                 ))}
             </div>
 
             {/* Main Content Area */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-16 md:pt-40 flex-1 flex flex-col justify-center">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 pt-24 pb-10 sm:pt-28 sm:pb-14 md:pt-40 md:pb-16 flex-1 flex flex-col justify-center overflow-hidden">
                 {/* Eyebrow / Tagline */}
-                <div className="flex items-center gap-3 mb-6 animate-fadeIn">
-                    <span className="w-6 h-[2px] bg-[#E5A84B]" />
-                    <span className="text-xs md:text-sm font-semibold tracking-[0.25em] text-[#E5A84B] uppercase">
+                <div className="flex items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6 animate-fadeIn max-w-full">
+                    <span className="w-5 sm:w-6 h-[2px] bg-[#E5A84B] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold tracking-[0.12em] sm:tracking-[0.25em] text-[#E5A84B] uppercase break-words">
                         {activeSlide.tagline}
                     </span>
                 </div>
 
                 {/* Dynamic Titles */}
-                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.05] max-w-4xl">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.05] max-w-4xl break-words">
                     <span className="block text-white font-sans">{activeSlide.titleWhite}</span>
                     <span className="block italic font-serif font-medium text-[#E5A84B]">
                         {activeSlide.titleGold}
@@ -188,16 +129,16 @@ export default function Slider({
                 </h1>
 
                 {/* Description Paragraph */}
-                <p className="mt-8 text-base md:text-xl text-stone-300/90 font-normal leading-relaxed max-w-2xl">
+                <p className="mt-4 sm:mt-5 text-xs sm:text-sm md:text-lg text-white font-normal leading-relaxed max-w-2xl">
                     {activeSlide.description}
                 </p>
 
                 {/* Action Buttons (CTAs) */}
-                <div className="mt-10 flex flex-wrap items-center gap-4">
+                <div className="mt-6 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4 max-w-md sm:max-w-none">
                     {activeSlide.primaryBtn && (
                         <Link
                             href={activeSlide.primaryBtn.href || '#'}
-                            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#E5A84B] hover:bg-[#d8983e] text-stone-950 font-bold text-sm md:text-base tracking-wide transition-all duration-300 shadow-lg hover:shadow-[#E5A84B]/20 hover:-translate-y-0.5 active:translate-y-0"
+                            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4 rounded-full bg-[#E5A84B] hover:bg-[#d8983e] text-stone-950 font-bold text-sm md:text-base tracking-wide transition-all duration-300 shadow-lg hover:shadow-[#E5A84B]/20 hover:-translate-y-0.5 active:translate-y-0"
                         >
                             <span>{activeSlide.primaryBtn.text}</span>
                             <svg
@@ -216,7 +157,7 @@ export default function Slider({
                     {activeSlide.secondaryBtn && (
                         <Link
                             href={activeSlide.secondaryBtn.href || '#'}
-                            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-stone-900/60 hover:bg-stone-800/80 text-stone-100 font-medium text-sm md:text-base tracking-wide border border-white/20 hover:border-white/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4 rounded-full bg-stone-900/60 hover:bg-stone-800/80 text-stone-100 font-medium text-sm md:text-base tracking-wide border border-white/20 hover:border-white/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
                         >
                             <span>{activeSlide.secondaryBtn.text}</span>
                             <svg
@@ -236,7 +177,7 @@ export default function Slider({
 
             {/* Slide Navigation Controls & Indicators */}
             {showControls && slides.length > 1 && (
-                <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pb-4 flex items-center justify-between">
+                <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 pb-3 sm:pb-4 flex items-center justify-between gap-3 overflow-hidden">
                     {/* Slide dots / bars */}
                     <div className="flex items-center gap-2.5">
                         {slides.map((_, idx) => (
@@ -245,33 +186,33 @@ export default function Slider({
                                 onClick={() => goToSlide(idx)}
                                 aria-label={`Go to slide ${idx + 1}`}
                                 className={`transition-all duration-500 rounded-full ${idx === currentIndex
-                                        ? 'w-10 h-1.5 bg-[#E5A84B]'
-                                        : 'w-2 h-1.5 bg-stone-600/70 hover:bg-stone-400'
+                                    ? 'w-10 h-1.5 bg-[#E5A84B]'
+                                    : 'w-2 h-1.5 bg-stone-600/70 hover:bg-stone-400'
                                     }`}
                             />
                         ))}
                     </div>
 
                     {/* Previous / Next Arrow Controls */}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
                         <button
                             onClick={prevSlide}
                             aria-label="Previous slide"
-                            className="p-2.5 rounded-full bg-stone-900/60 hover:bg-stone-800 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-sm transition-colors"
+                            className="p-2 sm:p-2.5 rounded-full bg-stone-900/60 hover:bg-stone-800 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-sm transition-colors"
                         >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <span className="text-xs tracking-wider text-stone-400 font-mono">
+                        <span className="text-[11px] sm:text-xs tracking-wider text-white/90 font-mono">
                             0{currentIndex + 1} / 0{slides.length}
                         </span>
                         <button
                             onClick={nextSlide}
                             aria-label="Next slide"
-                            className="p-2.5 rounded-full bg-stone-900/60 hover:bg-stone-800 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-sm transition-colors"
+                            className="p-2 sm:p-2.5 rounded-full bg-stone-900/60 hover:bg-stone-800 text-stone-300 hover:text-white border border-white/10 hover:border-white/30 backdrop-blur-sm transition-colors"
                         >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
@@ -280,22 +221,22 @@ export default function Slider({
             )}
 
             {/* Bottom Footer Bar */}
-            <div className="relative z-10 w-full border-t border-white/10 bg-black/30 backdrop-blur-sm">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] md:text-xs font-medium tracking-[0.2em] text-stone-400 uppercase">
+            <div className="relative z-10 w-full border-t border-white/10 bg-black/30 backdrop-blur-sm overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-2.5 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-3 text-[9px] sm:text-[10px] md:text-xs font-medium tracking-[0.12em] sm:tracking-[0.2em] text-white/90 uppercase text-center sm:text-left">
                     {/* Scroll cue & quality note */}
-                    <div className="flex items-center gap-3">
-                        <span className="flex items-center gap-1.5 text-[#E5A84B]">
-                            <svg className="w-3 h-3 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-3 max-w-full">
+                        <span className="flex items-center gap-1.5 text-[#E5A84B] shrink-0">
+                            <svg className="w-3 h-3 animate-bounce shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                             </svg>
                             SCROLL TO EXPLORE
                         </span>
-                        <span className="text-stone-600">|</span>
-                        <span className="text-stone-300">{activeSlide.bottomLeft}</span>
+                        <span className="hidden sm:inline text-stone-600">|</span>
+                        <span className="text-white/95 truncate sm:overflow-visible max-w-[260px] sm:max-w-none">{activeSlide.bottomLeft}</span>
                     </div>
 
                     {/* Location tag */}
-                    <div className="text-stone-400">{activeSlide.bottomRight}</div>
+                    <div className="text-white/80 shrink-0">{activeSlide.bottomRight}</div>
                 </div>
             </div>
         </section>
