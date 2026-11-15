@@ -23,7 +23,7 @@ const DEFAULT_SLIDES = [
         bottomLeft: 'QUALITY LUMBER, ROOTED ON VANCOUVER ISLAND.',
         bottomRight: 'OUR SAWMILL - VANCOUVER ISLAND, BC',
         bgImage:
-            'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=2000&q=80',
+           '/Images/pageImg/IMG_0311.JPEG',
     },
     {
         id: 2,
@@ -43,7 +43,7 @@ const DEFAULT_SLIDES = [
         bottomLeft: 'PREMIUM PACIFIC TIMBER & CUSTOM CUTS.',
         bottomRight: 'DISTRIBUTION & LOGGING - PACIFIC NW',
         bgImage:
-            'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=2000&q=80',
+            '/Images/pageImg/IMG_4841.JPEG',
     },
     {
         id: 3,
@@ -63,9 +63,11 @@ const DEFAULT_SLIDES = [
         bottomLeft: 'HERITAGE TIMBER CRAFT SINCE 1982.',
         bottomRight: 'COWICHAN VALLEY, BC',
         bgImage:
-            'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80',
+            '/Images/pageImg/IMG_4855.JPEG',
     },
 ];
+// const DEFAULT_SLIDES = []
+
 
 /**
  * Reusable Hero Slider Component
