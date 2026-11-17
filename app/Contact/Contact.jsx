@@ -1,10 +1,13 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 
-const address = "5110 Dove Crk Rd, Comox Valley, BC V9J 1P4";
-const email = "info@islandbeamandtimber.com";
+const address = `${siteConfig?.address}`;
+const email = `${siteConfig?.email}`;
 const mapQuery = encodeURIComponent(address);
+
 
 const contactCards = [
     {
@@ -36,6 +39,13 @@ const contactCards = [
 const fieldClass = "w-full border-0 bg-[#EAE7DC] px-4 py-3.5 text-sm text-[#173D2C] placeholder:text-[#697267] outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-[#E8B51E]";
 
 export default function Contact() {
+    const [selectedService, setSelectedService] = useState("");
+    const services = [
+        "Custom lumber & beams",
+        "Milling & mobile milling",
+        "Ready-to-go & custom sheds",
+        "Firewood delivery",
+    ];
     return (
         <main className="bg-[#F4F2E9] text-[#173D2C]">
             <section className="grid bg-[#003C24] text-[#F4F2E9] lg:min-h-[calc(100vh-130px)] lg:grid-cols-2">
@@ -165,15 +175,22 @@ export default function Contact() {
                             Share your dimensions, quantities, delivery location and preferred timing. Still working out the details? Tell us what you&apos;re planning and we&apos;ll help you find a starting point.
                         </p>
                         <div className="mt-8 divide-y divide-[#173D2C]/15 border-y border-[#173D2C]/15">
-                            {[
-                                "Custom lumber & beams",
-                                "Milling & mobile milling",
-                                "Ready-to-go & custom sheds",
-                                "Firewood delivery",
-                            ].map((service) => (
-                                <div key={service} className="flex items-center justify-between py-4 text-sm text-[#173D2C]">
-                                    <span>{service}</span><ArrowUpRight className="size-3.5 text-[#8B5E1A]" aria-hidden="true" />
-                                </div>
+                            {services?.map((service) => (
+                                <button
+                                    key={service}
+                                    type="button"
+                                    onClick={() => setSelectedService(service)}
+                                    className="flex w-full items-center justify-between py-4 text-left text-sm text-[#173D2C] transition-colors hover:text-[#8B5E1A]"
+                                >
+                                    <span>{service}</span>
+                                    <ArrowUpRight
+                                        className="size-3.5 text-[#8B5E1A]"
+                                        aria-hidden="true"
+                                    />
+                                </button>
+                                // <div key={service} className="flex items-center justify-between py-4 text-sm text-[#173D2C]">
+                                //     <span>{service}</span><ArrowUpRight className="size-3.5 text-[#8B5E1A]" aria-hidden="true" />
+                                // </div>
                             ))}
                         </div>
                         <div className="mt-7 border-l-2 border-[#E8B51E] pl-5 text-sm leading-relaxed text-[#697267]">
@@ -200,13 +217,22 @@ export default function Contact() {
                             </label>
                             <label className="block text-xs font-semibold text-[#173D2C]">
                                 I&apos;m enquiring about *
-                                <select name="Service" required defaultValue="" className={`${fieldClass} mt-2`}>
-                                    <option value="" disabled>Choose a service</option>
-                                    <option>Custom lumber &amp; beams</option>
-                                    <option>Milling &amp; mobile milling</option>
-                                    <option>Sheds</option>
-                                    <option>Firewood</option>
-                                    <option>Other</option>
+                                <select
+                                    name="Service"
+                                    required
+                                    value={selectedService}
+                                    onChange={(e) => setSelectedService(e.target.value)}
+                                    className={`${fieldClass} mt-2`}
+                                >
+                                    <option value="" disabled>
+                                        Choose a service
+                                    </option>
+
+                                    {services.map((service) => (
+                                        <option key={service} value={service}>
+                                            {service}
+                                        </option>
+                                    ))}
                                 </select>
                             </label>
                             <label className="block text-xs font-semibold text-[#173D2C] sm:col-span-2">
