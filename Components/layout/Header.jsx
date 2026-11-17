@@ -6,9 +6,15 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { servicesLinks, siteConfig } from '@/lib/siteConfig';
 
-const ACTIVE = '#E5A84B';
-
-const productLinks = [];
+const primaryNavLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Custom lumber', href: '/CustomLumber' },
+    { name: 'Milling services', href: '/MobileMilling' },
+    { name: 'About us', href: '/About' },
+    { name: 'Garden sheds', href: '/DouglasFirShed' },
+    { name: 'Firewood', href: '/Firewood' },
+    { name: 'Contact us', href: '/Contact' },
+];
 
 // Case-insensitive route match ("/About" and "/about" both work)
 const isActive = (pathname, href) => {
@@ -21,7 +27,7 @@ const isActive = (pathname, href) => {
 
 const Chevron = ({ open, active, className = 'w-3.5 h-3.5' }) => (
     <svg
-        className={`${className} transition-all duration-300 ${active ? 'text-[#E5A84B]' : 'text-white/80'} ${open ? 'rotate-180' : ''}`}
+        className={`${className} transition-all duration-300 ${active ? 'text-[#B98216]' : 'text-[#173D2C]/70'} ${open ? 'rotate-180' : ''}`}
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth="2.5"
@@ -59,76 +65,32 @@ const PhoneIcon = ({ className = 'w-4 h-4' }) => (
 );
 
 const navLinkBase =
-    'relative text-sm font-semibold tracking-wide transition-colors duration-200 ' +
+    'relative text-xs font-medium tracking-normal transition-colors duration-200 ' +
     'after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:origin-left ' +
-    'after:bg-[#E5A84B] after:transition-transform after:duration-300 ' +
+    'after:bg-[#E8B51E] after:transition-transform after:duration-300 ' +
     'focus-visible:outline-none focus-visible:after:scale-x-100';
-const navLinkIdle = 'text-white hover:text-white after:scale-x-0 hover:after:scale-x-100';
-const navLinkActive = 'text-[#E5A84B] after:scale-x-100';
+const navLinkIdle = 'text-[#173D2C] hover:text-[#003C24] after:scale-x-0 hover:after:scale-x-100';
+const navLinkActive = 'text-[#173D2C] after:scale-x-100';
 
-function NavLink({ href, pathname, children }) {
+function NavLink({ href, pathname, children, light = false }) {
     const active = isActive(pathname, href);
+    const themeClass = light
+        ? (active ? 'text-white after:scale-x-100' : 'text-white/90 hover:text-white after:scale-x-0 hover:after:scale-x-100')
+        : (active ? navLinkActive : navLinkIdle);
     return (
         <Link
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={`${navLinkBase} ${active ? navLinkActive : navLinkIdle}`}
+            className={`${navLinkBase} ${themeClass}`}
         >
             {children}
         </Link>
     );
 }
 
-function Dropdown({ id, label, links, active, setActive, pathname }) {
-    const open = active === id;
-    const selected = links.some((l) => isActive(pathname, l.href));
-    return (
-        <div
-            className="relative"
-            onMouseEnter={() => setActive(id)}
-            onMouseLeave={() => setActive(null)}
-            onKeyDown={(e) => e.key === 'Escape' && setActive(null)}
-        >
-            <button
-                type="button"
-                className={`${navLinkBase} flex items-center gap-1.5 py-2 ${selected ? navLinkActive : navLinkIdle} after:bottom-0`}
-                aria-expanded={open}
-                aria-haspopup="true"
-                onClick={() => setActive(open ? null : id)}
-            >
-                <span>{label}</span>
-                <Chevron open={open} active={selected} />
-            </button>
-
-            <div
-                className={`absolute top-full left-1/2 z-50 w-64 -translate-x-1/2 pt-3 transition-all duration-300 ease-out ${open ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'
-                    }`}
-            >
-                <div className="rounded-2xl border border-white/15 bg-[#07110b]/85 p-2 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150">
-                    {links.map((item) => {
-                        const itemActive = isActive(pathname, item.href);
-                        return (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                onClick={() => setActive(null)}
-                                aria-current={itemActive ? 'page' : undefined}
-                                tabIndex={open ? 0 : -1}
-                                className={`block rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-200 hover:translate-x-1 hover:bg-white/10 ${itemActive ? 'bg-white/10 text-[#E5A84B]' : 'text-white hover:text-[#E5A84B]'
-                                    }`}
-                            >
-                                {item.name}
-                            </Link>
-                        );
-                    })}
-                </div>
-            </div>
-        </div>
-    );
-}
-
 export default function Header() {
     const currentPathname = usePathname();
+    const isHomepage = currentPathname === '/';
     const [hasMounted, setHasMounted] = useState(false);
     const pathname = hasMounted ? currentPathname : null;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -193,33 +155,29 @@ export default function Header() {
         setActiveDropdown(null);
     }, [pathname]);
 
-    const solid = true;
     const visible = isVisible || mobileMenuOpen;
+    const homeOverlay = isHomepage && !isScrolled && !mobileMenuOpen;
 
     const mobileLink = (href) =>
-        `block rounded-lg px-4 py-3 text-base font-semibold transition-colors hover:bg-white/10 ${isActive(pathname, href) ? 'bg-white/5 text-[#E5A84B]' : 'text-white'
+    `block rounded-lg px-4 py-3 text-base font-semibold transition-colors hover:bg-[#173D2C]/5 ${isActive(pathname, href) ? 'bg-[#173D2C]/5 text-[#8B5E1A]' : 'text-[#173D2C]'
         }`;
 
     return (
         <>
             <header
                 ref={headerRef}
-                className={`fixed top-0 inset-x-0 z-50 w-full max-w-full
+                className={`${isHomepage ? 'fixed' : 'sticky'} top-0 inset-x-0 z-50 w-full max-w-full
   transition-all duration-300
   ${visible ? 'translate-y-0' : '-translate-y-full'}
-  bg-[#07110b]/95
-  backdrop-blur-2xl
-  backdrop-saturate-150
-  border-b border-white/10
-  shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)]
+  ${homeOverlay ? 'border-b border-white/20 bg-transparent' : 'border-b border-[#D9D8CD] bg-[#F4F2E9]'}
 `}
             >
-                <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-                    <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-14 sm:h-16' : 'h-16 sm:h-20'}`}>
+                <div className="mx-auto max-w-[1680px] px-3 sm:px-6 lg:px-8">
+                    <div className={`flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-20' : 'h-20 sm:h-24 xl:h-[130px]'}`}>
 
                         {/* Logo & Branding */}
                         <Link href="/" className="flex items-center gap-2 sm:gap-3 group focus-visible:outline-none min-w-0 shrink">
-                            <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center p-1 sm:p-1.5 transition-all duration-300 group-hover:scale-105 group-hover:border-[#E5A84B]/60 shrink-0">
+                            <div className="h-12 w-12 shrink-0 transition-transform duration-300 group-hover:scale-105 sm:h-[72px] sm:w-[72px]">
                                 {siteConfig?.Logo && (
                                     <Image
                                         src={siteConfig.Logo}
@@ -231,41 +189,30 @@ export default function Header() {
                                 )}
                             </div>
 
-                            <div className="flex flex-col drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)] min-w-0">
-                                <span className="text-white font-extrabold tracking-wider text-xs sm:text-base lg:text-lg leading-tight truncate">
+                            <div className="flex min-w-0 flex-col">
+                                <span className={`truncate text-sm font-extrabold leading-tight tracking-wide sm:text-lg ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
                                     ISLAND BEAM &amp; TIMBER
                                 </span>
-                                <span className="text-[#E5A84B] font-bold text-[9px] sm:text-[11px] lg:text-xs tracking-widest uppercase truncate">
+                                <span className={`truncate text-[8px] font-bold uppercase tracking-[0.22em] sm:text-[10px] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
                                     Lumber Yard &amp; Sawmill
                                 </span>
                             </div>
                         </Link>
 
                         {/* Desktop Nav — hidden below lg (1024px) */}
-                        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]" aria-label="Main">
-                            <NavLink href="/" pathname={pathname}>Home</NavLink>
-                            <NavLink href="/About" pathname={pathname}>About</NavLink>
-                            <Dropdown id="services" label="Services" links={servicesLinks} active={activeDropdown} setActive={setActiveDropdown} pathname={pathname} />
-                            <NavLink href="/Contact" pathname={pathname}>Contact</NavLink>
+                        <nav className="hidden items-center gap-4 xl:flex 2xl:gap-7" aria-label="Main">
+                            {primaryNavLinks.filter((item) => !(isHomepage && item.href === '/')).map((item) => (
+                                <NavLink key={item.href} href={item.href} pathname={pathname} light={homeOverlay}>{item.name}</NavLink>
+                            ))}
                         </nav>
 
                         {/* Desktop CTA + Phone */}
-                        <div className="hidden lg:flex items-center gap-3">
-                            {siteConfig?.phone && (
-                                <a
-                                    href={siteConfig.phoneLink}
-                                    className="flex items-center gap-2 rounded-full border border-white/20 px-4 py-2.5 text-sm font-medium text-white/90 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
-                                    aria-label={`Call ${siteConfig.phone}`}
-                                >
-                                    <PhoneIcon className="w-4 h-4" />
-                                    <span className="hidden xl:inline">{siteConfig.phone}</span>
-                                </a>
-                            )}
+                        <div className="hidden shrink-0 items-center gap-3 xl:flex">
                             <Link
                                 href="/request-quote"
-                                className={`group inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold tracking-wide backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E5A84B] hover:bg-[#E5A84B] hover:text-[#0d1612] hover:shadow-lg hover:shadow-[#E5A84B]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E5A84B]/60 ${isActive(pathname, '/request-quote')
-                                    ? 'border-[#E5A84B] bg-[#E5A84B] text-[#0d1612]'
-                                    : 'border-white/40 bg-white/10 text-white'
+                                className={`group inline-flex min-h-[68px] items-center justify-center gap-8 rounded-full px-8 text-sm font-semibold tracking-wide transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
+                                    ? 'border border-white/35 bg-white/10 text-white hover:bg-white/20'
+                                    : 'border border-[#003C24] bg-[#003C24] text-white hover:bg-[#09271B]'
                                     }`}
                             >
                                 <span>Request a quote</span>
@@ -274,11 +221,11 @@ export default function Header() {
                         </div>
 
                         {/* Mobile: Phone + Hamburger */}
-                        <div className="flex lg:hidden items-center gap-2">
+                        <div className="flex items-center gap-2 xl:hidden">
                             {siteConfig?.phoneLink && (
                                 <a
                                     href={siteConfig.phoneLink}
-                                    className="p-2 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-colors"
+                                    className={`rounded-lg p-2 transition-colors ${homeOverlay ? 'text-white/90 hover:bg-white/10 hover:text-white' : 'text-[#173D2C]/80 hover:bg-[#173D2C]/5 hover:text-[#173D2C]'}`}
                                     aria-label={`Call ${siteConfig.phone}`}
                                 >
                                     <PhoneIcon className="w-5 h-5" />
@@ -287,7 +234,7 @@ export default function Header() {
                             <button
                                 type="button"
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className="p-2 rounded-lg text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E5A84B]/60"
+                                className={`rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay ? 'text-white hover:bg-white/10' : 'text-[#173D2C] hover:bg-[#173D2C]/5'}`}
                                 aria-label="Toggle menu"
                                 aria-expanded={mobileMenuOpen}
                             >
@@ -304,12 +251,12 @@ export default function Header() {
 
                 {/* Mobile Drawer — slide-down animation */}
                 <div
-                    className={`lg:hidden overflow-hidden transition-all duration-300 ease-out ${mobileMenuOpen
-                        ? 'max-h-[calc(100vh-4rem)] opacity-100'
+                    className={`xl:hidden overflow-hidden transition-all duration-300 ease-out ${mobileMenuOpen
+                        ? 'max-h-[calc(100vh-5rem)] opacity-100'
                         : 'max-h-0 opacity-0'
                         }`}
                 >
-                    <div className="overflow-y-auto max-h-[calc(100vh-4rem)] border-t border-white/10 bg-[#07110b]/95 px-4 sm:px-6 pt-4 pb-8 space-y-1 backdrop-blur-2xl">
+                    <div className="max-h-[calc(100vh-5rem)] space-y-1 overflow-y-auto border-t border-[#173D2C]/10 bg-[#F4F2E9] px-4 pt-4 pb-8 sm:px-6">
                         {[
                             { name: 'Home', href: '/' },
                             { name: 'About', href: '/About' },
@@ -336,7 +283,7 @@ export default function Header() {
                                         type="button"
                                         onClick={() => setActiveDropdown(open ? null : group.id)}
                                         aria-expanded={open}
-                                        className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-base font-semibold transition-colors hover:bg-white/10 ${selected ? 'text-[#E5A84B]' : 'text-white'
+                                        className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-base font-semibold transition-colors hover:bg-[#173D2C]/5 ${selected ? 'text-[#8B5E1A]' : 'text-[#173D2C]'
                                             }`}
                                     >
                                         <span>{group.label}</span>
@@ -347,7 +294,7 @@ export default function Header() {
                                             }`}
                                     >
                                         <div className="overflow-hidden">
-                                            <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-white/15 pl-4">
+                                                <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-[#173D2C]/15 pl-4">
                                                 {group.links.map((item) => {
                                                     const itemActive = isActive(pathname, item.href);
                                                     return (
@@ -357,7 +304,7 @@ export default function Header() {
                                                             onClick={() => setMobileMenuOpen(false)}
                                                             tabIndex={open ? 0 : -1}
                                                             aria-current={itemActive ? 'page' : undefined}
-                                                            className={`block rounded-md py-2.5 px-3 text-sm font-medium transition-colors hover:bg-white/5 hover:text-[#E5A84B] ${itemActive ? 'text-[#E5A84B] bg-white/5' : 'text-white/80'
+                                                            className={`block rounded-md px-3 py-2.5 text-sm font-medium transition-colors hover:bg-[#173D2C]/5 hover:text-[#8B5E1A] ${itemActive ? 'bg-[#173D2C]/5 text-[#8B5E1A]' : 'text-[#173D2C]/80'
                                                                 }`}
                                                         >
                                                             {item.name}
@@ -385,7 +332,7 @@ export default function Header() {
                             <Link
                                 href="/request-quote"
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#E5A84B] bg-[#E5A84B] py-3 font-semibold text-[#0d1612] transition-all duration-300 hover:bg-[#d4963f] active:scale-[0.98]"
+                                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#003C24] bg-[#003C24] py-3 font-semibold text-white transition-all duration-300 hover:bg-[#09271B] active:scale-[0.98]"
                             >
                                 <span>Request a quote</span>
                                 <ArrowUpRight className="w-4 h-4" />
@@ -394,7 +341,7 @@ export default function Header() {
                             {siteConfig?.phone && (
                                 <a
                                     href={siteConfig.phoneLink}
-                                    className="flex w-full items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 py-3 font-semibold text-white backdrop-blur-md transition-all duration-300 hover:border-white/50 hover:bg-white/15 active:scale-[0.98]"
+                                    className="flex w-full items-center justify-center gap-2 rounded-full border border-[#173D2C]/25 bg-white/40 py-3 font-semibold text-[#173D2C] transition-all duration-300 hover:bg-white/70 active:scale-[0.98]"
                                 >
                                     <PhoneIcon className="w-4 h-4" />
                                     <span>{siteConfig.phone}</span>
@@ -405,24 +352,26 @@ export default function Header() {
                 </div>
             </header>
 
-            {/* Scroll progress bar */}
-            <div
-                className={`fixed inset-x-0 z-[51] h-[3px] bg-white/15 pointer-events-none transition-[top] duration-300 ${
-                    visible
-                        ? (isScrolled ? 'top-14 sm:top-16' : 'top-16 sm:top-20')
-                        : 'top-0'
-                }`}
-                aria-hidden="true"
-            >
+            {/* Render browser-measured scroll progress only after hydration. */}
+            {hasMounted && (
                 <div
-                    className="h-full bg-[#E5A84B] shadow-[0_0_8px_rgba(229,168,75,0.8)] transition-[width] duration-100"
-                    style={{ width: `${scrollProgress}%` }}
-                />
-            </div>
+                    className={`fixed inset-x-0 z-[51] h-[3px] pointer-events-none transition-[top] duration-300 ${homeOverlay ? 'bg-white/20' : 'bg-[#173D2C]/10'} ${
+                        visible
+                                    ? (isScrolled ? 'top-16 sm:top-20' : 'top-20 sm:top-24 xl:top-[130px]')
+                            : 'top-0'
+                    }`}
+                    aria-hidden="true"
+                >
+                    <div
+                        className="h-full bg-[#E8B51E] transition-[width] duration-100"
+                        style={{ width: `${scrollProgress}%` }}
+                    />
+                </div>
+            )}
 
             {/* Mobile overlay backdrop */}
             <div
-                className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                className={`fixed inset-0 z-40 bg-black/25 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                     }`}
                 onClick={() => setMobileMenuOpen(false)}
                 aria-hidden="true"

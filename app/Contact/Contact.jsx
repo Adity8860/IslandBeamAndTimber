@@ -1,175 +1,246 @@
 import Image from "next/image";
-import Link from "next/link";
-import { MapPin, Mail, Phone } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
-import ScrollReveal from "@/Components/Ui/ScrollReveal";
-import FAQSection from "@/Components/Ui/FAQ";
 
 const address = "5110 Dove Crk Rd, Comox Valley, BC V9J 1P4";
+const email = "info@islandbeamandtimber.com";
 const mapQuery = encodeURIComponent(address);
-const delay = (ms) => ({ "--d": `${ms}ms` });
-
-const faqs = [
-    {
-        id: "lumber-options",
-        question: "What kinds of lumber and timber can I order?",
-        answer:
-            "We mill Douglas fir, red cedar and yellow cedar, with options ranging from rough cut lumber to custom beams and finished timber. Tell us what you are building and the sizes you need, and we can help you plan your order.",
-    },
-    {
-        id: "custom-sizes",
-        question: "Can you cut custom sizes and long beams?",
-        answer:
-            "Yes. We cut to suit your project, with custom beam lengths available up to 32 feet. Send your dimensions and quantities and we will confirm what is possible.",
-    },
-    {
-        id: "delivery-milling",
-        question: "Do you offer delivery or mobile milling?",
-        answer:
-            "Delivery and milling options depend on the order and location. Get in touch with your project details and delivery address so we can talk through the best option.",
-    },
-    {
-        id: "yard-pickup",
-        question: "Can I visit the lumber yard to pick up an order?",
-        answer:
-            "Our yard is at 5110 Dove Crk Rd in the Comox Valley. Please call ahead before visiting so we can confirm availability and arrange a convenient pickup.",
-    },
-];
 
 const contactCards = [
-    { label: "Address", value: address, href: `https://maps.google.com/?q=${mapQuery}`, Icon: MapPin },
-    { label: "Email", value: "info@islandbeamandtimber.com", href: "mailto:info@islandbeamandtimber.com", Icon: Mail },
-    { label: "Phone", value: siteConfig.phone, href: siteConfig.phoneLink, Icon: Phone },
+    {
+        number: "01",
+        label: "Call or text",
+        title: siteConfig.phone,
+        detail: "Talk through your project or text us your cut list.",
+        links: [
+            { label: "Call the mill", href: siteConfig.phoneLink },
+            { label: "Send a text", href: `sms:${siteConfig.phoneLink.replace("tel:", "")}` },
+        ],
+    },
+    {
+        number: "02",
+        label: "Email our team",
+        title: email,
+        detail: "Send dimensions, photos, ideas or project drawings.",
+        links: [{ label: "Write to us", href: `mailto:${email}` }],
+    },
+    {
+        number: "03",
+        label: "Our sawmill",
+        title: "5110 Dove Crk Rd",
+        detail: "Comox Valley, BC V9J 1P4",
+        links: [{ label: "See our location ↓", href: `https://maps.google.com/?q=${mapQuery}` }],
+    },
 ];
 
-const fieldClass =
-    "w-full rounded-md border border-white/10 bg-[#f8f8f5] px-4 py-3.5 text-sm text-[#152019] placeholder:text-[#777f79] shadow-sm outline-none transition-all duration-300 hover:border-[#9fc69d]/60 focus:-translate-y-0.5 focus:border-[#9fc69d] focus:shadow-lg focus:ring-2 focus:ring-[#9fc69d]/30";
+const fieldClass = "w-full border-0 bg-[#EAE7DC] px-4 py-3.5 text-sm text-[#173D2C] placeholder:text-[#697267] outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-[#E8B51E]";
 
 export default function Contact() {
     return (
-        <main className="bg-white text-[#1b241e]">
-            <ScrollReveal />
-
-            <section className="px-5 pb-16 pt-28 sm:px-8 sm:pb-20 sm:pt-36 lg:px-12">
-                <div className="mx-auto max-w-7xl">
-                    <header className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
-                        <p data-reveal className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#a5c5a2]">Island Beam &amp; Timber</p>
-                        <h1 data-reveal style={delay(100)} className="text-4xl font-medium uppercase tracking-[0.07em] text-[#17251b] sm:text-5xl lg:text-6xl">Contact us</h1>
-                        <p data-reveal style={delay(200)} className="mx-auto mt-5 max-w-xl text-sm leading-6 text-[#68726b] sm:text-base">
-                            Thanks for your interest in Island Beam &amp; Timber. Whether you are looking for quality lumber, custom timber, or help with a project, we are here to help.
+        <main className="bg-[#F4F2E9] text-[#173D2C]">
+            <section className="grid bg-[#003C24] text-[#F4F2E9] lg:min-h-[calc(100vh-130px)] lg:grid-cols-2">
+                <div className="flex flex-col justify-between px-6 py-14 sm:px-10 sm:py-16 lg:px-12 lg:py-14 xl:pr-16 xl:pl-[clamp(5rem,7.3vw,9rem)] xl:py-16">
+                    <div>
+                        <div className="mb-8 flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/80 sm:text-[10px]">
+                            <span className="h-[2px] w-8 bg-[#EEBF21]" aria-hidden="true" />
+                            <span>Island Beam &amp; Timber / Contact us</span>
+                        </div>
+                        <h1 className="max-w-[760px] text-[clamp(3.5rem,7vw,8rem)] font-normal leading-[0.96] tracking-[-0.065em]">
+                            Good wood.<br />
+                            Real people.<br />
+                            <span className="text-[#EEBF21]">Let&apos;s talk.</span>
+                        </h1>
+                        <p className="mt-7 max-w-[470px] text-sm leading-[1.75] text-white/80 sm:text-base">
+                            Custom lumber, a backyard shed, mobile milling or your next firewood delivery. Tell us what you have in mind — we&apos;ll work through the details with you.
                         </p>
-                    </header>
-
-                    <div id='form' data-reveal='up' className="grid items-stretch gap-5 lg:grid-cols-2">
-                        <div data-reveal="left" className="group relative min-h-[360px] overflow-hidden rounded-md bg-[#18251c] shadow-md transition-shadow duration-500 hover:shadow-2xl sm:min-h-[470px] lg:min-h-[520px]">
-                            <Image
-                                src="/Images/pageImg/img7.png"
-                                alt="Timber being prepared at a Vancouver Island sawmill"
-                                fill
-                                priority
-                                sizes="(max-width: 1024px) 100vw, 50vw"
-                                className="img-settle object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#07110b]/70 via-transparent to-transparent" />
-                            <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8">
-                                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c7dfc2]">Locally milled · Vancouver Island</span>
-                                <p className="mt-2 max-w-md text-2xl font-medium leading-tight text-white transition-transform duration-500 group-hover:-translate-y-1 sm:text-3xl">Good timber starts with a good conversation.</p>
-                            </div>
-                        </div>
-
-                        <div data-reveal="right" className="rounded-md bg-[#1d3024] p-6 shadow-md sm:p-9 lg:p-10">
-                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a5c5a2]">We would love to hear from you</p>
-                            <h2 className="mt-3 text-2xl font-medium uppercase tracking-wide text-white sm:text-3xl">Get in touch</h2>
-                            <p className="mt-3 max-w-md text-sm leading-6 text-[#c1c9c1]">Send us a note about your project, and our team will get back to you as soon as we can.</p>
-                            <form action="mailto:info@islandbeamandtimber.com" method="post" encType="text/plain" className="mt-7 space-y-4">
-                                <label className="sr-only" htmlFor="contact-name">Your name</label>
-                                <input id="contact-name" name="Name" autoComplete="name" required placeholder="Your name" className={fieldClass} />
-                                <label className="sr-only" htmlFor="contact-email">Your email</label>
-                                <input id="contact-email" type="email" name="Email" autoComplete="email" required placeholder="Your email" className={fieldClass} />
-                                <label className="sr-only" htmlFor="contact-message">Your message</label>
-                                <textarea id="contact-message" name="Message" required rows={5} placeholder="Tell us a little about your project" className={`${fieldClass} resize-y`} />
-                                <button type="submit" className="btn-shine group w-full rounded-full bg-[#D9B258] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.15em] text-[#152019] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e4c273] hover:shadow-xl hover:shadow-[#D9B258]/20 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1d3024]">
-                                    Send your message{" "}
-                                    <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                                </button>
-                                <p className="text-center text-xs text-[#aeb9b0]">Or email us directly at <a className="underline decoration-white/40 underline-offset-4 transition-colors hover:text-white hover:decoration-white" href="mailto:info@islandbeamandtimber.com">info@islandbeamandtimber.com</a></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="bg-[#f7f3e8] px-5 py-14 text-[#1b3023] sm:px-8 sm:py-20 lg:px-12">
-                <div className="mx-auto max-w-7xl">
-                    <header data-reveal className="mx-auto mb-10 max-w-2xl text-center">
-                        <div className="flex items-center justify-center gap-4 sm:gap-6">
-                            <span aria-hidden="true" className="eyebrow-line h-[2px] w-16 origin-right bg-[#d9b25e] sm:w-24" />
-                            <h2 className="text-2xl font-bold uppercase tracking-wide text-[#193526] sm:text-3xl">Contact information</h2>
-                            <span aria-hidden="true" className="eyebrow-line h-[2px] w-16 bg-[#d9b25e] sm:w-24" />
-                        </div>
-                        <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#4f5b51] sm:text-base">We are a locally owned sawmill serving builders, makers and homeowners across Vancouver Island.</p>
-                    </header>
-                    <div className="grid sm:grid-cols-3">
-                        {contactCards.map((item, index) => (
-                            <a
-                                key={item.label}
-                                data-reveal
-                                style={delay(index * 100)}
-                                href={item.href}
-                                className={`${index > 0 ? "border-t border-[#d9b25e]/70 sm:border-l sm:border-t-0" : ""} group flex flex-col items-center rounded-lg px-4 py-6 text-center transition-all duration-300 hover:-translate-y-1 hover:bg-white/60 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d9b25e] sm:px-6 sm:py-8`}
-                            >
-                                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#eee2c3] text-[#193526] transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6 group-hover:bg-[#d9b25e]"><item.Icon aria-hidden="true" size={25} strokeWidth={2.5} /></span>
-                                <span className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#a8791f]">{item.label}</span>
-                                <span className="mt-1.5 text-sm leading-6 text-[#3f4d43] transition-colors group-hover:text-[#17251b]">{item.value}</span>
+                        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+                            <a href="#contact-form" className="group inline-flex min-h-16 items-center gap-7 rounded-full bg-[#EEBF21] px-7 text-sm font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B]">
+                                Start an enquiry <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </a>
-                        ))}
+                            <a href={siteConfig.phoneLink} className="group inline-flex items-center gap-2 border-b border-white/25 pb-2 text-xs font-semibold text-white transition-colors hover:border-[#EEBF21] hover:text-[#EEBF21]">
+                                Call {siteConfig.phone} <ArrowUpRight className="size-3.5" />
+                            </a>
+                        </div>
                     </div>
+
+                    <div className="mt-14 flex items-center justify-between gap-5 border-t border-white/15 pt-5 text-[8px] font-semibold uppercase tracking-[0.17em] text-white/60 sm:text-[9px]">
+                        <span>Comox Valley, Vancouver Island</span>
+                        <span className="text-right">Lumber yard &amp; sawmill</span>
+                    </div>
+                </div>
+
+                <figure className="relative min-h-[360px] overflow-hidden bg-[#20362A] sm:min-h-[480px] lg:min-h-0">
+                    <Image
+                        src="/Images/contact/IMG_4604.JPEG"
+                        alt="Island Beam & Timber sawmill yard in the Comox Valley"
+                        fill
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#003C24]/70 via-transparent to-transparent" />
+                    <figcaption className="absolute bottom-7 left-7 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/90 sm:bottom-9 sm:left-9">
+                        Our sawmill in the Comox Valley
+                    </figcaption>
+                </figure>
+            </section>
+
+            <section aria-label="Contact options" className="border-b border-[#D9D8CD] bg-[#F4F2E9] px-5 sm:px-8 lg:px-10">
+                <div className="mx-auto grid max-w-7xl divide-y divide-[#D9D8CD] sm:grid-cols-[0.9fr_1.2fr_0.9fr] sm:divide-x sm:divide-y-0">
+                    {contactCards.map((card) => (
+                        <article key={card.number} className={`min-w-0 px-2 py-7 sm:py-12 ${card.number === "01" ? "sm:px-2" : "sm:px-8"}`}>
+                            <div className="flex items-center justify-between text-[9px] font-semibold uppercase tracking-[0.16em] text-[#748073]">
+                                <span>{card.number} / {card.label}</span>
+                                <ArrowUpRight className="size-3 text-[#A2A89C]" aria-hidden="true" />
+                            </div>
+                            <h2 className="mt-5 break-words text-xl font-normal leading-tight tracking-[-0.04em] text-[#173D2C] sm:text-[28px]">
+                                {card.title}
+                            </h2>
+                            <p className="mt-3 min-h-6 text-xs leading-5 text-[#697267] sm:text-sm">{card.detail}</p>
+                            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+                                {card.links.map((link) => (
+                                    <a key={link.label} href={link.href} className="border-b border-[#173D2C]/25 pb-1 text-[11px] font-bold text-[#173D2C] transition-colors hover:border-[#A87B19] hover:text-[#8B5E1A]">
+                                        {link.label} ↗
+                                    </a>
+                                ))}
+                            </div>
+                        </article>
+                    ))}
                 </div>
             </section>
 
-            <section className="px-4 pb-20 pt-10 sm:px-8 sm:pb-24 lg:px-12">
-                <div data-reveal="zoom" className="mx-auto max-w-7xl overflow-hidden rounded-md bg-[#f8f8f5] text-[#1b241e] shadow-lg">
-                    <div className="flex flex-col gap-5 px-6 py-7 sm:px-9 lg:flex-row lg:items-end lg:justify-between lg:px-10">
-                        <div>
-                            <span className="inline-flex rounded-full bg-[#e8eee8] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#425348]">Island Beam &amp; Timber · Lumber yard</span>
-                            <h2 className="mt-3 text-2xl font-medium uppercase tracking-wide sm:text-3xl">Location &amp; site access</h2>
-                            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#68726b]">Visit our lumber yard at {address}. Please call ahead to confirm your pickup and arrange your visit.</p>
-                        </div>
-                        <a href={`https://maps.google.com/?q=${mapQuery}`} target="_blank" rel="noreferrer" className="btn-shine group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#D9B258] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.1em] text-[#152019] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e4c273] hover:shadow-lg active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#152019]">Open in Google Maps <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span></a>
-                    </div>
-                    <div className="grid lg:grid-cols-[1.65fr_0.85fr]">
-                        <div className="min-h-[340px] bg-[#dce6dc] sm:min-h-[450px] lg:min-h-[480px]">
-                            <iframe title="Map to Island Beam & Timber" src={`https://maps.google.com/maps?q=${mapQuery}&output=embed`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-full min-h-[340px] w-full border-0 sm:min-h-[450px] lg:min-h-[480px]" />
-                        </div>
-                        <div className="grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-1 lg:p-6">
-                            <article data-reveal style={delay(100)} className="rounded-md border border-[#e5e8e4] bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#D9B258] hover:shadow-lg">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#54705d]">Plan your visit</p>
-                                <h3 className="mt-2 font-semibold">Call ahead for pickup</h3>
-                                <p className="mt-2 text-sm leading-6 text-[#68726b]">Our yard team can confirm stock, loading details and a convenient time to stop by.</p>
-                                <a href={siteConfig.phoneLink} className="mt-4 inline-flex text-sm font-semibold text-[#355440] underline decoration-[#D9B258] underline-offset-4 transition-colors hover:text-[#152019]">Call {siteConfig.phone}</a>
-                            </article>
-                            <article data-reveal style={delay(200)} className="rounded-md border border-[#e5e8e4] bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#D9B258] hover:shadow-lg">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#54705d]">Need help with an order?</p>
-                                <h3 className="mt-2 font-semibold">Talk with our team</h3>
-                                <p className="mt-2 text-sm leading-6 text-[#68726b]">Share your species, dimensions and quantities. We will help you figure out the next steps.</p>
-                                <a href="mailto:info@islandbeamandtimber.com" className="mt-4 inline-flex text-sm font-semibold text-[#355440] underline decoration-[#D9B258] underline-offset-4 transition-colors hover:text-[#152019]">Email the yard</a>
-                            </article>
-                            <a data-reveal style={delay(300)} href={`https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`} target="_blank" rel="noreferrer" className="btn-shine group inline-flex items-center justify-center gap-2 rounded-full bg-[#D9B258] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.1em] text-[#152019] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e4c273] hover:shadow-lg active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#152019] sm:col-span-2 lg:col-span-1">Get directions <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span></a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="bg-[#1d3024] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+            <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
                 <div className="mx-auto max-w-7xl">
-                    <header className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
-                        <p data-reveal className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D9B258]">A few helpful answers</p>
-                        <h2 data-reveal style={delay(100)} className="mt-3 text-3xl font-medium uppercase tracking-wide text-white sm:text-4xl">Customers frequently ask</h2>
-                        <p data-reveal style={delay(200)} className="mt-4 text-sm leading-6 text-[#d4ded5]">A little more about our lumber, custom orders and visiting the yard.</p>
-                    </header>
-                    <FAQSection data={faqs} tone="dark" className="grid gap-x-10 sm:grid-cols-2" />
-                    <div data-reveal className="mt-10 text-center">
-                        <Link href="/contact#form" className="group inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[#a5c5a2] hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">Still have a question? Contact us <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span></Link>
+                    <div className="mb-8 grid items-end gap-6 sm:mb-10 lg:grid-cols-12">
+                        <div className="lg:col-span-8">
+                            <div className="mb-4 flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#173D2C] sm:text-[10px]">
+                                <span className="h-[2px] w-8 bg-[#E8B51E]" aria-hidden="true" />
+                                <span>Rooted in the Comox Valley</span>
+                            </div>
+                            <h2 className="max-w-[800px] text-[clamp(2.75rem,6vw,5rem)] font-normal leading-[0.98] tracking-[-0.06em] text-[#173D2C]">
+                                Find us on<br />Dove Creek Road.
+                            </h2>
+                        </div>
+                        <p className="max-w-sm text-sm leading-relaxed text-[#697267] lg:col-span-4 lg:justify-self-end">
+                            Look for our Island Beam &amp; Timber sign. Call ahead to discuss your order and arrange a visit with our team.
+                        </p>
+                    </div>
+
+                    <div className="grid overflow-hidden rounded-[3px] bg-[#003C24] lg:grid-cols-[1.65fr_0.85fr]">
+                        <div className="min-h-[320px] bg-[#D8D5C8] sm:min-h-[420px] lg:min-h-[500px]">
+                            <iframe
+                                title="Map to Island Beam & Timber"
+                                src={`https://maps.google.com/maps?q=${mapQuery}&output=embed`}
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                className="h-full min-h-[320px] w-full border-0 sm:min-h-[420px] lg:min-h-[500px]"
+                            />
+                        </div>
+                        <div className="flex flex-col justify-center px-7 py-9 text-[#F4F2E9] sm:px-10 sm:py-12 lg:px-12">
+                            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#EEBF21]">Island Beam &amp; Timber Ltd.</p>
+                            <h3 className="mt-5 text-3xl font-normal leading-tight tracking-[-0.045em] sm:text-4xl">5110 Dove Crk Rd</h3>
+                            <p className="mt-2 text-sm text-white/70">Comox Valley, BC V9J 1P4</p>
+                            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/75">
+                                Your local lumber yard and sawmill on Vancouver Island. Open the map for directions to our address.
+                            </p>
+                            <a href={`https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`} target="_blank" rel="noreferrer" className="group mt-7 inline-flex w-fit items-center gap-5 rounded-full bg-[#EEBF21] px-6 py-4 text-xs font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B]">
+                                Get directions <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-form" className="bg-[#E9E7DC] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+                <div className="mx-auto grid max-w-7xl items-start gap-10 lg:grid-cols-12 lg:gap-16">
+                    <div className="lg:col-span-5">
+                        <div className="mb-4 flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#173D2C] sm:text-[10px]">
+                            <span className="h-[2px] w-8 bg-[#E8B51E]" aria-hidden="true" />
+                            <span>Let&apos;s put your plans in motion</span>
+                        </div>
+                        <h2 className="max-w-[520px] text-[clamp(3rem,5.5vw,5.25rem)] font-normal leading-[0.96] tracking-[-0.06em] text-[#173D2C]">
+                            Big beams.<br />Small details.<br />Start here.
+                        </h2>
+                        <p className="mt-6 max-w-lg text-sm leading-relaxed text-[#697267] sm:text-base">
+                            Share your dimensions, quantities, delivery location and preferred timing. Still working out the details? Tell us what you&apos;re planning and we&apos;ll help you find a starting point.
+                        </p>
+                        <div className="mt-8 divide-y divide-[#173D2C]/15 border-y border-[#173D2C]/15">
+                            {[
+                                "Custom lumber & beams",
+                                "Milling & mobile milling",
+                                "Ready-to-go & custom sheds",
+                                "Firewood delivery",
+                            ].map((service) => (
+                                <div key={service} className="flex items-center justify-between py-4 text-sm text-[#173D2C]">
+                                    <span>{service}</span><ArrowUpRight className="size-3.5 text-[#8B5E1A]" aria-hidden="true" />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-7 border-l-2 border-[#E8B51E] pl-5 text-sm leading-relaxed text-[#697267]">
+                            <p className="font-bold text-[#173D2C]">We can help with delivery.</p>
+                            <p className="mt-1">Ask about lumber and shed delivery, mobile milling, and forklift loading at our yard. Firewood is available by delivery only.</p>
+                        </div>
+                    </div>
+
+                    <div className="rounded-[3px] bg-[#F4F2E9] p-6 shadow-sm sm:p-8 lg:col-span-7 lg:p-10">
+                        <h3 className="text-2xl font-normal tracking-[-0.04em] text-[#173D2C] sm:text-3xl">Tell us what you need.</h3>
+                        <p className="mt-3 text-xs text-[#697267]">* Required fields</p>
+                        <form action={`mailto:${email}`} method="post" encType="text/plain" className="mt-7 grid gap-x-5 gap-y-5 sm:grid-cols-2">
+                            <label className="block text-xs font-semibold text-[#173D2C]">
+                                Your name *
+                                <input name="Name" autoComplete="name" required placeholder="Full name" className={`${fieldClass} mt-2`} />
+                            </label>
+                            <label className="block text-xs font-semibold text-[#173D2C]">
+                                Email address *
+                                <input name="Email" type="email" autoComplete="email" required placeholder="you@example.com" className={`${fieldClass} mt-2`} />
+                            </label>
+                            <label className="block text-xs font-semibold text-[#173D2C]">
+                                Phone number
+                                <input name="Phone" type="tel" autoComplete="tel" placeholder="Best number to reach you" className={`${fieldClass} mt-2`} />
+                            </label>
+                            <label className="block text-xs font-semibold text-[#173D2C]">
+                                I&apos;m enquiring about *
+                                <select name="Service" required defaultValue="" className={`${fieldClass} mt-2`}>
+                                    <option value="" disabled>Choose a service</option>
+                                    <option>Custom lumber &amp; beams</option>
+                                    <option>Milling &amp; mobile milling</option>
+                                    <option>Sheds</option>
+                                    <option>Firewood</option>
+                                    <option>Other</option>
+                                </select>
+                            </label>
+                            <label className="block text-xs font-semibold text-[#173D2C] sm:col-span-2">
+                                Project or delivery location
+                                <input name="Location" placeholder="Town or delivery destination" className={`${fieldClass} mt-2`} />
+                            </label>
+                            <label className="block text-xs font-semibold text-[#173D2C] sm:col-span-2">
+                                Your message *
+                                <textarea name="Message" required rows={5} placeholder="Sizes, quantities, preferred timing and anything else we should know" className={`${fieldClass} mt-2 resize-y`} />
+                            </label>
+                            <div className="sm:col-span-2">
+                                <button type="submit" className="group inline-flex min-h-14 items-center gap-6 rounded-full bg-[#EEBF21] px-7 text-sm font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B]">
+                                    Review my enquiry <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                </button>
+                                <p className="mt-4 text-xs leading-relaxed text-[#697267]">Review your details, then open an email draft to our team. You can attach photos and drawings in your email app.</p>
+                                <a className="mt-4 inline-block text-xs text-[#173D2C] underline underline-offset-4" href={`mailto:${email}`}>{email}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section className="px-5 py-14 sm:px-8 sm:py-20 lg:px-10">
+                <div className="group relative mx-auto aspect-[16/8] max-w-7xl overflow-hidden bg-[#173D2C] sm:aspect-[2.4/1]">
+                    <Image src="/Images/contact/IMG_4841.JPEG" alt="The sawmill taking shape at the Island Beam & Timber yard" fill sizes="100vw" className="object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#003C24]/75 via-[#003C24]/10 to-transparent" />
+                    <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-5 sm:inset-x-10 sm:bottom-10">
+                        <div className="text-[#F4F2E9]">
+                            <h2 className="max-w-lg text-3xl font-normal leading-[1.02] tracking-[-0.05em] sm:text-5xl">Where your plans<br />take shape.</h2>
+                            <p className="mt-3 text-[8px] font-semibold uppercase tracking-[0.16em] sm:text-[9px]">Island Beam &amp; Timber · Comox Valley, BC</p>
+                        </div>
+                        <a href="#contact-form" className="group/talk inline-flex shrink-0 items-center gap-4 rounded-full bg-[#EEBF21] px-5 py-3 text-xs font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B] sm:px-6 sm:py-4">
+                            Talk to our team <ArrowUpRight className="size-4 transition-transform group-hover/talk:translate-x-0.5 group-hover/talk:-translate-y-0.5" />
+                        </a>
                     </div>
                 </div>
             </section>

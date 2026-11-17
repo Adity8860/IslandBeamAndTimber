@@ -46,16 +46,21 @@ export default function TimberGallery({ data, className = "" }) {
     return (
         <section
             aria-label={data.label || "Timber gallery"}
-            className={`relative isolate w-full max-w-full overflow-hidden bg-[#FAF8F5] px-4 py-14 sm:px-8 md:px-12 lg:py-28 ${className}`}
+            className={`relative isolate w-full max-w-full overflow-hidden bg-[#EBE9DE] px-4 py-8 sm:px-6 md:px-8 lg:px-12 lg:py-10 ${className}`}
         >
-            <span aria-hidden="true" className="pointer-events-none absolute -left-24 top-1/4 -z-10 h-80 w-80 rounded-full bg-[#F4B323]/10 blur-3xl" />
-            <span aria-hidden="true" className="pointer-events-none absolute -right-24 bottom-0 -z-10 h-80 w-80 rounded-full bg-[#102D1F]/5 blur-3xl" />
-
-            <ul role="list" data-reveal className="mx-auto grid max-w-7xl list-none grid-cols-1 gap-8 p-0 md:grid-cols-12 lg:gap-10">
+            <ul role="list" data-reveal className="mx-auto grid max-w-7xl list-none grid-cols-1 gap-x-5 gap-y-7 p-0 md:grid-cols-12 md:gap-y-8">
                 {images.map((item, index) => {
-                    const description = item.description || item.alt;
+                    const gridSpan = {
+                        small: "md:col-span-4",
+                        large: "md:col-span-8",
+                        wide: "md:col-span-7",
+                        medium: "md:col-span-5",
+                    }[item.size] || "md:col-span-6";
+                    const imageHeight = index < 2
+                        ? "h-[260px] sm:h-[340px] md:h-[376px]"
+                        : "h-[240px] sm:h-[280px] md:h-[302px]";
                     return (
-                        <li key={item.id || index} className={`group flex flex-col ${item.size === "large" ? "md:col-span-7" : "md:col-span-5"}`}>
+                        <li key={item.id || index} className={`group flex flex-col ${gridSpan}`}>
                             <button
                                 type="button"
                                 aria-haspopup="dialog"
@@ -64,7 +69,7 @@ export default function TimberGallery({ data, className = "" }) {
                                     triggerRef.current = e.currentTarget;
                                     setActive(index);
                                 }}
-                                className="relative block h-[280px] w-full cursor-zoom-in overflow-hidden rounded-2xl bg-stone-200 text-left shadow-[0_1px_2px_rgba(16,45,31,0.06)] ring-1 ring-[#102D1F]/10 transition-[transform,box-shadow] duration-500 hover:-translate-y-1 hover:shadow-[0_28px_48px_-28px_rgba(16,45,31,0.55)] focus-visible:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F4B323] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:h-[360px] md:h-[420px] lg:h-[460px]"
+                                className={`relative block ${imageHeight} w-full cursor-zoom-in overflow-hidden bg-stone-200 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173D2C]`}
                             >
                                 {item.image && (
                                     <img
@@ -72,33 +77,14 @@ export default function TimberGallery({ data, className = "" }) {
                                         alt=""
                                         loading="lazy"
                                         decoding="async"
-                                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                                     />
                                 )}
-
-                                {/* Green overlay with description, shown on hover and keyboard focus */}
-                                <span
-                                    aria-hidden="true"
-                                    className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-[#0A2216]/95 via-[#102D1F]/60 to-transparent p-5 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none sm:p-7"
-                                >
-                                    <span className="mb-3 block h-1 w-12 rounded-full bg-[#F4B323]" />
-                                    <span className="text-pretty text-sm leading-relaxed text-white sm:text-base">{description}</span>
-                                    <span className="mt-3 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-[#F4B323]">
-                                        View image
-                                        <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M5 15 15 5M7 5h8v8" />
-                                        </svg>
-                                    </span>
-                                </span>
-
-                                {/* Yellow bar draws in on hover */}
-                                <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-[#F4B323] transition-transform duration-500 group-hover:scale-x-100 motion-reduce:transition-none" />
                             </button>
 
                             {item.caption && (
-                                <p className="mt-4 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-[#102D1F] transition-colors duration-300 group-hover:text-[#19452F] sm:text-xs">
-                                    <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-[#F4B323] ring-4 ring-[#F4B323]/25 transition-[box-shadow] duration-300 group-hover:ring-[#F4B323]/45 motion-reduce:transition-none" />
-                                    {item.caption}
+                                <p className="mt-2 text-[9px] font-normal tracking-[0.1em] text-[#748078] sm:text-[10px]">
+                                    {String(index + 1).padStart(2, "0")} — {item.caption}
                                 </p>
                             )}
                         </li>
