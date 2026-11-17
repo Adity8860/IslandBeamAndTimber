@@ -2395,7 +2395,22 @@ html {
   animation: spec-pulse 2.4s ease-out infinite;
 }
 
+/* Keep the card's lift separate from the scroll-reveal transform. */
+.editorial-service-card[data-reveal].is-in {
+  transition: transform 220ms ease, background-color 300ms ease, box-shadow 220ms ease;
+}
+
+.editorial-service-card[data-reveal].is-in:hover {
+  transform: translate3d(0, -8px, 0);
+  box-shadow: 0 16px 28px -20px rgba(0, 43, 43, 0.38);
+}
+
 @media (prefers-reduced-motion: reduce) {
+
+  .editorial-service-card[data-reveal].is-in:hover {
+    transform: none;
+    box-shadow: none;
+  }
 
   .spec-drift-a,
   .spec-drift-b,

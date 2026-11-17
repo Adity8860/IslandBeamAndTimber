@@ -17,31 +17,36 @@ export function Card({
     ctaText = 'Ask about Douglas fir',
     ctaHref = '#',
     className = '',
+    variant = "default",
 }) {
     return (
         <div
-            className={`cards-in group relative flex flex-col justify-between p-8 sm:p-10 min-h-[500px] w-full rounded-md bg-[#F7F3EB] text-[#09271B] border border-[#E7E2D6] transition-[background-color,border-color,box-shadow,transform] duration-500 ease-out hover:bg-[#09271B] hover:border-[#09271B] hover:shadow-[0_28px_48px_-24px_rgba(9,39,27,0.55)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${className}`}
+            className={`${variant === "editorial"
+                ? "cards-in group relative flex min-h-[520px] w-full flex-col justify-between border border-transparent bg-transparent p-6 text-[#09271B] transition-[background-color,border-color,box-shadow,transform] duration-500 ease-out hover:bg-[#003C24] hover:border-[#003C24] hover:shadow-[0_28px_48px_-24px_rgba(9,39,27,0.35)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-8 lg:p-10"
+                : "cards-in group relative flex min-h-[500px] w-full flex-col justify-between rounded-md border border-[#E7E2D6] bg-[#faf8f5] p-8 text-[#09271B] transition-[background-color,border-color,box-shadow,transform] duration-500 ease-out hover:bg-[#09271B] hover:border-[#09271B] hover:shadow-[0_28px_48px_-24px_rgba(9,39,27,0.55)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0"} ${className}`}
         >
             <div>
                 <div
-                    className="w-full h-10 mb-8 opacity-70 transition-colors duration-500 text-[#D8D1C2] group-hover:text-[#1D4A32]"
+                    className={`${variant === "editorial" ? "h-20 w-full max-w-[460px] mb-8" : "h-10 w-full mb-8"} opacity-70 transition-colors duration-500 text-[#D8D1C2] group-hover:text-[#1D4A32]`}
                     style={{
                         background:
-                            'repeating-linear-gradient(65deg, currentColor 0px, currentColor 1.5px, transparent 1.5px, transparent 9px)',
+                            'repeating-linear-gradient(94deg, currentColor 0px, currentColor 2px, transparent 2px, transparent 12px)',
+                        maskImage: 'linear-gradient(to right, #000 0%, #000 38%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to right, #000 0%, #000 38%, transparent 100%)',
                     }}
                     aria-hidden="true"
                 />
 
-                <div className="text-xs font-bold tracking-[0.22em] uppercase tabular-nums text-[#2C4A38] group-hover:text-[#F4B323] transition-colors duration-500">
+                <div className={`uppercase tabular-nums text-[#2C4A38] ${variant === "editorial" ? "group-hover:text-[#A7B8AE]" : "group-hover:text-[#F4B323]"} transition-colors duration-500 ${variant === "editorial" ? "text-[10px] font-medium tracking-[0.2em] sm:text-xs" : "text-xs font-bold tracking-[0.22em]"}`}>
                     {number} / {tag}
                 </div>
 
-                <h3 className="mt-4 text-balance text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] leading-[1.08] text-[#09271B] group-hover:text-white transition-colors duration-500">
+                <h3 className={`text-balance text-[#09271B] group-hover:text-white transition-colors duration-500 ${variant === "editorial" ? "mt-8 text-[1.8rem] font-normal tracking-[-0.035em] leading-[1.12] sm:text-[2rem]" : "mt-4 text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] leading-[1.08]"}`}>
                     <span className="block">{titleLine1}</span>
                     <span className="block">{titleLine2}</span>
                 </h3>
 
-                <p className="mt-6 max-w-[46ch] text-pretty text-sm sm:text-base leading-[1.65] text-[#55635B] group-hover:text-[#B7CDBF] transition-colors duration-500">
+                <p className={`text-pretty text-[#55635B] group-hover:text-[#B7CDBF] transition-colors duration-500 ${variant === "editorial" ? "mt-5 max-w-none text-sm leading-[1.7] sm:text-base" : "mt-6 max-w-[46ch] text-sm sm:text-base leading-[1.65]"}`}>
                     {description}
                 </p>
             </div>
@@ -49,7 +54,7 @@ export function Card({
             <div className="mt-10 pt-6 border-t border-[#E5DFD3] group-hover:border-[#18452F] transition-colors duration-500">
                 <Link
                     href={ctaHref}
-                    className={`${focusRing} inline-flex items-center gap-2 font-bold text-sm tracking-wide text-[#09271B] group-hover:text-[#F4B323] transition-colors duration-500`}
+                    className={`${focusRing} inline-flex items-center gap-2 font-bold text-sm tracking-wide text-[#09271B] ${variant === "editorial" ? "group-hover:text-white" : "group-hover:text-[#F4B323]"} transition-colors duration-500`}
                 >
                     <span>{ctaText}</span>
                     <svg
@@ -81,18 +86,21 @@ function ServiceCard({
     ctaText = null,
     ctaHref = null,
     className = "",
+    variant = "default",
 }) {
     if (!icon && !title && !description && !ctaText) return null;
 
     return (
         <article
             data-reveal
-            className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#102D1F]/10 bg-[#F5F2EC] p-6 shadow-[0_1px_2px_rgba(16,45,31,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-[#F4B323]/70 hover:bg-white hover:shadow-[0_24px_40px_-28px_rgba(16,45,31,0.55)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-7 ${className}`}
+            className={variant === "editorial"
+                ? `editorial-service-card group relative flex h-full min-h-[240px] flex-col overflow-hidden bg-[#E9E7DC] p-7 text-[#002B2B] transition-[background-color,transform] duration-300 hover:-translate-y-1 hover:bg-[#E4E2D6] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:min-h-[257px] sm:p-8 lg:p-9 ${className}`
+                : `group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#102D1F]/10 bg-[#F5F2EC] p-6 shadow-[0_1px_2px_rgba(16,45,31,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-[#F4B323]/70 hover:bg-white hover:shadow-[0_24px_40px_-28px_rgba(16,45,31,0.55)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-7 ${className}`}
         >
-            <span
+            {variant !== "editorial" && <span
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#F4B323]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#F4B323]/25"
-            />
+            />}
 
             {tag && (
                 <span className="relative mb-4 text-[0.65rem] font-extrabold uppercase tracking-[0.12em] text-[#BC641D]">
@@ -107,19 +115,25 @@ function ServiceCard({
             )}
 
             {title && (
-                <h3 className="relative mt-5 text-lg font-bold tracking-tight text-[#102D1F]">
+                <h3 className={variant === "editorial"
+                    ? "relative text-[1.55rem] font-normal leading-tight tracking-[-0.03em] text-[#002B2B] sm:text-[1.7rem]"
+                    : "relative mt-5 text-lg font-bold tracking-tight text-[#102D1F]"}>
                     {title}
                 </h3>
             )}
 
             {description && (
-                <p className="relative mt-2 text-sm leading-relaxed text-[#59665D] sm:text-base">
+                <p className={variant === "editorial"
+                    ? "relative mt-4 max-w-[48ch] text-[0.98rem] leading-[1.55] text-[#53615C]"
+                    : "relative mt-2 text-sm leading-relaxed text-[#59665D] sm:text-base"}>
                     {description}
                 </p>
             )}
 
             {ctaText && ctaHref && (
-                <Link href={ctaHref} className="relative mt-auto inline-flex items-center gap-2 pt-6 text-xs font-bold uppercase tracking-wider text-[#102D1F] hover:text-[#BC641D]">
+                <Link href={ctaHref} className={variant === "editorial"
+                    ? "relative mt-auto inline-flex items-center gap-2 border-t border-[#002B2B]/15 pt-6 text-sm font-bold text-[#002B2B] transition-colors hover:text-[#8B5E1A]"
+                    : "relative mt-auto inline-flex items-center gap-2 pt-6 text-xs font-bold uppercase tracking-wider text-[#102D1F] hover:text-[#BC641D]"}>
                     {ctaText} ↗
                 </Link>
             )}
@@ -397,6 +411,26 @@ export function StepsCard({
     );
 }
 
+function TimberEditorialCards({ items = [] }) {
+    return (
+        <div className="grid grid-cols-1 border border-[#D8D5C8] md:grid-cols-3">
+            {items.map((item, index) => {
+                const displayItem = index === 2
+                    ? {
+                        ...item,
+                        titleLine1: "Distinctive colour.",
+                        titleLine2: "Beautiful possibilities.",
+                        description: "A pale, warm-toned option for custom woodwork and outdoor projects. Let us know what you’re planning and we’ll discuss suitable cuts and availability.",
+                    }
+                    : item;
+                return (
+                    <Card key={item.id || index} {...displayItem} variant="editorial" />
+                );
+            })}
+        </div>
+    );
+}
+
 
 
 
@@ -487,13 +521,14 @@ export default function Cards({
     className = "",
     gridClassName = "",
     itemClassName = "",
+    variant = "default",
 }) {
     const cardItems =
         items ?? (type === "services" ? SERVICE_CARDS : DEFAULT_CARDS);
 
     return (
-        <section className={`w-full max-w-full overflow-hidden py-6 sm:py-10 px-0 sm:px-6 md:px-12 ${className}`}>
-            <div className="mx-auto max-w-7xl">
+        <section className={`w-full max-w-full overflow-hidden ${variant === "editorial" ? "px-0 py-0" : "px-0 py-6 sm:px-6 sm:py-10 md:px-12"} ${className}`}>
+            <div className={`mx-auto ${variant === "editorial" ? "max-w-none" : "max-w-7xl"}`}>
 
                 {type === "crafted" ? (
 
@@ -504,11 +539,12 @@ export default function Cards({
 
                 ) : type === "services" ? (
 
-                    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${gridClassName}`}>
+                    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4 ${gridClassName}`}>
                         {cardItems.map((item, index) => (
                             <ServiceCard
                                 key={item.id || index}
                                 {...item}
+                                variant={variant}
                                 className={itemClassName || item.className || ""}
                             />
                         ))}
@@ -534,16 +570,19 @@ export default function Cards({
                     />
 
                 ) : (
-
-                    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center ${gridClassName}`}>
-                        {cardItems.map((item, index) => (
-                            <Card
-                                key={item.id || index}
-                                {...item}
-                                className={itemClassName || item.className || ""}
-                            />
-                        ))}
-                    </div>
+                    variant === "editorial" ? (
+                        <TimberEditorialCards items={cardItems} />
+                    ) : (
+                        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center ${gridClassName}`}>
+                            {cardItems.map((item, index) => (
+                                <Card
+                                    key={item.id || index}
+                                    {...item}
+                                    className={itemClassName || item.className || ""}
+                                />
+                            ))}
+                        </div>
+                    )
 
                 )}
 

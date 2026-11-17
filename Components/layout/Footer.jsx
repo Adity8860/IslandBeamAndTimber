@@ -31,7 +31,7 @@ export default function Footer() {
     ];
 
     return (
-        <footer className="w-full max-w-full overflow-hidden border-t-2 border-[#F4B323] bg-[#061A11] text-[#B7CDBF] font-sans">
+        <footer className="w-full max-w-full overflow-hidden  bg-[#061A11] text-[#B7CDBF] font-sans">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-14 pb-10 sm:pt-20">
                 {/* Main Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 pb-14 border-b border-white/10">
