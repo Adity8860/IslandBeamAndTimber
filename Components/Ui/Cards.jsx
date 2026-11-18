@@ -313,6 +313,7 @@ function CraftedCard({
 
 
 
+
 export function GridImageCard({
     image,
     imageAlt = "",
@@ -514,6 +515,140 @@ const SERVICE_CARDS = [
 ];
 
 
+
+const DEFAULT_PRODUCT_CARDS = [
+    {
+        id: 1,
+        number: "01",
+        eyebrow: "CUSTOM CUTS",
+        title: "Boards, posts\n& long beams.",
+        description:
+            "Order dimensions that suit your plans, including Douglas fir beams up to 32 feet. Send the thickness, width, length and quantity for each item.",
+        highlighted: false,
+    },
+    {
+        id: 2,
+        number: "02",
+        eyebrow: "SURFACE & PROFILE",
+        title: "The finish\nyour build calls for.",
+        description:
+            "Choose rough sawn lumber or discuss planed options, S4S and tongue & groove. Let us know if your measurements are rough-cut or final finished dimensions.",
+        highlighted: false,
+    },
+    {
+        id: 3,
+        number: "03",
+        eyebrow: "SPECIALTY REQUESTS",
+        title: "More room\nfor your ideas.",
+        description:
+            "Ask about maple slabs, kiln drying, planing and moulding for your order. We'll confirm stock, drying condition, service availability and timing.",
+        highlighted: false,
+    },
+];
+
+export function ProductCard({
+    number = "01",
+    eyebrow = "CUSTOM CUTS",
+    title = "",
+    description = "",
+    highlighted = false,
+    className = "",
+    index = 0,
+    ctaText = null,
+    ctaHref = null,
+}) {
+    return (
+        <article
+            data-reveal
+            style={{ "--d": `${index * 120}ms` }}
+            className={`group relative flex flex-col justify-between overflow-hidden bg-[#E9E6DA] p-7 transition-all duration-500 ease-out hover:-translate-y-1.5 hover:bg-[#E3DFD2] hover:shadow-[0_22px_44px_-16px_rgba(23,61,44,0.14)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-9 lg:p-10 ${
+                highlighted ? "shadow-sm" : ""
+            } ${className}`}
+        >
+            {/* Progressive Top Bar Line */}
+            <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-[#173D2C]/10 overflow-hidden"
+                aria-hidden="true"
+            >
+                <div
+                    className={`h-full w-full origin-left bg-[#173D2C] transition-transform duration-500 ease-out motion-reduce:transition-none ${
+                        highlighted
+                            ? "scale-x-100 group-hover:bg-[#102D1F]"
+                            : "scale-x-0 group-hover:scale-x-100 group-focus-within:scale-x-100"
+                    }`}
+                />
+            </div>
+
+            <div>
+                {/* Eyebrow / Tag */}
+                <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#173D2C]/75 transition-colors duration-300 group-hover:text-[#173D2C] sm:text-xs">
+                    <span className="tabular-nums transition-transform duration-300 ease-out group-hover:translate-x-0.5">{number}</span>
+                    <span className="text-[#173D2C]/40 transition-colors duration-300 group-hover:text-[#173D2C]/70">/</span>
+                    <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5">{eyebrow}</span>
+                </div>
+
+                {/* Title */}
+                <h3 className="mt-7 text-2xl font-normal leading-[1.08] tracking-[-0.045em] text-[#173D2C] transition-transform duration-300 ease-out group-hover:translate-x-1 sm:text-3xl lg:text-[2rem] whitespace-pre-line">
+                    {title}
+                </h3>
+
+                {/* Description */}
+                <p className="mt-6 text-sm leading-[1.7] text-[#55635B] transition-colors duration-300 group-hover:text-[#38483F] sm:text-[15px]">
+                    {description}
+                </p>
+            </div>
+
+            {/* Optional CTA */}
+            {ctaText && ctaHref && (
+                <div className="mt-8 border-t border-[#173D2C]/10 pt-6 transition-colors duration-300 group-hover:border-[#173D2C]/20">
+                    <Link
+                        href={ctaHref}
+                        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#173D2C] transition-colors duration-300 hover:text-[#BC641D]"
+                    >
+                        <span>{ctaText}</span>
+                        <span
+                            className="inline-block transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transition-none"
+                            aria-hidden="true"
+                        >
+                            ↗
+                        </span>
+                    </Link>
+                </div>
+            )}
+        </article>
+    );
+}
+
+export function ProductCards({
+    items = DEFAULT_PRODUCT_CARDS,
+    className = "",
+    gridClassName = "",
+    itemClassName = "",
+}) {
+    const cardList = items && items.length > 0 ? items : DEFAULT_PRODUCT_CARDS;
+
+    return (
+        <div
+            className={`grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ${gridClassName} ${className}`}
+        >
+            {cardList.map((item, index) => (
+                <ProductCard
+                    key={item.id ?? item.number ?? index}
+                    index={index}
+                    number={item.number || `0${index + 1}`}
+                    eyebrow={item.eyebrow || item.tag || item.label}
+                    title={item.title}
+                    description={item.description || item.copy}
+                    highlighted={item.highlighted ?? false}
+                    ctaText={item.ctaText}
+                    ctaHref={item.ctaHref || item.href}
+                    className={itemClassName || item.className || ""}
+                />
+            ))}
+        </div>
+    );
+}
+
 export default function Cards({
     type = "timber",
     items,
@@ -565,6 +700,13 @@ export default function Cards({
                 ) : type === "stepCard" ? (
                     <StepsCard
                         steps={steps}
+                        className={gridClassName}
+                        itemClassName={itemClassName}
+                    />
+
+                ) : type === "product" || type === "products" ? (
+                    <ProductCards
+                        items={items}
                         className={gridClassName}
                         itemClassName={itemClassName}
                     />

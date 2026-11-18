@@ -12,11 +12,32 @@ export default function EnquiryForm({
     selectedService: selectedServiceProp,
     onServiceChange,
     buttonText = "Review my enquiry",
+    variant = "default",
 }) {
     const [localSelectedService, setLocalSelectedService] = useState("");
     const selectedService = selectedServiceProp ?? localSelectedService;
 
     if (!email) return null;
+
+    if (variant === "custom-lumber") {
+        return (
+            <form action={`mailto:${email}`} method="post" encType="text/plain" className={`rounded-[3px] bg-[#fbfaf3] p-7 shadow-[0_20px_50px_-40px_rgba(7,61,40,.45)] sm:p-10 ${className}`}>
+                <h3 className="text-[clamp(2rem,3vw,3rem)] font-normal tracking-[-0.055em]">What are you building?</h3>
+                <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                    <label className="text-xs font-semibold">Your name<input required name="Name" placeholder="Name" className={`${fieldClass} mt-2`} /></label>
+                    <label className="text-xs font-semibold">Wood species<select name="Wood species" defaultValue="Douglas fir" className={`${fieldClass} mt-2`}><option>Douglas fir</option><option>Red cedar</option><option>Yellow cedar</option></select></label>
+                    <label className="text-xs font-semibold sm:col-span-2">Dimensions & quantities<textarea required name="Dimensions" rows="3" placeholder="Example: 8” × 8” × 16 ft — 6 pieces" className={`${fieldClass} mt-2 resize-y`} /></label>
+                    <label className="text-xs font-semibold">Surface / finish<select name="Surface / finish" defaultValue="Rough-sawn" className={`${fieldClass} mt-2`}><option>Rough-sawn</option><option>Planed</option><option>S4S</option><option>Tongue & groove</option></select></label>
+                    <label className="text-xs font-semibold">Preferred timing<input name="Preferred timing" placeholder="When do you need it?" className={`${fieldClass} mt-2`} /></label>
+                    <label className="text-xs font-semibold sm:col-span-2">Project location / delivery<input name="Location" placeholder="Town and pickup or delivery preference" className={`${fieldClass} mt-2`} /></label>
+                    <label className="text-xs font-semibold sm:col-span-2">Project details<textarea name="Project details" rows="3" placeholder="Intended use, finished size requirements or other notes" className={`${fieldClass} mt-2 resize-y`} /></label>
+                </div>
+                <button type="submit" className="group mt-8 inline-flex min-h-[62px] items-center gap-7 rounded-full bg-[#f2c31b] px-7 text-sm font-bold text-[#073d28] transition-colors hover:bg-[#f5cc3b]">{buttonText}<ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></button>
+                <p className="mt-5 text-xs leading-relaxed text-[#778078]">Review your details, then open an email draft to send to our mill. You can attach drawings or photos in your email app.</p>
+                <a className="mt-5 inline-block text-xs underline underline-offset-4" href={`mailto:${email}`}>Or email {email}</a>
+            </form>
+        );
+    }
 
     return (
         <form

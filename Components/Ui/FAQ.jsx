@@ -6,21 +6,30 @@ export default function FAQSection({
     data = [],
     className = '',
     defaultOpenId = null,
+    defaultOpenIds = [],
+    allowMultiple = false,
     tone = 'light',
 }) {
     const [activeId, setActiveId] = useState(defaultOpenId);
+    const [activeIds, setActiveIds] = useState(defaultOpenIds);
     const isDark = tone === 'dark';
 
     if (!data?.length) return null;
 
     const handleToggle = (id) => {
+        if (allowMultiple) {
+            setActiveIds((previous) => previous.includes(id)
+                ? previous.filter((activeItemId) => activeItemId !== id)
+                : [...previous, id]);
+            return;
+        }
         setActiveId((prev) => (prev === id ? null : id));
     };
 
     return (
         <div className={`bg-transparent ${className}`}>
             {data.map((item) => {
-                const isOpen = activeId === item.id;
+                const isOpen = allowMultiple ? activeIds.includes(item.id) : activeId === item.id;
 
                 return (
                     <div

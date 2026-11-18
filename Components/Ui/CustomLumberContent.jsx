@@ -1,35 +1,11 @@
 "use client";
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import { ArrowDown, ArrowUpRight, ChevronDown, Plus } from "lucide-react";
-
-const species = [
-    {
-        name: "Douglas fir",
-        number: "01",
-        eyebrow: "Strong, dependable timber",
-        title: "Douglas fir. Built for the work.",
-        copy: "A strong, versatile choice for beams, framing, posts and outdoor structures. We can help match the grade, size and finish to your project.",
-        tags: ["Structural options", "Long lengths", "Custom cuts"],
-    },
-    {
-        name: "Red cedar",
-        number: "02",
-        eyebrow: "Naturally suited to the outdoors",
-        title: "Red cedar. Made to weather well.",
-        copy: "A practical choice for cladding, fencing, garden structures and custom exterior details, with the warm character cedar is known for.",
-        tags: ["Exterior projects", "Siding & decking", "Custom profiles"],
-    },
-    {
-        name: "Yellow cedar",
-        number: "03",
-        eyebrow: "A distinctive timber option",
-        title: "Yellow cedar. More possibilities.",
-        copy: "Bring yellow cedar into your custom woodwork and outdoor projects. Tell us the application and required sizes so we can confirm suitable material and current availability.",
-        tags: ["Custom dimensions", "Outdoor details", "Specialty requests"],
-    },
-];
+import CardSwitch from "@/Components/Ui/CardSwitch";
+import { lumberSpecies } from "@/lib/CustomLumberConst";
 
 const services = [
     { number: "01", eyebrow: "Custom cuts", title: "Boards, posts & long beams.", copy: "Order dimensions that suit your plans, including Douglas fir beams up to 32 feet. Send the thickness, width, length and quantity for each item." },
@@ -48,9 +24,7 @@ function Eyebrow({ children }) {
 }
 
 export default function CustomLumberContent() {
-    const [selectedSpecies, setSelectedSpecies] = useState(2);
     const [openFaq, setOpenFaq] = useState(null);
-    const currentSpecies = species[selectedSpecies];
 
     return (
         <div className="bg-[#f6f3e9] text-[#073d28]">
@@ -58,25 +32,7 @@ export default function CustomLumberContent() {
                 <h2 className="max-w-[9ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">Start with<br />the right wood.</h2>
                 <p className="self-start pt-2 text-base leading-[1.7] text-[#657369] sm:text-lg lg:mt-4">Douglas fir, red cedar and yellow cedar are at the heart of our lumber offering. Tell us how the wood will be used so we can discuss suitable sizes, finishes and availability.</p>
 
-                <div className="space-y-0 lg:col-start-1">
-                    {species.map((item, index) => (
-                        <button key={item.name} type="button" onClick={() => setSelectedSpecies(index)} className={`flex w-full items-center gap-6 border-t border-[#073d28]/14 px-5 py-7 text-left transition-colors sm:px-7 ${selectedSpecies === index ? "bg-[#004329] text-white" : "hover:bg-[#eae7db]"}`}>
-                            <span className="text-[11px] font-semibold text-current/70">{item.number}</span>
-                            <span className="text-2xl tracking-[-0.045em] sm:text-3xl">{item.name}</span>
-                            <ArrowUpRight className="ml-auto size-4" />
-                        </button>
-                    ))}
-                </div>
-
-                <article className="relative overflow-hidden bg-[#e9e6da] p-7 sm:p-12 lg:col-start-2 lg:row-start-2">
-                    <span className="pointer-events-none absolute right-6 top-0 text-[clamp(8rem,16vw,15rem)] font-normal leading-none tracking-[-0.1em] text-[#073d28]/5">{currentSpecies.number}</span>
-                    <Eyebrow>{currentSpecies.eyebrow}</Eyebrow>
-                    <h3 className="relative mt-10 max-w-[12ch] text-[clamp(2.5rem,4.3vw,4.6rem)] font-normal leading-[0.98] tracking-[-0.07em]">{currentSpecies.title}</h3>
-                    <p className="relative mt-7 max-w-[52ch] text-base leading-[1.7] text-[#647269]">{currentSpecies.copy}</p>
-                    <div className="relative mt-7 flex flex-wrap gap-2">{currentSpecies.tags.map((tag) => <span key={tag} className="rounded-full border border-[#073d28]/15 px-3 py-1.5 text-[11px] font-semibold text-[#315343]">{tag}</span>)}</div>
-                    <a href="#enquiry" className="relative mt-10 flex items-center justify-between border-t border-[#073d28]/15 pt-6 text-sm font-bold">Discuss your order <ArrowUpRight className="size-4" /></a>
-                </article>
-                <p className="text-sm leading-relaxed text-[#778278] lg:col-span-2">Species, dimensions and lead times depend on available logs and the requirements of your order.</p>
+                <CardSwitch items={lumberSpecies} note="Species, dimensions and lead times depend on available logs and the requirements of your order." />
             </section>
 
             <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
