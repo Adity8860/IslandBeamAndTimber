@@ -1,18 +1,25 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
-  allowedDevOrigins: ['192.168.1.39'],
+    output: "export",
 
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
+    // Static export configuration
+    trailingSlash: true,
+
+    images: {
+        unoptimized: true,
     },
-  },
+
+    allowedDevOrigins: ['192.168.1.39'],
+
+    turbopack: {
+        rules: {
+            "*.css": {
+                loaders: ["@tailwindcss/turbopack"],
+                as: "*.css",
+            },
+        },
+    },
 };
 
 export default nextConfig;

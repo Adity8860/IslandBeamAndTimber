@@ -1,14 +1,15 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
-import { connection } from 'next/server'
+// import { connection } from 'next/server'
 import { siteConfig } from '@/lib/siteConfig';
 import Image from 'next/image';
 
 
 
-async function CurrentYear() {
-    await connection();
-    return new Date().getFullYear();
+const CURRENT_YEAR = 2026;
+
+function CurrentYear() {
+    return CURRENT_YEAR;
 }
 
 // Shared styles

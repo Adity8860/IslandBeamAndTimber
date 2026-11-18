@@ -4,6 +4,69 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 
 // Default slides matching your screenshot
+const DEFAULT_SLIDES = [
+    {
+        id: 1,
+        tagline: 'VANCOUVER ISLAND / LUMBER YARD & SAWMILL',
+        titleWhite: 'Island roots.',
+        titleGold: 'Endless possibilities.',
+        description:
+            "Douglas fir, red cedar and yellow cedar. Custom beams, everyday lumber and specialty cuts – made around what you're building.",
+        primaryBtn: {
+            text: 'Explore our lumber',
+            href: '/lumber',
+        },
+        secondaryBtn: {
+            text: 'Talk to our mill',
+            href: '/contact',
+        },
+        bottomLeft: 'QUALITY LUMBER, ROOTED ON VANCOUVER ISLAND.',
+        bottomRight: 'OUR SAWMILL - VANCOUVER ISLAND, BC',
+        bgImage:
+           '/Images/pageImg/IMG_0311.JPEG',
+    },
+    {
+        id: 2,
+        tagline: 'SUSTAINABLY SOURCED / LOCAL TIMBER',
+        titleWhite: 'Crafted with care.',
+        titleGold: 'Built to endure.',
+        description:
+            'Precision milling for residential, architectural, and heavy commercial timber frames. Sourced responsibly from Pacific Northwest forests.',
+        primaryBtn: {
+            text: 'View our products',
+            href: '/products',
+        },
+        secondaryBtn: {
+            text: 'Request a quote',
+            href: '/quote',
+        },
+        bottomLeft: 'PREMIUM PACIFIC TIMBER & CUSTOM CUTS.',
+        bottomRight: 'DISTRIBUTION & LOGGING - PACIFIC NW',
+        bgImage:
+            '/Images/pageImg/IMG_4841.JPEG',
+    },
+    {
+        id: 3,
+        tagline: 'CUSTOM TIMBER & ARCHITECTURAL BEAMS',
+        titleWhite: 'Rooted in heritage.',
+        titleGold: 'Milled for vision.',
+        description:
+            'From rough-cut structural timbers to fine-finish tongue and groove cedar, we turn raw logs into structural works of art.',
+        primaryBtn: {
+            text: 'Our mill capabilities',
+            href: '/capabilities',
+        },
+        secondaryBtn: {
+            text: 'Contact timber team',
+            href: '/contact',
+        },
+        bottomLeft: 'HERITAGE TIMBER CRAFT SINCE 1982.',
+        bottomRight: 'COWICHAN VALLEY, BC',
+        bgImage:
+            '/Images/pageImg/IMG_4855.JPEG',
+    },
+];
+// const DEFAULT_SLIDES = []
 
 
 /**
