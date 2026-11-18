@@ -23,7 +23,7 @@ const DEFAULT_SLIDES = [
         bottomLeft: 'QUALITY LUMBER, ROOTED ON VANCOUVER ISLAND.',
         bottomRight: 'OUR SAWMILL - VANCOUVER ISLAND, BC',
         bgImage:
-           '/Images/pageImg/IMG_0311.JPEG',
+            '/Images/pageImg/IMG_0311.JPEG',
     },
     {
         id: 2,

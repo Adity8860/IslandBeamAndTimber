@@ -6,7 +6,7 @@ import { ArrowUpRight, Flame } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import CustomLumberHero from "@/Components/Ui/ServiceHro.jsx"
 import { FirewoodData, FirewoodBodyData } from "@/lib/FirewoodConst.js"
-import ServiceBody from "@/Components/Ui/ServiceaBody.jsx"
+import ServiceBody from "@/Components/Ui/ServiceBody.jsx"
 
 
 const deliverySteps = [

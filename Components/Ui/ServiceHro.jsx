@@ -110,7 +110,7 @@ export function HeroSection({ data = [], className = "", showSpecs = true }) {
                                 type="button"
                                 onClick={() => setActiveIndex((activeIndex + 1) % slides.length)}
                                 aria-label="Show next slide"
-                                className="grid size-12 shrink-0 place-items-center rounded-full border border-white/30 bg-white/5 text-white transition-colors hover:border-[#EEBF21] hover:text-[#EEBF21]"
+                                className="hidden grid size-12 shrink-0 place-items-center rounded-full border border-white/30 bg-white/5 text-white transition-colors hover:border-[#EEBF21] hover:text-[#EEBF21]"
                             >
                                 <ChevronRight className="size-4" aria-hidden="true" />
                             </button>

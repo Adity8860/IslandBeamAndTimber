@@ -65,7 +65,7 @@ const PhoneIcon = ({ className = 'w-4 h-4' }) => (
 );
 
 const navLinkBase =
-    'relative text-xs font-medium tracking-normal transition-colors duration-200 ' +
+    'relative text-md font-bold tracking-normal transition-colors duration-200 ' +
     'after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:origin-left ' +
     'after:bg-[#E8B51E] after:transition-transform after:duration-300 ' +
     'focus-visible:outline-none focus-visible:after:scale-x-100';
@@ -159,7 +159,7 @@ export default function Header() {
     const homeOverlay = isHomepage && !isScrolled && !mobileMenuOpen;
 
     const mobileLink = (href) =>
-    `block rounded-lg px-4 py-3 text-base font-semibold transition-colors hover:bg-[#173D2C]/5 ${isActive(pathname, href) ? 'bg-[#173D2C]/5 text-[#8B5E1A]' : 'text-[#173D2C]'
+        `block rounded-lg px-4 py-3 text-base font-semibold transition-colors hover:bg-[#173D2C]/5 ${isActive(pathname, href) ? 'bg-[#173D2C]/5 text-[#8B5E1A]' : 'text-[#173D2C]'
         }`;
 
     return (
@@ -169,31 +169,32 @@ export default function Header() {
                 className={`${isHomepage ? 'fixed' : 'sticky'} top-0 inset-x-0 z-50 w-full max-w-full
   transition-all duration-300
   ${visible ? 'translate-y-0' : '-translate-y-full'}
-  ${homeOverlay ? 'border-b border-white/20 bg-transparent' : 'border-b border-[#D9D8CD] bg-[#F4F2E9]'}
+  ${homeOverlay ? 'border-b border-white/10 bg-transparent' : 'border-b border-[#E5E2DA] bg-white'}
 `}
             >
-                <div className="mx-auto max-w-[1680px] px-3 sm:px-6 lg:px-8">
-                    <div className={`flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-20' : 'h-20 sm:h-24 xl:h-[130px]'}`}>
+                <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
+                    <div className={`flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-18 sm:h-20 xl:h-20'}`}>
 
                         {/* Logo & Branding */}
-                        <Link href="/" className="flex items-center gap-2 sm:gap-3 group focus-visible:outline-none min-w-0 shrink">
-                            <div className="h-12 w-12 shrink-0 transition-transform duration-300 group-hover:scale-105 sm:h-[72px] sm:w-[72px]">
+                        <Link href="/" className="group flex shrink-0 items-center gap-3 focus-visible:outline-none sm:gap-4">
+                            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-sm transition-transform duration-300 group-hover:scale-105 sm:h-16 sm:w-16">
                                 {siteConfig?.Logo && (
                                     <Image
                                         src={siteConfig.Logo}
                                         alt={`${siteConfig.name} logo`}
-                                        width={44}
-                                        height={44}
-                                        className="h-full w-full object-contain"
+                                        width={64}
+                                        height={64}
+                                        className="h-full w-full object-cover"
                                     />
                                 )}
                             </div>
 
-                            <div className="flex min-w-0 flex-col">
-                                <span className={`truncate text-sm font-extrabold leading-tight tracking-wide sm:text-lg ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
-                                    ISLAND BEAM &amp; TIMBER
+                            <div className="flex flex-col">
+                                <span className={`text-[16px] font-black leading-[0.9] tracking-[0.01em] sm:text-[15px] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
+                                    <span className="block">ISLAND BEAM</span>
+                                    <span className="block">&amp; TIMBER</span>
                                 </span>
-                                <span className={`truncate text-[8px] font-bold uppercase tracking-[0.22em] sm:text-[10px] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
+                                <span className={`mt-1 text-[7px] font-black uppercase tracking-[0.19em] sm:text-[8px] sm:tracking-[0.2em] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
                                     Lumber Yard &amp; Sawmill
                                 </span>
                             </div>
@@ -206,17 +207,18 @@ export default function Header() {
                             ))}
                         </nav>
 
-                        {/* Desktop CTA + Phone */}
                         <div className="hidden shrink-0 items-center gap-3 xl:flex">
                             <Link
                                 href="/request-quote"
-                                className={`group inline-flex min-h-[68px] items-center justify-center gap-8 rounded-full px-8 text-sm font-semibold tracking-wide transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
-                                    ? 'border border-white/35 bg-white/10 text-white hover:bg-white/20'
-                                    : 'border border-[#003C24] bg-[#003C24] text-white hover:bg-[#09271B]'
+                                className={`group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
+                                    ? 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20'
+                                    : 'bg-[#3C5A47] text-white hover:bg-[#2E4A39]'
                                     }`}
                             >
                                 <span>Request a quote</span>
-                                <ArrowUpRight />
+                                <span className={`grid h-10 w-10 place-items-center rounded-full transition-colors duration-300 ${homeOverlay ? 'bg-white/15' : 'bg-[#2E4A39] group-hover:bg-[#1E3A29]'}`}>
+                                    <ArrowUpRight className="w-4 h-4" />
+                                </span>
                             </Link>
                         </div>
 
@@ -256,7 +258,7 @@ export default function Header() {
                         : 'max-h-0 opacity-0'
                         }`}
                 >
-                    <div className="max-h-[calc(100vh-5rem)] space-y-1 overflow-y-auto border-t border-[#173D2C]/10 bg-[#F4F2E9] px-4 pt-4 pb-8 sm:px-6">
+                    <div className="max-h-[calc(100vh-5rem)] space-y-1 overflow-y-auto border-t border-[#173D2C]/10 bg-white px-4 pt-4 pb-8 sm:px-6">
                         {[
                             { name: 'Home', href: '/' },
                             { name: 'About', href: '/About' },
@@ -294,7 +296,7 @@ export default function Header() {
                                             }`}
                                     >
                                         <div className="overflow-hidden">
-                                                <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-[#173D2C]/15 pl-4">
+                                            <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-[#173D2C]/15 pl-4">
                                                 {group.links.map((item) => {
                                                     const itemActive = isActive(pathname, item.href);
                                                     return (
@@ -355,11 +357,10 @@ export default function Header() {
             {/* Render browser-measured scroll progress only after hydration. */}
             {hasMounted && (
                 <div
-                    className={`fixed inset-x-0 z-[51] h-[3px] pointer-events-none transition-[top] duration-300 ${homeOverlay ? 'bg-white/20' : 'bg-[#173D2C]/10'} ${
-                        visible
-                                    ? (isScrolled ? 'top-16 sm:top-20' : 'top-20 sm:top-24 xl:top-[130px]')
-                            : 'top-0'
-                    }`}
+                    className={`fixed inset-x-0 z-[51] h-[3px] pointer-events-none transition-[top] duration-300 ${homeOverlay ? 'bg-white/20' : 'bg-[#173D2C]/10'} ${visible
+                        ? (isScrolled ? 'top-16 sm:top-18' : 'top-18 sm:top-20 xl:top-20')
+                        : 'top-0'
+                        }`}
                     aria-hidden="true"
                 >
                     <div
