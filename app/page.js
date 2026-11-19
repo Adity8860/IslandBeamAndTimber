@@ -104,7 +104,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-16 items-center">
 
           {/* Left Column: Image with Overlay Badge */}
-          <div data-reveal="left" className="lg:col-span-6 relative group overflow-hidden">
+          <div data-reveal className="lg:col-span-6 relative group overflow-hidden">
             <div className="relative overflow-hidden aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/5] bg-stone-900 border border-white/10 shadow-2xl transition-shadow duration-500 group-hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
               <Image
                 src="/Images/pageImg/IMG_0280.JPEG"
@@ -115,7 +115,7 @@ export default function Home() {
               />
 
               {/* Floating Mill Badge at Bottom-Left */}
-              <div className="absolute bottom-4 left-4 rounded-full bg-[#F5F2E9] px-4 py-3 shadow-lg sm:bottom-6 sm:left-6 sm:px-5 sm:py-3.5">
+              <div data-reveal className="absolute bottom-4 left-4 rounded-full bg-[#F5F2E9] px-4 py-3 shadow-lg sm:bottom-6 sm:left-6 sm:px-5 sm:py-3.5">
                 <span className="text-[9px] font-medium tracking-[0.16em] text-[#073D2B] uppercase sm:text-[10px]">
                   REAL TIMBER. CUT AT OUR MILL.
                 </span>
@@ -124,7 +124,7 @@ export default function Home() {
           </div>
 
           {/* Right Column: Content & Stat Counter */}
-          <div data-reveal="right" className="lg:col-span-6 flex flex-col justify-center">
+          <div data-reveal className="lg:col-span-6 flex flex-col justify-center">
             {/* Eyebrow */}
             <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <span className="eyebrow-line w-8 h-[2px] bg-[#F2C21A]" />
@@ -250,7 +250,7 @@ export default function Home() {
       {/* Garden sheds */}
       <section className="w-full overflow-hidden bg-[#F4F2E9] px-4 py-12 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-28">
         <div className="mx-auto grid w-full max-w-7xl overflow-hidden lg:grid-cols-2">
-          <div data-reveal="left" className="group relative h-[300px] overflow-hidden sm:h-[420px] lg:h-[620px]">
+          <div data-reveal className="group relative h-[300px] overflow-hidden sm:h-[420px] lg:h-[620px]">
             <Image
               src="/Images/pageImg/img8.png"
               alt="Premium Douglas Fir backyard garden shed"
@@ -260,20 +260,20 @@ export default function Home() {
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
             />
           </div>
-          <div data-reveal="right" className="flex flex-col justify-center bg-[#EAE7DC] px-7 py-10 sm:px-10 sm:py-12 lg:px-[8.5%] lg:py-16">
-            <div className="mb-7 flex items-center gap-3">
+          <div data-reveal className="flex flex-col justify-center bg-[#EAE7DC] px-7 py-10 sm:px-10 sm:py-12 lg:px-[8.5%] lg:py-16">
+            <div data-reveal className="mb-7 flex items-center gap-3">
               <span className="eyebrow-line h-[2px] w-8 bg-[#EEBF21]" aria-hidden="true" />
               <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#173D2C] sm:text-xs">
                 Also built at our mill
               </p>
             </div>
-            <h2 className="max-w-[620px] text-[clamp(2.5rem,3.1vw,3.5rem)] font-normal leading-[1.04] tracking-[-0.045em] text-[#173D2C]">
+            <h2 data-reveal className="max-w-[620px] text-[clamp(2.5rem,3.1vw,3.5rem)] font-normal leading-[1.04] tracking-[-0.045em] text-[#173D2C]">
               Premium backyard sheds.<br />Built solid.<br />Delivered to you.
             </h2>
-            <p className="mt-7 max-w-[620px] text-sm leading-[1.65] text-[#173D2C] sm:text-base">
+            <p data-reveal className="mt-7 max-w-[620px] text-sm leading-[1.65] text-[#173D2C] sm:text-base">
               Make room for tools, garden gear and everyday storage with a solid wood shed built on skids. Choose from available ready-to-go sheds or talk to us about a custom size and delivery to your property.
             </p>
-            <a
+            <a data-reveal
               href="/garden-sheds"
               className="btn-shine group mt-7 inline-flex min-h-[72px] w-fit items-center gap-8 rounded-full bg-[#EEBF21] px-7 text-sm font-bold text-[#003C24] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F5CC3B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003C24] sm:px-8"
             >
@@ -290,10 +290,10 @@ export default function Home() {
         <div className="mx-auto flex min-h-[340px] w-full max-w-7xl flex-col items-start justify-center gap-10 lg:min-h-[340px] lg:flex-row lg:items-center lg:justify-between lg:gap-12">
 
           {/* Left Content */}
-          <div data-reveal className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1">
 
             {/* Eyebrow */}
-            <div className="mb-8 flex items-center gap-3">
+            <div data-reveal className="mb-8 flex items-center gap-3">
               <span
                 className="h-[2px] w-8 shrink-0 bg-[#EEBF21]"
                 aria-hidden="true"
@@ -305,19 +305,19 @@ export default function Home() {
             </div>
 
             {/* Heading */}
-            <h2 className="lg:whitespace-nowrap text-[clamp(3.25rem,6.35vw,7.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#F5F2E9]">
+            <h2 data-reveal className="lg:whitespace-nowrap text-[clamp(3.25rem,6.35vw,7.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#F5F2E9]">
               What are you building?
             </h2>
 
             {/* Description */}
-            <p className="mt-7 max-w-[700px] text-sm leading-relaxed text-[#E1E8E3] sm:text-base">
+            <p data-reveal className="mt-7 max-w-[700px] text-sm leading-relaxed text-[#E1E8E3] sm:text-base">
               Send your species, dimensions, quantities and preferred finish.
               We&apos;ll help you plan the next step and provide a quote for
               your order.
             </p>
 
             {/* Address */}
-            <p className="mt-6 text-sm leading-[1.6] text-[#E1E8E3] sm:text-base">
+            <p data-reveal className="mt-6 text-sm leading-[1.6] text-[#E1E8E3] sm:text-base">
               {siteConfig?.address?.split(", ").map((line, index) => (
                 <span key={line} className="block">{line}</span>
               ))}

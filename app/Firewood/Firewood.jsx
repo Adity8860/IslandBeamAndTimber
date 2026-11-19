@@ -5,262 +5,147 @@ import Image from "next/image";
 import { ArrowUpRight, Flame } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import CustomLumberHero from "@/Components/Ui/ServiceHro.jsx"
-import { FirewoodData, FirewoodBodyData } from "@/lib/FirewoodConst.js"
+import ScrollReveal from "@/Components/Ui/ScrollReveal.jsx"
+import Cards, { ProductCards } from "@/Components/Ui/Cards.jsx"
+import { FirewoodData, firewoodCards, firewoodEnquiry, firewoodFaqs } from "@/lib/FirewoodConst.js"
 import ServiceBody from "@/Components/Ui/ServiceBody.jsx"
-
-
-const deliverySteps = [
-    {
-        number: "01",
-        title: "Naturally seasoned",
-        description: "Time and airflow bring each split to a cleaner, more reliable burn.",
-    },
-    {
-        number: "02",
-        title: "Sorted with care",
-        description: "Consistent sizes make stacking simple and lighting your fire effortless.",
-    },
-    {
-        number: "03",
-        title: "Delivered locally",
-        description: "Schedule the load you need, from a few bundles to a full winter reserve.",
-    },
-];
-
-//  const shell = "mx-auto w-[min(100%-2.5rem,1280px)] sm:w-[min(100%-4rem,1280px)] lg:w-[min(100%-6rem,1280px)]";
-const shell = ''
-const focusRing = "focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-[#F4B323]";
-
-function Eyebrow({ children, light = false, className = "" }) {
-    return (
-        <p className={`flex items-center gap-2.5 text-xs font-extrabold uppercase tracking-[0.14em] ${light ? "text-[#F4B323]" : "text-[#09271B]"} ${className}`}>
-            <span className="h-2 w-2 shrink-0 rounded-full bg-[#F4B323]" aria-hidden="true" />
-            {children}
-        </p>
-    );
-}
-
-function ActionLink({ href, children, secondary = false }) {
-    return (
-        <Link
-            href={href}
-            className={`${focusRing} group inline-flex min-h-14 items-center justify-center gap-3 rounded-full px-7 py-4 text-base font-bold transition-[background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${secondary ? "border border-white/25 bg-white/5 text-white hover:border-[#F4B323] hover:bg-white/10" : "bg-[#F4B323] text-[#09271B] shadow-[0_14px_28px_-16px_rgba(244,179,35,0.9)] hover:bg-[#FFC53D]"}`}
-        >
-            {children}
-            {secondary && <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />}
-        </Link>
-    );
-}
+import EnquiryForm from "@/Components/layout/Form";
+import FAQSection from "@/Components/Ui/FAQ";
 
 export default function Firewood() {
     return (
         <main className="overflow-x-clip bg-[#F7F3EB] text-[#09271B]">
-
-            <CustomLumberHero
-                data={FirewoodData}
-                padX="px-5 md:px-10 lg:px-16  mt-16"
-            />
-            <ServiceBody data={FirewoodBodyData} />
-
-            {/* <section className={`${shell} my-12 grid gap-10 rounded-2xl bg-[#EFEBDF] px-7 py-12 sm:my-16 sm:px-12 sm:py-16 lg:grid-cols-2 lg:gap-16 lg:px-16 lg:py-20`}>
-                <div className="relative hidden min-h-[320px] overflow-hidden rounded-xl bg-[linear-gradient(135deg,#F7F3EB,#E4DFD2)] ring-1 ring-[#09271B]/10 lg:block">
-                    <Image
-                        src="/Images/FirewoodImg/img4.png"
-                        alt="Seasoned firewood ready for delivery"
-                        fill
-                        sizes="(min-width: 1024px) 40vw, 0px"
-                        className="object-cover"
-                    />
+            <ScrollReveal />
+            <CustomLumberHero data={FirewoodData} />
+            <section className="bg-[#f6f3e9] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+                <div className="mx-auto max-w-7xl">
+                    <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
+                        <div data-reveal>
+                            <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.19em] text-[#315343]">
+                                <span className="h-[2px] w-8 bg-[#eabf20]" />The roots of our business
+                            </p>
+                            <h2 className="mt-8 max-w-[13ch] text-[clamp(2.7rem,5vw,5rem)] font-normal leading-[1.02] tracking-[-0.07em]">From our timber yard to your woodpile.</h2>
+                        </div>
+                        <div data-reveal style={{ "--d": "220ms" }} className="space-y-5 text-base leading-[1.7] text-[#657369]">
+                            <p>Long before the sawmill, there was firewood. Daniel’s more than 15 years in the business shaped a practical understanding of wood, equipment and the people who rely on both.</p>
+                            <p>That experience remains part of Island Beam &amp; Timber. We believe in doing the work properly, making useful products from the wood we handle and giving customers clear answers about what they’re ordering.</p>
+                            <p>Whether you’re planning ahead for home heating or topping up your wood supply, speak directly with our team. We’ll confirm current stock, wood condition, cut lengths and the quantity that works for your order.</p>
+                            <Link href="/About" className="group flex items-center justify-between border-t border-[#073d28]/15 pt-5 text-sm font-bold text-[#073d28] transition-colors hover:text-[#b18a10]">
+                                <span>More about our Island roots</span><ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            </Link>
+                        </div>
+                    </div>
+                    <ProductCards type="firewood" items={firewoodCards} className="mt-16" itemClassName="min-h-[fit-content]" />
                 </div>
-                <div>
-                    <Eyebrow>Made for good burns</Eyebrow>
-                    <h2 className="mt-4 text-balance text-3xl font-extrabold leading-[1.05] tracking-[-0.04em] sm:text-4xl lg:text-5xl">From our timber yard to your woodpile.</h2>
-                    <ol className="mt-8 grid gap-6">
-                        {deliverySteps.map((step) => (
-                            <li key={step.number} className="cards-in relative grid grid-cols-[3.25rem_1fr] gap-4 before:absolute before:bottom-[-1.5rem] before:left-6 before:top-12 before:w-px before:bg-[#09271B]/20 before:content-[''] last:before:hidden">
-                                <span className="relative z-10 grid h-12 w-12 place-items-center rounded-full bg-[#09271B] text-base font-extrabold tabular-nums text-[#F4B323] ring-4 ring-[#EFEBDF]">{step.number}</span>
-                                <div className="pt-1.5">
-                                    <h3 className="text-lg font-bold">{step.title}</h3>
-                                    <p className="mt-1 text-pretty text-base leading-relaxed text-[#45564B]">{step.description}</p>
-                                </div>
-                            </li>
-                        ))}
-                    </ol>
-                </div>
-            </section> */}
-            <section
-                aria-labelledby="delivery-heading"
-                className={`${shell} my-12 grid items-center gap-10 rounded-2xl bg-[#EFEBDF] px-6 py-10 sm:my-16 sm:px-12 sm:py-16 lg:grid-cols-2 lg:gap-16 lg:px-16 lg:py-20`}
-            >
-                {/* Image: now visible on mobile too, sticky on desktop */}
-                <div className="relative overflow-hidden rounded-xl bg-[linear-gradient(135deg,#F7F3EB,#E4DFD2)] ring-1 ring-[#09271B]/10 sm:aspect-[16/10] lg:sticky lg:top-24  lg:self-start">
-                    <Image
-                        src="/Images/FirewoodImg/img4.png"
-                        alt="Stacked seasoned firewood ready for delivery"
-                        fill
-                        sizes="(min-width: 1024px) 40vw, (min-width: 640px) 90vw, 100vw"
-                        className="object-cover"
-                    />
-                    <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#09271B]/25 to-transparent"
-                    />
-                </div>
-
-                <div>
-                    <Eyebrow>Made for good burns</Eyebrow>
-                    <h2
-                        id="delivery-heading"
-                        className="mt-4 text-balance text-3xl font-extrabold leading-[1.05] tracking-[-0.04em] text-[#09271B] sm:text-4xl lg:text-5xl"
-                    >
-                        From our timber yard to your woodpile.
-                    </h2>
-
-                    <ol role="list" className="mt-8 grid list-none gap-7 p-0 sm:mt-10">
-                        {deliverySteps.map((step, i) => (
-                            <li
-                                key={step.number}
-                                style={{ animationDelay: `${i * 90}ms` }}
-                                className="cards-in relative grid grid-cols-[3rem_1fr] gap-4 before:absolute before:left-6 before:top-12 before:-bottom-7 before:w-px before:-translate-x-1/2 before:bg-[#09271B]/20 before:content-[''] last:before:hidden sm:grid-cols-[3.25rem_1fr] sm:gap-5 sm:before:left-[1.625rem]"
-                            >
-                                <span className="relative z-10 grid h-12 w-12 place-items-center rounded-full bg-[#09271B] text-base font-extrabold tabular-nums text-[#F4B323] ring-4 ring-[#EFEBDF] sm:h-[3.25rem] sm:w-[3.25rem]">
-                                    {step.number}
-                                </span>
-                                <div className="pt-1.5">
-                                    <h3 className="text-lg font-bold leading-snug text-[#09271B]">{step.title}</h3>
-                                    <p className="mt-1 text-pretty text-base leading-relaxed text-[#45564B]">
-                                        {step.description}
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
-                    </ol>
+                <div className="mx-auto mt-16 grid max-w-7xl gap-7 md:grid-cols-[1.5fr_1fr]">
+                    <figure data-reveal style={{ "--d": "100ms" }}>
+                        <div className="relative aspect-[1.83/1] overflow-hidden rounded-[3px]">
+                            <Image
+                                src="/Images/pageImg/IMG_0311.JPEG"
+                                alt="Sawmill equipment beneath a timber frame shelter"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 60vw"
+                                className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                            />
+                        </div>
+                        <figcaption className="mt-3 text-xs text-[#728076]">A working mill. Timber we’re proud to put to use.</figcaption>
+                    </figure>
+                    <figure data-reveal style={{ "--d": "250ms" }} className="md:mt-14">
+                        <div className="relative aspect-[1.28/1] overflow-hidden rounded-[3px]">
+                            <Image
+                                src="/Images/customlumberimg/IMG_4672.JPEG"
+                                alt="Logs ready for milling"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 40vw"
+                                className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                            />
+                        </div>
+                        <figcaption className="mt-3 text-xs text-[#728076]">Every order starts with the material.</figcaption>
+                    </figure>
                 </div>
             </section>
+            <section id="enquiry" className="bg-[#eeece2] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+                <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-2 lg:gap-20">
+                    <div>
+                        <p data-reveal className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.19em] text-[#315343]">
+                            <span className="eyebrow-line inline-block h-[2px] w-8 bg-[#eabf20]" />
+                            Keep the warmth coming
+                        </p>
+                        <h2 data-reveal style={{ "--d": "120ms" }} className="mt-8 max-w-[7ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
+                            Tell us what
+                            you need.
+                        </h2>
+                        <p data-reveal style={{ "--d": "220ms" }} className="mt-8 max-w-[52ch] text-base leading-[1.7] text-[#66746a]">
+                            Send a few details and we’ll get back to you about availability and a quote. If you’re unsure about quantity or the right option, start with a conversation.
 
-            <section className="bg-[#09271B] bg-[radial-gradient(ellipse_70%_80%_at_50%_0%,rgba(244,179,35,0.14),transparent_70%)] px-5 py-20 text-center text-white sm:px-8 sm:py-28">
-                <div className="mx-auto max-w-4xl">
-                    <Eyebrow light className="justify-center">Keep the warmth coming</Eyebrow>
-                    <h2 className="mt-5 text-balance text-4xl font-extrabold leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">Tell us how you burn, and we’ll build the right firewood order.</h2>
-                    <p className="mx-auto mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-[#B7CDBF] sm:text-xl">Home delivery, hospitality supply, and special-event bundles—prepared around your season.</p>
-                    <div className="mt-9 flex flex-wrap justify-center gap-3 sm:gap-4">
-                        <ActionLink href="/Contact">Request firewood</ActionLink>
-                        <ActionLink href={siteConfig.phoneLink} secondary><Flame className="h-4 w-4" aria-hidden="true" /> Call the yard</ActionLink>
+                        </p>
+                        <ol className="mt-10 divide-y divide-[#073d28]/15 border-y border-[#073d28]/15">
+                            {[
+                                ["Tell us about your order.", "Quantity, preferred cut length, location and timing."],
+                                ["We confirm the details", "Available wood, condition, pricing and delivery arrangements."],
+                                ["Plan your delivery.", "Agree on access and timing before the order is scheduled."]
+                            ].map(([title, copy], index) => (
+                                <li
+                                    key={title}
+                                    data-reveal
+                                    style={{ "--d": `${300 + index * 100}ms` }}
+                                    className="grid grid-cols-[25px_1fr] gap-4 py-5"
+                                >
+                                    <span className="text-xs text-[#52685b]">0{index + 1}</span>
+                                    <div>
+                                        <strong className="text-sm">{title}</strong>
+                                        <p className="mt-2 text-sm text-[#748078]">{copy}</p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ol>
+                        <p data-reveal style={{ "--d": "550ms" }} className="mt-12 max-w-[58ch] text-xs leading-relaxed text-[#68756d]">
+                            Share what you have, where it is, and what you want to make. We’ll work through the practical details before the job begins.
+                        </p>
+                        <a
+                            data-reveal
+                            style={{ "--d": "620ms" }}
+                            href={siteConfig.phoneLink}
+                            className="group mt-6 flex items-center justify-between border-t border-[#073d28]/15 pt-6 text-sm font-bold transition-colors hover:text-[#b18a10]"
+                        >
+                            <span>Talk to our mill: {siteConfig.phone}</span>
+                            <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                        </a>
+                    </div>
+                    <div data-reveal style={{ "--d": "200ms" }} className="rounded-[3px] bg-[#fbfaf3] p-7 shadow-[0_20px_50px_-40px_rgba(7,61,40,.45)] sm:p-10">
+                        <h3 className="text-[clamp(2rem,3vw,3rem)] font-normal tracking-[-0.055em]">Your next load starts here.</h3>
+                        <EnquiryForm
+                            email={firewoodEnquiry?.email}
+                            services={firewoodEnquiry?.services}
+                            buttonText="Review my enquiry"
+                        />
                     </div>
                 </div>
             </section>
+            <section className="bg-[#f6f3e9] px-6 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-28">
+                <div className="mx-auto max-w-4xl">
+                    <h2 data-reveal className="text-[clamp(2.5rem,4vw,4rem)] font-normal tracking-[-0.065em]">
+                        Before your next load.
+                    </h2>
+                    <FAQSection data={firewoodFaqs} className="mt-8" />
+                </div>
+            </section>
+            <section className="bg-[#004329] px-6 py-16 text-[#f6f3e9] sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+                <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.4fr_0.8fr] lg:items-center">
+                    <div>
+                        <h2 className="text-[clamp(2.8rem,5vw,5rem)] font-normal leading-[0.98] tracking-[-0.07em]">Good wood.<br />Good people.</h2>
+                        <p className="mt-6 text-base text-white/80">Speak directly with our team about your next firewood order.</p>
+                    </div>
+                    <address className="not-italic text-base leading-relaxed">
+                        <a href={siteConfig.phoneLink} className="text-3xl tracking-[-0.05em] transition-colors hover:text-[#f2c31b]">{siteConfig.phone}</a>
+                        <a href={`mailto:${siteConfig.email}`} className="mt-4 block text-sm transition-colors hover:text-[#f2c31b]">{siteConfig.email}</a>
+                        <p className="mt-5 whitespace-pre-line text-sm text-white/80">{siteConfig.address.replace(", ", "\n")}</p>
+                    </address>
+                </div>
+            </section>
+
+
+
         </main>
     );
-}// import Link from "next/link";
-// import { ArrowUpRight, Flame } from "lucide-react";
-// import { siteConfig } from "@/lib/siteConfig";
-// import CustomLumberHero from "@/Components/Ui/ServiceHro.jsx"
-// import { FirewoodData, FirewoodBodyData } from "@/lib/FirewoodConst.js"
-// import ServiceBody from "@/Components/Ui/ServiceaBody.jsx";
-
-// const deliverySteps = [
-//     {
-//         number: "01",
-//         title: "Naturally seasoned",
-//         description: "Time and airflow bring each split to a cleaner, more reliable burn.",
-//     },
-//     {
-//         number: "02",
-//         title: "Sorted with care",
-//         description: "Consistent sizes make stacking simple and lighting your fire effortless.",
-//     },
-//     {
-//         number: "03",
-//         title: "Delivered locally",
-//         description: "Schedule the load you need, from a few bundles to a full winter reserve.",
-//     },
-// ];
-
-// // One shared page width: hero, article and bands all align to the same 1280px column with matching side gutters
-// const shell = "mx-auto w-[min(100%-2.5rem,1280px)] sm:w-[min(100%-4rem,1280px)] lg:w-[min(100%-6rem,1280px)]";
-// const focusRing = "focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-[#f5b900]";
-
-// function Eyebrow({ children, light = false, className = "" }) {
-//     return (
-//         <p className={`flex items-center gap-2.5 text-xs font-extrabold uppercase tracking-[0.14em] ${light ? "text-[#f5b900]" : "text-[#09271B]"} ${className}`}>
-//             <span className="h-2 w-2 shrink-0 rounded-full bg-[#f5b900]" aria-hidden="true" />
-//             {children}
-//         </p>
-//     );
-// }
-
-// function ActionLink({ href, children, secondary = false }) {
-//     return (
-//         <Link
-//             href={href}
-//             className={`${focusRing} inline-flex min-h-14 items-center justify-center gap-3 rounded-full px-7 py-4 text-base font-bold transition-[background-color,transform] duration-200 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${secondary ? "border border-[#31533d] bg-[#183627] text-white hover:bg-[#20432f]" : "bg-[#f5b900] text-[#09271B] hover:bg-[#ffca19]"}`}
-//         >
-//             {children}
-//             {secondary && <ArrowUpRight className="h-4 w-4" aria-hidden="true" />}
-//         </Link>
-//     );
-// }
-
-// export default function Firewood() {
-//     return (
-//         <main className="overflow-x-clip bg-[#F7F3EB] text-[#09271B]">
-//             {/* <section className="pb-12 pt-8 sm:pb-16 sm:pt-10">
-//                 <div className={`${shell} flex min-h-[600px] flex-col items-start rounded-2xl bg-[#09271B] px-7 py-12 text-white sm:min-h-[660px] sm:px-12 sm:py-16 lg:min-h-[720px] lg:px-16 lg:py-20`}>
-//                     <div className="inline-flex items-center gap-3 rounded-full border border-[#f5b900]/50 bg-[#061A11] px-4 py-2.5 text-xs font-bold uppercase tracking-[0.08em] text-white sm:text-sm">
-//                         <span className="h-2.5 w-2.5 rounded-full bg-[#f5b900]" />
-//                         Seasoned &amp; ready to burn
-//                     </div>
-//                     <div className="mt-14 max-w-[760px] sm:mt-16 lg:mt-20">
-//                         <h1 className="max-w-[740px] text-balance text-[clamp(2.5rem,5.6vw,5rem)] font-extrabold leading-[1] tracking-[-0.04em]">
-//                             Firewood that makes every gathering feel grounded.
-//                         </h1>
-//                         <p className="mt-7 max-w-[640px] text-pretty text-lg leading-[1.65] text-[#B7CDBF] sm:text-xl">
-//                             Clean-burning hardwood, thoughtfully split and naturally seasoned for fireplaces, wood stoves, pizza ovens, and long nights outside.
-//                         </p>
-//                     </div>
-//                     <div className="mt-auto flex flex-wrap gap-3 pt-14 sm:gap-4">
-//                         <ActionLink href="/Contact">Build your delivery</ActionLink>
-//                         <ActionLink href={siteConfig.phoneLink} secondary>Talk to our wood team</ActionLink>
-//                     </div>
-//                 </div>
-//             </section> */}
-//             <CustomLumberHero
-//                 data={FirewoodData}
-//                 padX="px-5 md:px-10 lg:px-16  mt-16"
-//             />
-
-//             <ServiceBody data={FirewoodBodyData} />
-
-//             <section className={`${shell} my-12 grid gap-10 rounded-2xl bg-[#EFEBDF] px-7 py-12 sm:my-16 sm:px-12 sm:py-16 lg:grid-cols-2 lg:gap-16 lg:px-16 lg:py-20`}>
-//                 <div className="hidden min-h-[320px] rounded-xl bg-[linear-gradient(135deg,#F7F3EB,#E4DFD2)] ring-1 ring-[#09271B]/10 lg:block" aria-hidden="true" />
-//                 <div>
-//                     <Eyebrow>Made for good burns</Eyebrow>
-//                     <h2 className="mt-4 text-balance text-3xl font-extrabold leading-[1.05] tracking-[-0.04em] sm:text-4xl lg:text-5xl">From our timber yard to your woodpile.</h2>
-//                     <ol className="mt-8 grid gap-6">
-//                         {deliverySteps.map((step) => (
-//                             <li key={step.number} className="grid grid-cols-[3.25rem_1fr] gap-4">
-//                                 <span className="grid h-12 w-12 place-items-center rounded-full bg-[#09271B] text-base font-extrabold tabular-nums text-[#f5b900]">{step.number}</span>
-//                                 <div>
-//                                     <h3 className="text-lg font-bold">{step.title}</h3>
-//                                     <p className="mt-1 text-pretty text-base leading-relaxed text-[#45564B]">{step.description}</p>
-//                                 </div>
-//                             </li>
-//                         ))}
-//                     </ol>
-//                 </div>
-//             </section>
-
-//             <section className="bg-[#09271B] px-5 py-20 text-center text-white sm:px-8 sm:py-28">
-//                 <div className="mx-auto max-w-4xl">
-//                     <Eyebrow light className="justify-center">Keep the warmth coming</Eyebrow>
-//                     <h2 className="mt-5 text-balance text-4xl font-extrabold leading-[1.02] tracking-[-0.04em] sm:text-5xl lg:text-6xl">Tell us how you burn, and we’ll build the right firewood order.</h2>
-//                     <p className="mx-auto mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-[#B7CDBF] sm:text-xl">Home delivery, hospitality supply, and special-event bundles—prepared around your season.</p>
-//                     <div className="mt-9 flex flex-wrap justify-center gap-3 sm:gap-4">
-//                         <ActionLink href="/Contact">Request firewood</ActionLink>
-//                         <ActionLink href={siteConfig.phoneLink} secondary><Flame className="h-4 w-4" aria-hidden="true" /> Call the yard</ActionLink>
-//                     </div>
-//                 </div>
-//             </section>
-//         </main>
-//     );
-// }
+}

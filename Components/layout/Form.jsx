@@ -19,6 +19,26 @@ export default function EnquiryForm({
 
     if (!email) return null;
 
+    if (variant === "garden-shed") {
+        return (
+            <form action={`mailto:${email}`} method="post" encType="text/plain" className={className}>
+                <h3 className="text-[clamp(2rem,3vw,3rem)] font-normal tracking-[-0.055em]">What would you like to build?</h3>
+                <div className="mt-7 grid gap-x-4 gap-y-5 sm:grid-cols-2">
+                    <label className="text-xs font-semibold">Your name<input required name="Name" autoComplete="name" placeholder="Name" className={`${fieldClass} mt-2`} /></label>
+                    <label className="text-xs font-semibold">I’m interested in<select name="Interest" defaultValue="Ready-to-go sheds" className={`${fieldClass} mt-2`}><option>Ready-to-go sheds</option><option>Custom shed</option><option>Delivery</option><option>Not sure yet</option></select></label>
+                    <label className="text-xs font-semibold">Preferred size<input name="Preferred size" placeholder="Width × length, or please advise" className={`${fieldClass} mt-2`} /></label>
+                    <label className="text-xs font-semibold">Preferred style<select name="Preferred style" defaultValue="Please advise" className={`${fieldClass} mt-2`}><option>Please advise</option><option>Gable roof</option><option>Single-slope roof</option><option>Custom style</option></select></label>
+                    <label className="text-xs font-semibold sm:col-span-2">Your location<input name="Location" placeholder="Town / delivery destination" className={`${fieldClass} mt-2`} /></label>
+                    <label className="text-xs font-semibold sm:col-span-2">Preferred timing<input name="Preferred timing" placeholder="When would you like your shed?" className={`${fieldClass} mt-2`} /></label>
+                    <label className="text-xs font-semibold sm:col-span-2">Ideas, features &amp; access details<textarea name="Details" rows="3" placeholder="Intended use, door layout, style ideas or delivery access" className={`${fieldClass} mt-2 resize-y`} /></label>
+                </div>
+                <button type="submit" className="group mt-6 inline-flex min-h-[62px] items-center gap-6 rounded-full bg-[#f2c31b] px-7 text-sm font-bold text-[#073d28] transition-colors hover:bg-[#f5cc3b]">{buttonText}<ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></button>
+                <p className="mt-4 text-xs leading-relaxed text-[#778078]">Review your enquiry here, then open an email draft. You can attach inspiration and site photos in your email app.</p>
+                <a className="mt-5 inline-block text-xs underline underline-offset-4" href={`mailto:${email}`}>Or email {email}</a>
+            </form>
+        );
+    }
+
     if (variant === "custom-lumber") {
         return (
             <form action={`mailto:${email}`} method="post" encType="text/plain" className={`rounded-[3px] bg-[#fbfaf3] p-7 shadow-[0_20px_50px_-40px_rgba(7,61,40,.45)] sm:p-10 ${className}`}>

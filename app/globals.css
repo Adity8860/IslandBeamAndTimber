@@ -2445,8 +2445,8 @@ html {
 }
 
 .editorial-service-card[data-reveal].is-in:hover {
-  transform: translate3d(0, -8px, 0);
-  box-shadow: 0 16px 28px -20px rgba(0, 43, 43, 0.38);
+  transform: translate3d(0, -4px, 0);
+  box-shadow: 0 12px 24px -16px rgba(0, 43, 43, 0.2);
 }
 
 @media (prefers-reduced-motion: reduce) {

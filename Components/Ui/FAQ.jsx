@@ -48,7 +48,7 @@ export default function FAQSection({
                                 <span className="text-lg font-normal leading-snug sm:text-xl">
                                     {item.question}
                                 </span>
-                                <span
+                                <span data-reveal style={{ "--d": "220ms" }}
                                     aria-hidden="true"
                                     className={`relative grid size-4 shrink-0 place-items-center text-xl font-light leading-none ${isDark ? 'text-[#D9B258]' : 'text-[#B98216]'}`}
                                 >
@@ -59,6 +59,7 @@ export default function FAQSection({
                         </h3>
 
                         <div
+                            data-reveal
                             id={`faq-answer-${item.id}`}
                             role="region"
                             aria-labelledby={`faq-question-${item.id}`}

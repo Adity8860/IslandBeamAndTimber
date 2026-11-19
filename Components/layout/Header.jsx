@@ -11,7 +11,7 @@ const primaryNavLinks = [
     { name: 'Custom lumber', href: '/CustomLumber' },
     { name: 'Milling services', href: '/MobileMilling' },
     { name: 'About us', href: '/About' },
-    { name: 'Garden sheds', href: '/DouglasFirShed' },
+    { name: 'Garden sheds', href: '/GoldenShed' },
     { name: 'Firewood', href: '/Firewood' },
     { name: 'Contact us', href: '/Contact' },
 ];
@@ -98,12 +98,44 @@ export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [scrollProgress, setScrollProgress] = useState(0);
+    const [routeProgress, setRouteProgress] = useState(0);
+    const [isRouteLoading, setIsRouteLoading] = useState(false);
     const headerRef = useRef(null);
     const previousScrollY = useRef(0);
 
     useEffect(() => {
         setHasMounted(true);
     }, []);
+
+    useEffect(() => {
+        if (!isRouteLoading) return undefined;
+        const timer = window.setInterval(() => {
+            setRouteProgress((progress) => progress >= 88 ? progress : Math.min(progress + Math.random() * 8 + 3, 88));
+        }, 180);
+        return () => window.clearInterval(timer);
+    }, [isRouteLoading]);
+
+    useEffect(() => {
+        if (!isRouteLoading) return undefined;
+        setRouteProgress(100);
+        const timer = window.setTimeout(() => {
+            setIsRouteLoading(false);
+            setRouteProgress(0);
+        }, 320);
+        return () => window.clearTimeout(timer);
+    }, [currentPathname]);
+
+    const startRouteLoading = (event) => {
+        const link = event.target.closest('a[href]');
+        if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const target = link.getAttribute('target');
+        const href = link.getAttribute('href');
+        if (target === '_blank' || !href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        const destination = new URL(href, window.location.href);
+        if (destination.origin !== window.location.origin || destination.pathname === currentPathname) return;
+        setRouteProgress(12);
+        setIsRouteLoading(true);
+    };
 
     useEffect(() => {
         const onScroll = () => {
@@ -166,6 +198,7 @@ export default function Header() {
         <>
             <header
                 ref={headerRef}
+                onClickCapture={startRouteLoading}
                 className={`${isHomepage ? 'fixed' : 'sticky'} top-0 inset-x-0 z-50 w-full max-w-full
   transition-all duration-300
   ${visible ? 'translate-y-0' : '-translate-y-full'}
@@ -354,21 +387,20 @@ export default function Header() {
                 </div>
             </header>
 
-            {/* Render browser-measured scroll progress only after hydration. */}
-            {hasMounted && (
+            <div
+                className={`fixed inset-x-0 top-0 z-[60] h-[3px] pointer-events-none transition-opacity duration-200 ${isRouteLoading || scrollProgress > 0 ? 'opacity-100' : 'opacity-0'}`}
+                role="progressbar"
+                aria-label={isRouteLoading ? "Loading page" : "Page scroll progress"}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(isRouteLoading ? routeProgress : scrollProgress)}
+                aria-hidden={!isRouteLoading && scrollProgress <= 0}
+            >
                 <div
-                    className={`fixed inset-x-0 z-[51] h-[3px] pointer-events-none transition-[top] duration-300 ${homeOverlay ? 'bg-white/20' : 'bg-[#173D2C]/10'} ${visible
-                        ? (isScrolled ? 'top-16 sm:top-18' : 'top-18 sm:top-20 xl:top-20')
-                        : 'top-0'
-                        }`}
-                    aria-hidden="true"
-                >
-                    <div
-                        className="h-full bg-[#E8B51E] transition-[width] duration-100"
-                        style={{ width: `${scrollProgress}%` }}
-                    />
-                </div>
-            )}
+                    className="h-full bg-[#E8B51E] shadow-[0_0_10px_rgba(232,181,30,.55)] transition-[width] duration-200 ease-out"
+                    style={{ width: `${isRouteLoading ? routeProgress : scrollProgress}%` }}
+                />
+            </div>
 
             {/* Mobile overlay backdrop */}
             <div

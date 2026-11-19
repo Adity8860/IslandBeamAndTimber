@@ -20,7 +20,7 @@ export default function CustomLumber() {
                                 <span className="eyebrow-line inline-block h-[2px] w-8 bg-[#eabf20]" />
                                 Cut for your project
                             </p>
-                            <h2 data-reveal style={{ "--d": "120ms" }} className="mt-8 max-w-[11ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
+                            <h2 data-revea className="mt-8 max-w-[11ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
                                 From rough-sawn to ready for finishing.
                             </h2>
                         </div>
@@ -135,11 +135,11 @@ export default function CustomLumber() {
                         <h2 data-reveal className="text-[clamp(3rem,4vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
                             Let’s talk timber.
                         </h2>
-                        <p data-reveal style={{ "--d": "150ms" }} className="mt-7 max-w-[58ch] text-base leading-[1.7] text-white/80 sm:text-lg">
+                        <p data-reveal className="mt-7 max-w-[58ch] text-base leading-[1.7] text-white/80 sm:text-lg">
                             Custom lumber, personal service and a practical conversation about your project.
                         </p>
                     </div>
-                    <address data-reveal style={{ "--d": "250ms" }} className="not-italic text-base leading-[1.65] sm:text-lg">
+                    <address data-reveal className="not-italic text-base leading-[1.65] sm:text-lg">
                         <a href={siteConfig.phoneLink} className="block text-[clamp(2rem,2vw,3rem)] leading-none tracking-[-0.05em] transition-colors hover:text-[#f2c31b]">{siteConfig.phone}</a>
                         <a href={`mailto:${siteConfig.email}`} className="mt-7 block font-semibold transition-colors hover:text-[#f2c31b]">{siteConfig.email}</a>
                         <p className="mt-7 whitespace-pre-line text-white/90">{siteConfig.address.replace(", ", "\n")}</p>
