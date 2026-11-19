@@ -93,7 +93,7 @@ function NavLink({ href, pathname, children, light = false }) {
 export default function Header() {
     const currentPathname = usePathname();
     const isHomepage = currentPathname === '/';
-    const [hasMounted, setHasMounted] = useState(false);
+    const hasMounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
     const pathname = hasMounted ? currentPathname : null;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
@@ -104,10 +104,13 @@ export default function Header() {
     const [isRouteLoading, setIsRouteLoading] = useState(false);
     const headerRef = useRef(null);
     const previousScrollY = useRef(0);
+    const [prevPathname, setPrevPathname] = useState(currentPathname);
 
-    useEffect(() => {
-        setHasMounted(true);
-    }, []);
+    if (prevPathname !== currentPathname) {
+        setPrevPathname(currentPathname);
+        setMobileMenuOpen(false);
+        setActiveDropdown(null);
+    }
 
     useEffect(() => {
         if (!isRouteLoading) return undefined;
@@ -119,13 +122,16 @@ export default function Header() {
 
     useEffect(() => {
         if (!isRouteLoading) return undefined;
-        setRouteProgress(100);
+        const frame = window.requestAnimationFrame(() => setRouteProgress(100));
         const timer = window.setTimeout(() => {
             setIsRouteLoading(false);
             setRouteProgress(0);
         }, 320);
-        return () => window.clearTimeout(timer);
-    }, [currentPathname]);
+        return () => {
+            window.cancelAnimationFrame(frame);
+            window.clearTimeout(timer);
+        };
+    }, [currentPathname, isRouteLoading]);
 
     const startRouteLoading = (event) => {
         const link = event.target.closest('a[href]');
@@ -140,6 +146,8 @@ export default function Header() {
     };
 
     useEffect(() => {
+        if (mobileMenuOpen) return undefined;
+
         const onScroll = () => {
             const currentScrollY = window.scrollY;
             setIsScrolled(currentScrollY > 20);
@@ -148,7 +156,7 @@ export default function Header() {
 
             if (currentScrollY <= 80 || currentScrollY < previousScrollY.current - 4) {
                 setIsVisible(true);
-            } else if (currentScrollY > previousScrollY.current + 4 && !mobileMenuOpen) {
+            } else if (currentScrollY > previousScrollY.current + 4) {
                 setIsVisible(false);
             }
 
@@ -183,29 +191,16 @@ export default function Header() {
         return () => document.removeEventListener('mousedown', onClick);
     }, []);
 
-    // Close menus on route change
-    useEffect(() => {
-        setMobileMenuOpen(false);
-        setActiveDropdown(null);
-    }, [pathname]);
-
     const visible = isVisible || mobileMenuOpen;
     const homeOverlay = isHomepage && !isScrolled && !mobileMenuOpen;
-
-    const mobileLink = (href) =>
-        `block rounded-lg px-4 py-3 text-base font-semibold transition-colors hover:bg-[#173D2C]/5 ${isActive(pathname, href) ? 'bg-[#173D2C]/5 text-[#8B5E1A]' : 'text-[#173D2C]'
-        }`;
 
     return (
         <>
             <header
                 ref={headerRef}
                 onClickCapture={startRouteLoading}
-                className={`${isHomepage ? 'fixed' : 'sticky'} top-0 inset-x-0 z-50 w-full max-w-full
-  transition-all duration-300
-  ${visible ? 'translate-y-0' : '-translate-y-full'}
-  ${homeOverlay ? 'border-b border-white/10 bg-transparent' : 'border-b border-[#E5E2DA] bg-[#f5f2e9]'}
-`}
+                className={`fixed top-0 inset-x-0 z-50 w-full max-w-full transition-all duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'
+                    } ${homeOverlay ? 'border-b border-white/10 bg-transparent' : 'border-b border-[#E5E2DA] bg-[#f5f2e9]'}`}
             >
                 <div className="mx-auto max-w-[1350px] px-4 sm:px-6 lg:px-10">
                     <div className={`flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-18 sm:h-20 xl:h-20'}`}>
@@ -235,7 +230,7 @@ export default function Header() {
                             </div>
                         </Link>
 
-                        {/* Desktop Nav — hidden below lg (1024px) */}
+                        {/* Desktop Nav — hidden below xl */}
                         <nav className="hidden items-center gap-4 xl:flex 2xl:gap-7" aria-label="Main">
                             {primaryNavLinks.filter((item) => !(isHomepage && item.href === '/')).map((item) => (
                                 <NavLink key={item.href} href={item.href} pathname={pathname} light={homeOverlay}>{item.name}</NavLink>
@@ -267,21 +262,9 @@ export default function Header() {
                                     <ArrowUpRight className="w-4 h-4" />
                                 </span>
                             </button>
-                            {/* <Link
-                                href="/request-quote"
-                                className={`group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
-                                    ? 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20'
-                                    : 'bg-[#3C5A47] text-white hover:bg-[#2E4A39]'
-                                    }`}
-                            >
-                                <span>Request a quote</span>
-                                <span className={`grid h-10 w-10 place-items-center rounded-full transition-colors duration-300 ${homeOverlay ? 'bg-white/15' : 'bg-[#2E4A39] group-hover:bg-[#1E3A29]'}`}>
-                                    <ArrowUpRight className="w-4 h-4" />
-                                </span>
-                            </Link> */}
                         </div>
 
-                        {/* Mobile: Hamburger toggle */}
+                        {/* Mobile: Hamburger toggle only */}
                         <div className="flex items-center xl:hidden">
                             <button
                                 type="button"
@@ -301,31 +284,37 @@ export default function Header() {
                     </div>
                 </div>
 
-                {/* Mobile Drawer — slide-down animation */}
+                {/* Mobile Full Screen Menu */}
                 <div
                     className={`xl:hidden overflow-hidden transition-all duration-300 ease-out ${mobileMenuOpen
-                        ? 'max-h-[calc(100vh-5rem)] opacity-100'
-                        : 'max-h-0 opacity-0'
+                        ? 'h-[calc(100dvh-4.5rem)] sm:h-[calc(100dvh-5rem)] opacity-100'
+                        : 'h-0 opacity-0 pointer-events-none'
                         }`}
                 >
-                    <div className="max-h-[calc(100vh-5rem)] space-y-1 overflow-y-auto border-t border-[#173D2C]/10 bg-[#f5f2e9] px-4 pt-4 pb-8 sm:px-6">
+                    <div className="flex h-full flex-col justify-between overflow-y-auto overscroll-contain border-t border-[#173D2C]/10 bg-[#f5f2e9] px-6 pt-5 pb-8 sm:px-8">
 
-                        {primaryNavLinks
-                            .filter((item) => !(isHomepage && item.href === '/'))
-                            .map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    aria-current={isActive(pathname, item.href) ? 'page' : undefined}
-                                    className={mobileLink(item.href)}
-                                >
-                                    {item.name}
-                                </Link>
-                            ))}
+                        {/* Navigation Links */}
+                        <nav className="flex flex-col space-y-1">
+                            {primaryNavLinks
+                                .filter((item) => !(isHomepage && item.href === '/'))
+                                .map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                                        className={`rounded-xl px-4 py-3 text-lg font-bold tracking-tight transition-colors ${isActive(pathname, item.href)
+                                            ? 'bg-[#173D2C]/10 text-[#8B5E1A]'
+                                            : 'text-[#173D2C] hover:bg-[#173D2C]/5'
+                                            }`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ))}
+                        </nav>
 
-                        {/* Mobile CTA buttons */}
-                        <div className="pt-4 space-y-3">
+                        {/* Mobile Bottom Section: CTAs & Contact Details */}
+                        <div className="pt-6 space-y-3 border-t border-[#173D2C]/10 mt-auto">
                             <button
                                 type="button"
                                 onClick={() => {
@@ -338,7 +327,7 @@ export default function Header() {
                                         });
                                     }, 300);
                                 }}
-                                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#003C24] bg-[#003C24] py-3 font-semibold text-white transition-all duration-300 hover:bg-[#09271B] active:scale-[0.98]"
+                                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#003C24] bg-[#003C24] py-3.5 font-bold text-white transition-all duration-300 hover:bg-[#09271B] active:scale-[0.98] shadow-md"
                             >
                                 <span>Request a quote</span>
                                 <ArrowUpRight className="w-4 h-4" />
@@ -347,16 +336,29 @@ export default function Header() {
                             {siteConfig?.phone && (
                                 <a
                                     href={siteConfig.phoneLink}
-                                    className="flex w-full items-center justify-center gap-2 rounded-full border border-[#173D2C]/25 bg-white/40 py-3 font-semibold text-[#173D2C] transition-all duration-300 hover:bg-white/70 active:scale-[0.98]"
+                                    className="flex w-full items-center justify-center gap-2 rounded-full border border-[#173D2C]/25 bg-white/70 py-3 font-semibold text-[#173D2C] transition-all duration-300 hover:bg-white active:scale-[0.98]"
                                 >
-                                    <PhoneIcon className="w-4 h-4" />
-                                    <span>{siteConfig.phone}</span>
+                                    <PhoneIcon className="w-4 h-4 text-[#8B5E1A]" />
+                                    <span>Call our mill: {siteConfig.phone}</span>
                                 </a>
                             )}
+
+                            <div className="pt-2 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-[#173D2C]/60">
+                                Lumber Yard &amp; Sawmill · Vancouver Island, BC
+                            </div>
                         </div>
                     </div>
                 </div>
             </header>
+
+            {/* Spacer for non-homepage pages to prevent fixed header from covering content */}
+            {!isHomepage && (
+                <div
+                    className={`w-full shrink-0 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-18 sm:h-20 xl:h-20'
+                        }`}
+                    aria-hidden="true"
+                />
+            )}
 
             <div
                 className={`fixed inset-x-0 top-0 z-[60] h-[3px] pointer-events-none transition-opacity duration-200 ${isRouteLoading || scrollProgress > 0 ? 'opacity-100' : 'opacity-0'}`}
@@ -375,7 +377,7 @@ export default function Header() {
 
             {/* Mobile overlay backdrop */}
             <div
-                className={`fixed inset-0 z-40 bg-black/25 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                     }`}
                 onClick={() => setMobileMenuOpen(false)}
                 aria-hidden="true"
