@@ -93,7 +93,7 @@ function ServiceCard({
         <article
             data-reveal
             className={variant === "editorial"
-                ? `editorial-service-card group relative flex h-full min-h-[240px] flex-col overflow-hidden bg-[#E9E7DC] p-7 text-[#002B2B] transition-all duration-300 hover:bg-[#E2DFD3] hover:shadow-sm motion-reduce:transition-none sm:min-h-[257px] sm:p-8 lg:p-9 ${className}`
+                ? `editorial-service-card group relative flex h-full min-h-[220px] flex-col overflow-hidden bg-[#EAE8DE] p-7 text-[#002B2B] transition-all duration-300 hover:bg-[#E2DFD3] hover:shadow-sm motion-reduce:transition-none sm:min-h-[220px] sm:p-8 lg:p-6 ${className}`
                 : `group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#102D1F]/10 bg-[#F5F2EC] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#102D1F]/20 hover:bg-white hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-7 ${className}`}
         >
             {tag && (
@@ -110,8 +110,8 @@ function ServiceCard({
 
             {title && (
                 <h3 className={variant === "editorial"
-                    ? "relative text-[1.55rem] font-normal leading-tight tracking-[-0.03em] text-[#002B2B] sm:text-[1.7rem]"
-                    : "relative mt-5 text-lg font-bold tracking-tight text-[#102D1F]"}>
+                    ? "relative text-[1.65rem] font-normal leading-tight tracking-[-0.03em] text-[#002B2B] sm:text-[1.85rem]"
+                    : "relative mt-5 text-lg font-normal tracking-tight text-[#102D1F]"}>
                     {title}
                 </h3>
             )}
@@ -338,46 +338,46 @@ const DEFAULT_CARDS = [
     },
 ];
 
-const SERVICE_CARDS = [
-    {
-        id: 1,
-        title: 'Rough-sawn lumber',
-        description:
-            'Custom sizes and dimensional lumber for building, landscaping and practical projects around your property.',
-    },
-    {
-        id: 2,
-        title: 'Planed lumber & S4S',
-        description:
-            'Planed options, including surfacing on all four sides, for projects that call for a smoother finish.',
-    },
-    {
-        id: 3,
-        title: 'Tongue & groove',
-        description:
-            'Wood profiles for walls, ceilings and other finishing details. Ask about species, dimensions and current options.',
-    },
-    {
-        id: 4,
-        title: 'Maple slabs',
-        description:
-            'Character-rich maple slabs for tables, counters and creative woodworking. Ask about available sizes and drying condition.',
-    },
-    {
-        id: 5,
-        title: 'Custom milling & finishing',
-        description:
-            'Discuss custom cuts, mobile milling, kiln drying, planing and moulding for your timber or lumber order.',
-    },
-    {
-        id: 6,
-        title: 'Firewood',
-        description:
-            'Firewood supply backed by years of hands-on experience. Contact us for current availability and delivery arrangements.',
-        ctaText: 'Explore firewood',
-        ctaHref: '#',
-    },
-];
+// const SERVICE_CARDS = [
+//     {
+//         id: 1,
+//         title: 'Rough-sawn lumber',
+//         description:
+//             'Custom sizes and dimensional lumber for building, landscaping and practical projects around your property.',
+//     },
+//     {
+//         id: 2,
+//         title: 'Planed lumber & S4S',
+//         description:
+//             'Planed options, including surfacing on all four sides, for projects that call for a smoother finish.',
+//     },
+//     {
+//         id: 3,
+//         title: 'Tongue & groove',
+//         description:
+//             'Wood profiles for walls, ceilings and other finishing details. Ask about species, dimensions and current options.',
+//     },
+//     {
+//         id: 4,
+//         title: 'Maple slabs',
+//         description:
+//             'Character-rich maple slabs for tables, counters and creative woodworking. Ask about available sizes and drying condition.',
+//     },
+//     {
+//         id: 5,
+//         title: 'Custom milling & finishing',
+//         description:
+//             'Discuss custom cuts, mobile milling, kiln drying, planing and moulding for your timber or lumber order.',
+//     },
+//     {
+//         id: 6,
+//         title: 'Firewood',
+//         description:
+//             'Firewood supply backed by years of hands-on experience. Contact us for current availability and delivery arrangements.',
+//         ctaText: 'Explore firewood',
+//         ctaHref: '#',
+//     },
+// ];
 
 const DEFAULT_PRODUCT_CARDS = [
     {
@@ -583,7 +583,7 @@ function FirewoodCardGrid({ items = [], className = "" }) {
 
 export default function Cards({
     type = "timber",
-    items,
+    items = [],
     steps = [],
     className = "",
     gridClassName = "",
@@ -591,7 +591,11 @@ export default function Cards({
     variant = "default",
 }) {
     const cardItems =
-        items ?? (type === "services" ? SERVICE_CARDS : DEFAULT_CARDS);
+        items.length > 0
+            ? items
+            : type === "services"
+                ? SERVICE_CARDS
+                : DEFAULT_CARDS;
 
     return (
         <section className={`w-full max-w-full overflow-hidden ${variant === "editorial" ? "px-0 py-0" : "px-0 py-6 sm:px-6 sm:py-10 md:px-12"} ${className}`}>

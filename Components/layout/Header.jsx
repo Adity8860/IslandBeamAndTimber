@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { servicesLinks, siteConfig } from '@/lib/siteConfig';
+
+const emptySubscribe = () => () => { };
 
 const primaryNavLinks = [
     { name: 'Home', href: '/' },
@@ -202,10 +204,10 @@ export default function Header() {
                 className={`${isHomepage ? 'fixed' : 'sticky'} top-0 inset-x-0 z-50 w-full max-w-full
   transition-all duration-300
   ${visible ? 'translate-y-0' : '-translate-y-full'}
-  ${homeOverlay ? 'border-b border-white/10 bg-transparent' : 'border-b border-[#E5E2DA] bg-white'}
+  ${homeOverlay ? 'border-b border-white/10 bg-transparent' : 'border-b border-[#E5E2DA] bg-[#f5f2e9]'}
 `}
             >
-                <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
+                <div className="mx-auto max-w-[1350px] px-4 sm:px-6 lg:px-10">
                     <div className={`flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-18 sm:h-20 xl:h-20'}`}>
 
                         {/* Logo & Branding */}
@@ -241,7 +243,31 @@ export default function Header() {
                         </nav>
 
                         <div className="hidden shrink-0 items-center gap-3 xl:flex">
-                            <Link
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const enquirySection = document.getElementById("enquiry");
+
+                                    enquirySection?.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "start",
+                                    });
+                                }}
+                                className={`group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
+                                    ? 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20'
+                                    : 'bg-[#3C5A47] text-white hover:bg-[#2E4A39]'
+                                    }`}
+                            >
+                                <span>Request a quote</span>
+
+                                <span className={`grid h-10 w-10 place-items-center rounded-full transition-colors duration-300 ${homeOverlay
+                                    ? 'bg-white/15'
+                                    : 'bg-[#2E4A39] group-hover:bg-[#1E3A29]'
+                                    }`}>
+                                    <ArrowUpRight className="w-4 h-4" />
+                                </span>
+                            </button>
+                            {/* <Link
                                 href="/request-quote"
                                 className={`group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
                                     ? 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20'
@@ -252,24 +278,15 @@ export default function Header() {
                                 <span className={`grid h-10 w-10 place-items-center rounded-full transition-colors duration-300 ${homeOverlay ? 'bg-white/15' : 'bg-[#2E4A39] group-hover:bg-[#1E3A29]'}`}>
                                     <ArrowUpRight className="w-4 h-4" />
                                 </span>
-                            </Link>
+                            </Link> */}
                         </div>
 
-                        {/* Mobile: Phone + Hamburger */}
-                        <div className="flex items-center gap-2 xl:hidden">
-                            {siteConfig?.phoneLink && (
-                                <a
-                                    href={siteConfig.phoneLink}
-                                    className={`rounded-lg p-2 transition-colors ${homeOverlay ? 'text-white/90 hover:bg-white/10 hover:text-white' : 'text-[#173D2C]/80 hover:bg-[#173D2C]/5 hover:text-[#173D2C]'}`}
-                                    aria-label={`Call ${siteConfig.phone}`}
-                                >
-                                    <PhoneIcon className="w-5 h-5" />
-                                </a>
-                            )}
+                        {/* Mobile: Hamburger toggle */}
+                        <div className="flex items-center xl:hidden">
                             <button
                                 type="button"
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className={`rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay ? 'text-white hover:bg-white/10' : 'text-[#173D2C] hover:bg-[#173D2C]/5'}`}
+                                className={`rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay ? 'text-white hover:bg-white/10 drop-shadow-sm' : 'text-[#173D2C] hover:bg-[#173D2C]/5'}`}
                                 aria-label="Toggle menu"
                                 aria-expanded={mobileMenuOpen}
                             >
@@ -291,87 +308,41 @@ export default function Header() {
                         : 'max-h-0 opacity-0'
                         }`}
                 >
-                    <div className="max-h-[calc(100vh-5rem)] space-y-1 overflow-y-auto border-t border-[#173D2C]/10 bg-white px-4 pt-4 pb-8 sm:px-6">
-                        {[
-                            { name: 'Home', href: '/' },
-                            { name: 'About', href: '/About' },
-                        ].map((l) => (
-                            <Link
-                                key={l.name}
-                                href={l.href}
-                                onClick={() => setMobileMenuOpen(false)}
-                                aria-current={isActive(pathname, l.href) ? 'page' : undefined}
-                                className={mobileLink(l.href)}
-                            >
-                                {l.name}
-                            </Link>
-                        ))}
+                    <div className="max-h-[calc(100vh-5rem)] space-y-1 overflow-y-auto border-t border-[#173D2C]/10 bg-[#f5f2e9] px-4 pt-4 pb-8 sm:px-6">
 
-                        {[
-                            { id: 'mobile-services', label: 'Services', links: servicesLinks },
-                        ].map((group) => {
-                            const open = activeDropdown === group.id;
-                            const selected = group.links.some((l) => isActive(pathname, l.href));
-                            return (
-                                <div key={group.id}>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveDropdown(open ? null : group.id)}
-                                        aria-expanded={open}
-                                        className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-base font-semibold transition-colors hover:bg-[#173D2C]/5 ${selected ? 'text-[#8B5E1A]' : 'text-[#173D2C]'
-                                            }`}
-                                    >
-                                        <span>{group.label}</span>
-                                        <Chevron open={open} active={selected} className="w-4 h-4" />
-                                    </button>
-                                    <div
-                                        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                                            }`}
-                                    >
-                                        <div className="overflow-hidden">
-                                            <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-[#173D2C]/15 pl-4">
-                                                {group.links.map((item) => {
-                                                    const itemActive = isActive(pathname, item.href);
-                                                    return (
-                                                        <Link
-                                                            key={item.name}
-                                                            href={item.href}
-                                                            onClick={() => setMobileMenuOpen(false)}
-                                                            tabIndex={open ? 0 : -1}
-                                                            aria-current={itemActive ? 'page' : undefined}
-                                                            className={`block rounded-md px-3 py-2.5 text-sm font-medium transition-colors hover:bg-[#173D2C]/5 hover:text-[#8B5E1A] ${itemActive ? 'bg-[#173D2C]/5 text-[#8B5E1A]' : 'text-[#173D2C]/80'
-                                                                }`}
-                                                        >
-                                                            {item.name}
-                                                        </Link>
-                                                    );
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-
-                        <Link
-                            href="/Contact"
-                            onClick={() => setMobileMenuOpen(false)}
-                            aria-current={isActive(pathname, '/contact') ? 'page' : undefined}
-                            className={mobileLink('/contact')}
-                        >
-                            Contact
-                        </Link>
+                        {primaryNavLinks
+                            .filter((item) => !(isHomepage && item.href === '/'))
+                            .map((item) => (
+                                <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                                    className={mobileLink(item.href)}
+                                >
+                                    {item.name}
+                                </Link>
+                            ))}
 
                         {/* Mobile CTA buttons */}
                         <div className="pt-4 space-y-3">
-                            <Link
-                                href="/request-quote"
-                                onClick={() => setMobileMenuOpen(false)}
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setMobileMenuOpen(false);
+
+                                    setTimeout(() => {
+                                        document.getElementById("enquiry")?.scrollIntoView({
+                                            behavior: "smooth",
+                                            block: "start",
+                                        });
+                                    }, 300);
+                                }}
                                 className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#003C24] bg-[#003C24] py-3 font-semibold text-white transition-all duration-300 hover:bg-[#09271B] active:scale-[0.98]"
                             >
                                 <span>Request a quote</span>
                                 <ArrowUpRight className="w-4 h-4" />
-                            </Link>
+                            </button>
 
                             {siteConfig?.phone && (
                                 <a
@@ -409,6 +380,19 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 aria-hidden="true"
             />
+
+            {/* Mobile Floating "Call our mill" Button — Bottom Right across all pages */}
+            {siteConfig?.phoneLink && (
+                <a
+                    href={siteConfig.phoneLink}
+                    className={`fixed bottom-4 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-[#EEBF21] px-4 py-2.5 text-xs sm:text-sm font-bold tracking-wide text-[#073D2B] shadow-[0_4px_18px_rgba(0,0,0,0.25)] border border-[#073D2B]/10 transition-all duration-300 hover:bg-[#dfaa0d] active:scale-95 xl:hidden ${mobileMenuOpen ? 'pointer-events-none opacity-0' : 'opacity-100'
+                        }`}
+                    aria-label={`Call our mill at ${siteConfig.phone}`}
+                >
+                    <span>Call our mill</span>
+                    <span className="text-sm font-extrabold leading-none" aria-hidden="true">↗</span>
+                </a>
+            )}
         </>
     );
 }

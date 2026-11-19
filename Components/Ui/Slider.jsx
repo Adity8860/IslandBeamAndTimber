@@ -168,11 +168,9 @@ export default function Slider({
                             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                             style={{ backgroundImage: `url(${slide.bgImage})` }}
                         />
-                        {/* Atmospheric overlay: Dark forest vignette with warm undertone */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-stone-950/50 to-transparent mix-blend-multiply" />
-                        <div className="absolute inset-0 bg-black/30" />
-                        {/* <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-stone-950/75 mix-blend-multiply" />
-                        <div className="absolute inset-0 bg-black/45" /> */}
+                        {/* Atmospheric overlay: Allows background photo to be clearly seen while keeping text crisp */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/65 via-stone-950/20 to-stone-950/45 mix-blend-multiply" />
+                        <div className="absolute inset-0 bg-black/25 sm:bg-black/20" />
                     </div>
                 ))}
             </div>
@@ -182,24 +180,26 @@ export default function Slider({
                 {/* Eyebrow / Tagline */}
                 <div className="flex items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6 animate-fadeIn max-w-full">
                     <span className="w-5 sm:w-6 h-[2px] bg-[#F3BE1D] shrink-0" />
-                    <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold tracking-[0.12em] sm:tracking-[0.25em] text-[#F3BE1D] uppercase break-words">
+                    <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold tracking-[0.12em] sm:tracking-[0.25em] text-[#F3BE1D] uppercase break-words drop-shadow-sm">
                         {activeSlide.tagline}
                     </span>
                 </div>
 
                 {/* Dynamic Titles */}
-                <h1 className="max-w-6xl break-words text-[clamp(3.5rem,9vw,10rem)] font-normal leading-[0.9] tracking-[-0.06em]">
+                <h1 className="max-w-6xl break-words text-[clamp(3.5rem,9vw,10rem)] font-normal leading-[0.9] tracking-[-0.06em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                     <span className="block text-white font-sans">{activeSlide.titleWhite}</span>
                     <span className="block font-sans font-normal text-[#F3BE1D]">
                         {activeSlide.titleGold}
                     </span>
-                    <span className="block font-sans font-normal text-[#F3BE1D]">
-                        {activeSlide.titleGold1}
-                    </span>
+                    {activeSlide.titleGold1 && (
+                        <span className="block font-sans font-normal text-[#F3BE1D]">
+                            {activeSlide.titleGold1}
+                        </span>
+                    )}
                 </h1>
 
                 {/* Description Paragraph */}
-                <p className="mt-4 sm:mt-5 text-xs sm:text-sm md:text-lg text-white font-normal leading-relaxed max-w-2xl">
+                <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-white/95 font-normal leading-relaxed max-w-2xl drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                     {activeSlide.description}
                 </p>
 
@@ -291,7 +291,7 @@ export default function Slider({
             )}
 
             {/* Bottom Footer Bar */}
-            <div className="relative z-10 w-full border-t border-white/10 bg-black/30 backdrop-blur-sm overflow-hidden">
+            <div className="relative z-10 w-full border-t border-white/10 bg-black/40 sm:bg-black/30 backdrop-blur-sm overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-2.5 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-3 text-[9px] sm:text-[10px] md:text-xs font-medium tracking-[0.12em] sm:tracking-[0.2em] text-white/90 uppercase text-center sm:text-left">
                     {/* Scroll cue & quality note */}
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-3 max-w-full">

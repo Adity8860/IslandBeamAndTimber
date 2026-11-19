@@ -98,7 +98,7 @@ export default function About() {
       <StorySection data={approachData} title={<>Good timber.<br />Honest work.</>} reverse tone="warm" />
 
       {/* ── CTA ── */}
-      <section className="bg-[#003C24] px-4 py-14 text-[#F4F2E9] sm:px-6 sm:py-16 lg:px-8">
+      <section id="enquiry" className="bg-[#003C24] px-4 py-14 text-[#F4F2E9] sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-12">
           <div data-reveal className="lg:col-span-8">
             <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-normal leading-[1.03] tracking-[-0.055em]">

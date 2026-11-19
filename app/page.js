@@ -6,7 +6,7 @@ import { aboutSawmillData, timberGalleryData, faqData } from "@/lib/pageConstant
 import TimberGallery from "@/Components/Ui/TimberGallery";
 import FAQSection from "@/Components/Ui/FAQ";
 import ScrollReveal from "@/Components/Ui/ScrollReveal";
-import { SLIDES } from "@/lib/pageConstant";
+import { SLIDES, SERVICE_CARDS } from "@/lib/pageConstant";
 import { siteConfig } from "@/lib/siteConfig";
 
 const lumberStats = [
@@ -69,8 +69,8 @@ export default function Home() {
       </section>
 
       {/* Our lumber */}
-      <section className="w-full max-w-full overflow-hidden bg-[#FAF8F5] py-14 px-4 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-28">
-        <div className="max-w-7xl mx-auto">
+      <section id="our-lumber" className="w-full max-w-full overflow-hidden bg-[#f5f2e9] py-14 px-4 sm:px-6 sm:py-16 md:px-8 lg:px-6 lg:py-28 scroll-mt-20">
+        <div className="mx-auto w-full max-w-7xl">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
             <div data-reveal className="max-w-3xl">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
@@ -79,7 +79,7 @@ export default function Home() {
                   OUR LUMBER
                 </span>
               </div>
-              <h2 className="text-3xl font-black text-[#0E2117] tracking-tight leading-[1.08] sm:text-4xl md:text-5xl lg:text-6xl break-words">
+              <h2 className="text-3xl    text-[#173b28] tracking-tight leading-[1.08] sm:text-4xl md:text-5xl lg:text-6xl break-words">
                 The right wood.<br />
                 A world of possibilities.
               </h2>
@@ -164,7 +164,7 @@ export default function Home() {
             {/* CTA Button */}
             <div>
               <a
-                href="/cut-list"
+                href="#enquiry"
                 className="btn-shine group mt-8 inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[#F2C21A] hover:bg-[#FFD12B] text-[#073D2B] font-bold text-sm tracking-wide transition-all duration-300 hover:-translate-y-0.5 shadow-lg active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F2C21A] sm:px-8 sm:py-4"
               >
                 <span>Send us your cut list</span>
@@ -187,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* Products & milling services */}
-      <section className="w-full max-w-full overflow-hidden bg-[#FAF8F5] py-14 px-4 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-28">
+      <section className="w-full max-w-full overflow-hidden bg-[#f5f2e9] py-14 px-4 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-28">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
             <div data-reveal className="max-w-3xl">
@@ -197,7 +197,7 @@ export default function Home() {
                   PRODUCTS & MILLING SERVICES
                 </span>
               </div>
-              <h2 className="text-3xl font-black text-[#0E2117] tracking-tight leading-[1.08] sm:text-4xl md:text-5xl lg:text-6xl break-words">
+              <h2 className="text-3xl    text-[#173b28] tracking-tight leading-[1.08] sm:text-4xl md:text-5xl lg:text-6xl break-words">
                 More ways to make<br />
                 your project happen.
               </h2>
@@ -214,7 +214,7 @@ export default function Home() {
           </div>
 
           <div data-reveal style={delay(100)}>
-            <Card type="services" variant="editorial" className="!px-0 !py-0" />
+            <Card type="services" items={SERVICE_CARDS} variant="editorial" className="!px-0 !py-0" />
           </div>
         </div>
       </section>
@@ -274,7 +274,7 @@ export default function Home() {
               Make room for tools, garden gear and everyday storage with a solid wood shed built on skids. Choose from available ready-to-go sheds or talk to us about a custom size and delivery to your property.
             </p>
             <a data-reveal
-              href="/garden-sheds"
+              href="/GoldenShed"
               className="btn-shine group mt-7 inline-flex min-h-[72px] w-fit items-center gap-8 rounded-full bg-[#EEBF21] px-7 text-sm font-bold text-[#003C24] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F5CC3B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003C24] sm:px-8"
             >
               Explore garden sheds
@@ -286,7 +286,7 @@ export default function Home() {
 
       {/* Call to action */}
 
-      <section className="relative w-full overflow-hidden bg-[#003C24] px-4 py-20 text-[#F5F2E9] sm:px-6 sm:py-24 md:px-8 lg:px-12 lg:py-28">
+      <section id="enquiry" className="relative w-full overflow-hidden bg-[#003C24] px-4 py-20 text-[#F5F2E9] sm:px-6 sm:py-24 md:px-8 lg:px-12 lg:py-28">
         <div className="mx-auto flex min-h-[340px] w-full max-w-7xl flex-col items-start justify-center gap-10 lg:min-h-[340px] lg:flex-row lg:items-center lg:justify-between lg:gap-12">
 
           {/* Left Content */}

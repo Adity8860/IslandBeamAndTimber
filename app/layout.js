@@ -12,10 +12,15 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
 export const metadata = {
   title: "Island Beam & Timber Ltd. | Lumber Yard & Sawmill",
   description: "Quality lumber and custom timber rooted on Vancouver Island.",
+
+  icons: {
+    icon: "/Icons/LOGO.svg",
+    shortcut: "/Icons/LOGO.svg",
+    apple: "/Icons/LOGO.svg",
+  },
 };
 
 export const viewport = {

@@ -180,7 +180,7 @@ export default function Contact() {
                 </section>
 
                 {/* ── Enquiry form ── */}
-                <section id="contact-form" className="bg-[#EAE8DE] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+                <section id="enquiry" className="bg-[#EAE8DE] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
                     <div className="mx-auto grid max-w-7xl items-start gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16 xl:gap-24">
                         <div data-reveal className="lg:pt-1">
                             <div className="mb-4 flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#173D2C] sm:text-[10px]">
