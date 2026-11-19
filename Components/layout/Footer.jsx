@@ -33,7 +33,7 @@ export default function Footer() {
     const homeOverlay = []
     return (
         <footer className="w-full max-w-full overflow-hidden  bg-[#002b19] text-[#B7CDBF] font-sans">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-14 pb-10 sm:pt-20">
+            <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 pt-14 pb-10 sm:pt-20">
                 {/* Main Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 pb-14 border-b border-white/10">
 

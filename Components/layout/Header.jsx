@@ -172,7 +172,7 @@ export default function Header() {
   ${homeOverlay ? 'border-b border-white/10 bg-transparent' : 'border-b border-[#E5E2DA] bg-white'}
 `}
             >
-                <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
+                <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
                     <div className={`flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-18 sm:h-20 xl:h-20'}`}>
 
                         {/* Logo & Branding */}

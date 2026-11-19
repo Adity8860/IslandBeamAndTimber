@@ -12,7 +12,7 @@ export default function MobileMilling() {
         <div className="font-sans leading-relaxed text-[#073d28]">
             <ScrollReveal />
             <CustomLumberHero data={mobileMillingData} />
-            <section id="services" className="bg-[#f6f3e9] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+            <section id="services" className="bg-[#f6f3e9] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
                 <div className="mx-auto max-w-7xl">
                     <div className="grid gap-12 lg:grid-cols-2 lg:gap-24">
                         <div>
@@ -31,9 +31,9 @@ export default function MobileMilling() {
                     <ProductCards items={mobileMillingCards} className="mt-16" itemClassName="min-h-[fit-content]" />
                 </div>
                 <div className="mx-auto mt-20 grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
-                    <figure data-reveal className="relative aspect-[0.97/1] overflow-hidden bg-[#d8d5c8]">
+                    <figure data-reveal className="relative aspect-[0.97/1] overflow-hidden bg-[#d8d5c8] lg:aspect-auto lg:min-h-[800px]">
                         <Image
-                            src="/Images/pageImg/IMG_4841.JPEG"
+                            src="/Images/milling/milling-log.jpg"
                             alt="Logs being moved for mobile milling"
                             fill
                             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -59,7 +59,7 @@ export default function MobileMilling() {
                     <figure data-reveal style={{ "--d": "100ms" }}>
                         <div className="relative aspect-square overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/pageImg/IMG_4565 (1).JPEG"
+                                src="/Images/milling/IMG_4734.JPEG"
                                 alt="Forklift loading lumber at the yard"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 30vw"
@@ -68,10 +68,10 @@ export default function MobileMilling() {
                         </div>
                         <figcaption className="mt-3 text-xs text-[#728076]">Loading assistance at the yard.</figcaption>
                     </figure>
-                    <figure data-reveal style={{ "--d": "180ms" }} className="md:mt-16">
+                    <figure data-reveal style={{ "--d": "100ms" }} className="md:mt-16">
                         <div className="relative aspect-[1.5/1] overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/pageImg/IMG_4605.JPEG"
+                                src="/Images/pageImg/IMG_4841.JPEG"
                                 alt="Sawmill equipment beneath a timber frame shelter"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 40vw"
@@ -83,7 +83,7 @@ export default function MobileMilling() {
                     <figure data-reveal style={{ "--d": "260ms" }}>
                         <div className="relative aspect-square overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/pageImg/IMG_4841.JPEG"
+                                src="/Images/milling/IMG_0208 (1).JPEG"
                                 alt="Freshly milled lumber stacked at the yard"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 30vw"
@@ -95,7 +95,7 @@ export default function MobileMilling() {
                 </div>
             </section>
 
-            <section id="enquiry" className="bg-[#eeece2] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-36">
+            <section id="enquiry" className="bg-[#eeece2] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
                 <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-2 lg:gap-20">
                     <div>
                         <p data-reveal className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.19em] text-[#315343]">
@@ -151,8 +151,8 @@ export default function MobileMilling() {
                     </div>
                 </div>
             </section>
-            <section className="bg-[#f6f3e9] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
-                <div className="mx-auto max-w-7xl">
+            <section className="bg-[#f6f3e9] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+                <div className="mx-auto max-w-4xl">
                     <h2 data-reveal className="text-[clamp(2.5rem,4vw,4rem)] font-normal tracking-[-0.065em]">
                         Before we start.
                     </h2>
@@ -164,7 +164,7 @@ export default function MobileMilling() {
                     </div>
                 </div>
             </section>
-            <section className="bg-[#004329] px-6 py-20 text-[#f6f3e9] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+            <section className="bg-[#004329] px-6 py-16 text-[#f6f3e9] sm:px-8 sm:py-20 lg:px-10 lg:py-24">
                 <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1.45fr_0.85fr] lg:items-center lg:gap-20">
                     <div>
                         <h2 data-reveal className="text-[clamp(3rem,4vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">

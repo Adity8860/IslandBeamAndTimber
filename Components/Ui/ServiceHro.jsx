@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, ChevronRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
 import HeroHeadline from "@/Components/Ui/HeroHeadline";
 
 function normalizeSlides(data) {
@@ -27,6 +27,17 @@ function normalizeSlides(data) {
 export function HeroSection({ data = [], className = "", showSpecs = true }) {
     const slides = normalizeSlides(data);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+
+    useEffect(() => {
+        if (slides.length < 2 || isPaused) return undefined;
+
+        const timer = window.setInterval(() => {
+            setActiveIndex((index) => (index + 1) % slides.length);
+        }, 6500);
+
+        return () => window.clearInterval(timer);
+    }, [isPaused, slides.length]);
 
     if (!slides.length) return null;
 
@@ -35,16 +46,16 @@ export function HeroSection({ data = [], className = "", showSpecs = true }) {
 
     return (
         <section className={`overflow-hidden bg-[#002B18] text-[#F4F2E9] ${className}`} aria-label="Featured service">
-            <div className="relative z-0 grid min-h-[680px] lg:h-[calc(100svh-130px)] lg:min-h-[640px] lg:grid-cols-2 ">
-                <div className="flex min-w-0 flex-col justify-between px-6 py-12 sm:px-10 sm:py-14 lg:pl-[clamp(3rem,7.2vw,8rem)] lg:pr-[clamp(2rem,3vw,4rem)] lg:py-16">
-                    <div>
-                        <p className="mb-8 flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/75 sm:text-[10px]">
+            <div className="relative z-0 grid min-h-[fit-content] lg:h-[calc(100svh-130px)] lg:min-h-[fit-content] lg:grid-cols-2 ">
+                <div className="flex min-w-0 flex-col justify-between px-6 py-12 sm:px-10 sm:py-14 lg:pl-[clamp(3rem,7.2vw,8rem)] lg:pr-[clamp(2rem,3vw,4rem)]  ">
+                    <div className="p-8">
+                        <p data-reveal className="mb-8 flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/75 sm:text-[10px]">
                             <span className="h-[2px] w-8 bg-[#EEBF21]" aria-hidden="true" />
                             <span>Island Beam &amp; Timber / {active.badge}</span>
                         </p>
                         <HeroHeadline lines={titleLines} className="max-w-[850px]" />
                         {active.description && (
-                            <p className="mt-7 max-w-[560px] text-sm leading-[1.75] text-white/80 sm:text-base">
+                            <p data-reveal className="mt-7 max-w-[31rem] text-sm leading-[1.75] text-white/80 sm:text-base">
                                 {active.description}
                             </p>
                         )}
@@ -79,7 +90,7 @@ export function HeroSection({ data = [], className = "", showSpecs = true }) {
                             fill
                             priority={activeIndex === 0}
                             sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-cover object-center"
+                            className="hero-image-reveal object-cover object-center"
                         />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#002B18]/75 via-transparent to-transparent" />
@@ -108,27 +119,30 @@ export function HeroSection({ data = [], className = "", showSpecs = true }) {
                         {slides.length > 1 && (
                             <button
                                 type="button"
-                                onClick={() => setActiveIndex((activeIndex + 1) % slides.length)}
-                                aria-label="Show next slide"
-                                className="hidden grid size-12 shrink-0 place-items-center rounded-full border border-white/30 bg-white/5 text-white transition-colors hover:border-[#EEBF21] hover:text-[#EEBF21]"
+                                onClick={() => setIsPaused((paused) => !paused)}
+                                aria-label={isPaused ? "Play image carousel" : "Pause image carousel"}
+                                aria-pressed={isPaused}
+                                className="grid size-12 shrink-0 place-items-center rounded-full border border-white/30 bg-white/5 text-white transition-colors hover:border-[#EEBF21] hover:text-[#EEBF21]"
                             >
-                                <ChevronRight className="size-4" aria-hidden="true" />
+                                {isPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
                             </button>
                         )}
                     </div>
                 </div>
             </div>
+            <div>
+                {showSpecs && active.specs?.length > 0 && (
+                    <div className="relative z-10 grid bg-[#EEBF21] px-6 py-6 text-[#102D1F] sm:px-10 lg:grid-cols-3 lg:px-[clamp(3rem,7.2vw,8rem)]">
+                        {active.specs.slice(0, 3).map((spec, index) => (
+                            <div key={spec.label ?? spec.value ?? index} className={`flex items-baseline gap-4 py-2 ${index > 0 ? "lg:border-l lg:border-[#102D1F]/15 lg:pl-8" : ""} ${index < active.specs.length - 1 ? "border-b border-[#102D1F]/15 lg:border-b-0" : ""}`}>
+                                <strong className="shrink-0 text-2xl font-normal tracking-[-0.045em] sm:text-[28px]">{spec.value}</strong>
+                                <span className="text-xs leading-relaxed text-[#102D1F]/80">{spec.description ?? spec.label}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}</div>
 
-            {showSpecs && active.specs?.length > 0 && (
-                <div className="relative z-10 grid bg-[#EEBF21] px-6 py-6 text-[#102D1F] sm:px-10 lg:grid-cols-3 lg:px-[clamp(3rem,7.2vw,8rem)] mt-8">
-                    {active.specs.slice(0, 3).map((spec, index) => (
-                        <div key={spec.label ?? spec.value ?? index} className={`flex items-baseline gap-4 py-2 ${index > 0 ? "lg:border-l lg:border-[#102D1F]/15 lg:pl-8" : ""} ${index < active.specs.length - 1 ? "border-b border-[#102D1F]/15 lg:border-b-0" : ""}`}>
-                            <strong className="shrink-0 text-2xl font-normal tracking-[-0.045em] sm:text-[28px]">{spec.value}</strong>
-                            <span className="text-xs leading-relaxed text-[#102D1F]/80">{spec.description ?? spec.label}</span>
-                        </div>
-                    ))}
-                </div>
-            )}
+
         </section>
     );
 }

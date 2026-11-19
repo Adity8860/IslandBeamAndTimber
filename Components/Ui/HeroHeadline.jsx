@@ -11,8 +11,8 @@ export default function HeroHeadline({
     className = "",
 }) {
     return (
-        <Heading
-            className={`max-w-[900px] text-[clamp(3rem,5.5vw,6rem)] font-normal leading-[0.98] tracking-[-0.065em] text-[#F4F2E9] ${className}`}
+        <Heading data-reveal
+            className={`max-w-[900px] text-[clamp(3rem,4.5vw,6rem)] font-normal leading-[0.98] tracking-[-0.065em] text-[#F4F2E9] ${className}`}
         >
             {lines.map((line, index) => (
                 <span
