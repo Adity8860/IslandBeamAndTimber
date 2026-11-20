@@ -20,16 +20,25 @@ export default function EnquiryForm({
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
-        debugger
         e.preventDefault();
 
         const form = e.currentTarget;
 
         const formData = new FormData(form);
+        const fields = Object.fromEntries(formData.entries());
+        const additionalDetails = Object.entries(fields)
+            .filter(([key]) => !["Name", "Email", "Phone", "Service", "Location", "Message"].includes(key))
+            .map(([key, value]) => `${key}: ${value}`)
+            .join("\n");
 
         const payload = {
-            formType: variant,
-            ...Object.fromEntries(formData.entries()),
+            formType: "Contact Enquiry",
+            name: fields.Name || "",
+            email: fields.Email || "",
+            phone: fields.Phone || "",
+            service: fields.Service || fields.Interest || "",
+            location: fields.Location || "",
+            message: [fields.Message, additionalDetails].filter(Boolean).join("\n"),
         };
 
         try {
