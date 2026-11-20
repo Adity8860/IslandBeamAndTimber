@@ -264,7 +264,7 @@ export default function EnquiryForm({
             </label>
 
             {/* Location */}
-            <label className="block text-[13px] font-normal text-[#173D2C] sm:col-span-2">
+            {/* <label className="block text-[13px] font-normal text-[#173D2C] sm:col-span-2">
                 Project or delivery location
                 <input
                     {...lock}
@@ -272,7 +272,7 @@ export default function EnquiryForm({
                     placeholder="Town or delivery destination"
                     className={`${fieldClass} mt-2`}
                 />
-            </label>
+            </label> */}
 
             {/* Message */}
             <label className="block text-[13px] font-normal text-[#173D2C] sm:col-span-2">
