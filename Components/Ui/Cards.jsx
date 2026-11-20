@@ -15,14 +15,19 @@ export function Card({
     description = 'Our specialty for custom beams, posts, timbers and dimensional lumber.',
     ctaText = 'Ask about Douglas fir',
     ctaHref = '#',
+    cardHref = null,
     className = '',
     variant = "default",
 }) {
+    const CardWrapper = cardHref ? Link : 'div';
+    const ctaClass = `${focusRing} inline-flex items-center gap-2 font-bold text-sm tracking-wide text-[#09271B] transition-colors duration-300 ${variant === "editorial" ? "group-hover:text-white" : "group-hover:text-[#A86F1C]"}`;
+
     return (
-        <div
+        <CardWrapper
+            {...(cardHref ? { href: cardHref } : {})}
             className={`${variant === "editorial"
                 ? "cards-in group relative flex min-h-[520px] w-full flex-col justify-between bg-transparent p-6 text-[#09271B] transition-colors duration-300 ease-out hover:bg-[#003C24] sm:p-8 lg:p-10"
-                : "cards-in group relative flex min-h-[500px] w-full flex-col justify-between rounded-md border border-[#E7E2D6] bg-[#faf8f5] p-8 text-[#09271B] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#102D1F]/25 hover:bg-white hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"} ${className}`}
+                : "cards-in group relative flex min-h-[500px] w-full flex-col justify-between rounded-md border border-[#E7E2D6] bg-[#faf8f5] p-8 text-[#09271B] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#102D1F]/25 hover:bg-white hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"} ${cardHref ? focusRing : ""} ${className}`}
         >
             <div>
                 <div
@@ -51,10 +56,15 @@ export function Card({
             </div>
 
             <div className={`mt-10 pt-6 border-t transition-colors duration-300 ${variant === "editorial" ? "border-[#E5DFD3] group-hover:border-white/20" : "border-[#E5DFD3] group-hover:border-[#D5CDBD]"}`}>
-                <Link
-                    href={ctaHref}
-                    className={`${focusRing} inline-flex items-center gap-2 font-bold text-sm tracking-wide text-[#09271B] transition-colors duration-300 ${variant === "editorial" ? "group-hover:text-white" : "group-hover:text-[#A86F1C]"}`}
-                >
+                {cardHref ? (
+                    <span className={ctaClass}>
+                        <span>{ctaText}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </span>
+                ) : (
+                    <Link href={ctaHref} className={ctaClass}>
                     <span>{ctaText}</span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -71,9 +81,10 @@ export function Card({
                             d="M7 17L17 7M17 7H7M17 7V17"
                         />
                     </svg>
-                </Link>
+                    </Link>
+                )}
             </div>
-        </div>
+        </CardWrapper>
     );
 }
 
@@ -295,7 +306,7 @@ function TimberEditorialCards({ items = [] }) {
                     }
                     : item;
                 return (
-                    <Card key={item.id || index} {...displayItem} variant="editorial" />
+                    <Card key={item.id || index} {...displayItem} cardHref="/Contact#enquiry" variant="editorial" />
                 );
             })}
         </div>

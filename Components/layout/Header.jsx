@@ -4,19 +4,11 @@ import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { servicesLinks, siteConfig } from '@/lib/siteConfig';
+import { servicesLinks, siteConfig, NavLinks } from '@/lib/siteConfig';
 
 const emptySubscribe = () => () => { };
 
-const primaryNavLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Custom lumber', href: '/CustomLumber' },
-    { name: 'Milling services', href: '/MobileMilling' },
-    { name: 'About us', href: '/About' },
-    { name: 'Garden sheds', href: '/GoldenShed' },
-    { name: 'Firewood', href: '/Firewood' },
-    { name: 'Contact us', href: '/Contact' },
-];
+const primaryNavLinks = NavLinks
 
 // Case-insensitive route match ("/About" and "/about" both work)
 const isActive = (pathname, href) => {
@@ -238,16 +230,8 @@ export default function Header() {
                         </nav>
 
                         <div className="hidden shrink-0 items-center gap-3 xl:flex">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    const enquirySection = document.getElementById("enquiry");
-
-                                    enquirySection?.scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "start",
-                                    });
-                                }}
+                            <Link
+                                href="/Contact#enquiry"
                                 className={`group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
                                     ? 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20'
                                     : 'bg-[#3C5A47] text-white hover:bg-[#2E4A39]'
@@ -261,7 +245,7 @@ export default function Header() {
                                     }`}>
                                     <ArrowUpRight className="w-4 h-4" />
                                 </span>
-                            </button>
+                            </Link>
                         </div>
 
                         {/* Mobile: Hamburger toggle only */}
@@ -315,23 +299,14 @@ export default function Header() {
 
                         {/* Mobile Bottom Section: CTAs & Contact Details */}
                         <div className="pt-6 space-y-3 border-t border-[#173D2C]/10 mt-auto">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setMobileMenuOpen(false);
-
-                                    setTimeout(() => {
-                                        document.getElementById("enquiry")?.scrollIntoView({
-                                            behavior: "smooth",
-                                            block: "start",
-                                        });
-                                    }, 300);
-                                }}
+                            <Link
+                                href="/Contact#enquiry"
+                                onClick={() => setMobileMenuOpen(false)}
                                 className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#003C24] bg-[#003C24] py-3.5 font-bold text-white transition-all duration-300 hover:bg-[#09271B] active:scale-[0.98] shadow-md"
                             >
                                 <span>Request a quote</span>
                                 <ArrowUpRight className="w-4 h-4" />
-                            </button>
+                            </Link>
 
                             {siteConfig?.phone && (
                                 <a
@@ -354,8 +329,7 @@ export default function Header() {
             {/* Spacer for non-homepage pages to prevent fixed header from covering content */}
             {!isHomepage && (
                 <div
-                    className={`w-full shrink-0 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-18 sm:h-20 xl:h-20'
-                        }`}
+                    className="h-18 w-full shrink-0 sm:h-20"
                     aria-hidden="true"
                 />
             )}

@@ -23,7 +23,7 @@ const contactCards = [
         detail: "Talk through your project or text us your cut list.",
         links: [
             { label: "Call the mill", href: siteConfig.phoneLink },
-            { label: "Send a text", href: `sms:${siteConfig.phoneLink.replace("tel:", "")}` },
+            //     { label: "Send a text", href: `sms:${siteConfig.phoneLink.replace("tel:", "")}` },
         ],
     },
     {
@@ -31,14 +31,25 @@ const contactCards = [
         label: "Email our team",
         title: email,
         detail: "Send dimensions, photos, ideas or project drawings.",
-        links: [{ label: "Write to us", href: `mailto:${email}` }],
+        links: [
+            {
+                label: "Write to us",
+                href: "#enquiry",
+
+            },
+        ],
     },
     {
         number: "03",
         label: "Our sawmill",
         title: add1 || "5110 Dove Crk Rd",
         detail: add2 || "Comox Valley, BC V9J 1P4",
-        links: [{ label: "See our location ↓", href: `https://maps.google.com/?q=${mapQuery}` }],
+        links: [
+            {
+                label: "See our location ↓",
+                href: "#sawmill-location",
+            },
+        ],
     },
 ];
 
@@ -77,12 +88,12 @@ export default function Contact() {
                                 Custom lumber, a backyard shed, mobile milling or your next firewood delivery. Tell us what you have in mind — we&apos;ll work through the details with you.
                             </p>
                             <div data-reveal style={{ "--d": "380ms" }} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-                                <a href="#contact-form" className="group inline-flex min-h-16 items-center gap-7 rounded-full bg-[#EEBF21] px-7 text-sm font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B]">
+                                <a href="#enquiry" className="group inline-flex min-h-16 items-center gap-7 rounded-full bg-[#EEBF21] px-7 text-sm font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B]">
                                     Start an enquiry <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                 </a>
-                                <a href={siteConfig.phoneLink} className="group inline-flex items-center gap-2 border-b border-white/25 pb-2 text-xs font-semibold text-white transition-colors hover:border-[#EEBF21] hover:text-[#EEBF21]">
+                                {/* <a href={siteConfig.phoneLink} className="group inline-flex items-center gap-2 border-b border-white/25 pb-2 text-xs font-semibold text-white transition-colors hover:border-[#EEBF21] hover:text-[#EEBF21]">
                                     Call {siteConfig.phone} <ArrowUpRight className="size-3.5" />
-                                </a>
+                                </a> */}
                             </div>
                         </div>
 
@@ -109,7 +120,7 @@ export default function Contact() {
                 </section>
 
                 {/* ── Contact cards ── */}
-                <section aria-label="Contact options" className="border-b border-[#D9D8CD] bg-[#F4F2E9] px-5 sm:px-8 lg:px-10">
+                <section id="contact-options" aria-label="Contact options" className="border-b border-[#D9D8CD] bg-[#F4F2E9] px-5 sm:px-8 lg:px-10">
                     <div className="mx-auto grid max-w-7xl divide-y divide-[#D9D8CD] sm:grid-cols-[0.9fr_1.2fr_0.9fr] sm:divide-x sm:divide-y-0">
                         {contactCards.map((card, i) => (
                             <article data-reveal style={{ "--d": `${i * 150}ms` }} key={card.number} className={`min-w-0 px-2 py-7 sm:py-12 ${card.number === "01" ? "sm:px-2" : "sm:px-8"}`}>
@@ -117,11 +128,11 @@ export default function Contact() {
                                     <span>{card.number} / {card.label}</span>
                                     <ArrowUpRight className="size-3 text-[#A2A89C]" aria-hidden="true" />
                                 </div>
-                                <h2 className="mt-5 break-words text-xl font-normal leading-tight tracking-[-0.04em] text-[#173D2C] sm:text-[28px]">
+                                <h2 data-reveal className="mt-5 break-words text-xl font-normal leading-tight tracking-[-0.04em] text-[#173D2C] sm:text-[28px]">
                                     {card.title}
                                 </h2>
-                                <p className="mt-3 min-h-6 text-xs leading-5 text-[#697267] sm:text-sm">{card.detail}</p>
-                                <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+                                <p data-reveal className="mt-3 min-h-6 text-xs leading-5 text-[#697267] sm:text-sm">{card.detail}</p>
+                                <div data-reveal className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
                                     {card.links.map((link) => (
                                         <a key={link.label} href={link.href} className="border-b border-[#173D2C]/25 pb-1 text-[11px] font-bold text-[#173D2C] transition-colors hover:border-[#A87B19] hover:text-[#8B5E1A]">
                                             {link.label} ↗
@@ -134,7 +145,7 @@ export default function Contact() {
                 </section>
 
                 {/* ── Map section ── */}
-                <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+                <section id="sawmill-location" className="px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-8 grid items-end gap-6 sm:mb-10 lg:grid-cols-12">
                             <div data-reveal className="lg:col-span-8">
@@ -264,7 +275,7 @@ export default function Contact() {
                                 <h2 className="max-w-lg text-3xl font-normal leading-[1.02] tracking-[-0.05em] sm:text-5xl">Where your plans<br />take shape.</h2>
                                 <p className="mt-3 text-[8px] font-semibold uppercase tracking-[0.16em] sm:text-[9px]">{siteConfig.name} &amp; {siteConfig.name1}· Comox Valley, BC</p>
                             </div>
-                            <a href="#contact-form" className="group/talk inline-flex shrink-0 items-center gap-4 rounded-full bg-[#EEBF21] px-5 py-3 text-xs font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B] sm:px-6 sm:py-4">
+                            <a href="#contact-options" className="group/talk inline-flex shrink-0 items-center gap-4 rounded-full bg-[#EEBF21] px-5 py-3 text-xs font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B] sm:px-6 sm:py-4">
                                 Talk to our team <ArrowUpRight className="size-4 transition-transform group-hover/talk:translate-x-0.5 group-hover/talk:-translate-y-0.5" />
                             </a>
                         </div>

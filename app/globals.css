@@ -926,6 +926,7 @@ body {
 }
 
 @media (max-width: 768px) {
+
   [data-reveal="left"],
   [data-reveal="right"] {
     transform: translate3d(0, 24px, 0);
@@ -2461,5 +2462,129 @@ html {
   .spec-sheen,
   .spec-pulse {
     animation: none;
+  }
+}
+
+@keyframes enquiry-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enquiry-shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes enquiry-sheen {
+  from {
+    transform: translateX(-120%) skewX(-12deg);
+  }
+
+  to {
+    transform: translateX(420%) skewX(-12deg);
+  }
+}
+
+@keyframes enquiry-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes enquiry-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes enquiry-countdown {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+
+.enquiry-rise {
+  animation: enquiry-rise 0.4s ease-out both;
+}
+
+.enquiry-shake {
+  animation: enquiry-rise 0.3s ease-out both, enquiry-shake 0.5s 0.15s ease-in-out;
+}
+
+.enquiry-sheen {
+  animation: enquiry-sheen 1.2s ease-in-out infinite;
+}
+
+.enquiry-pop {
+  animation: enquiry-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.enquiry-check {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: enquiry-draw 0.5s 0.45s ease-out forwards;
+}
+
+.enquiry-countdown {
+  width: 100%;
+  animation-name: enquiry-countdown;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .enquiry-rise,
+  .enquiry-shake,
+  .enquiry-sheen,
+  .enquiry-pop {
+    animation: none;
+  }
+
+  .enquiry-check {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .enquiry-countdown {
+    animation-duration: 5000ms;
   }
 }

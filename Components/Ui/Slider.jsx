@@ -186,13 +186,13 @@ export default function Slider({
                 </div>
 
                 {/* Dynamic Titles */}
-                <h1 className="max-w-6xl break-words text-[clamp(3.5rem,7rem,10rem)] font-normal leading-[0.9] tracking-[-0.06em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                <h1 className="max-w-6xl break-words text-[clamp(2.95rem,14.5vw,4.25rem)] sm:text-[clamp(3.75rem,7vw,6.5rem)] md:text-[clamp(4.5rem,7.5vw,8.5rem)] lg:text-[clamp(5.5rem,7vw,10rem)] font-medium sm:font-normal leading-[0.99] tracking-[-0.05em] sm:tracking-[-0.06em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                     <span className="block text-white font-sans">{activeSlide.titleWhite}</span>
-                    <span className="block font-sans font-normal text-[#F3BE1D]">
+                    <span className="block font-sans text-[#F3BE1D]">
                         {activeSlide.titleGold}
                     </span>
                     {activeSlide.titleGold1 && (
-                        <span className="block font-sans font-normal text-[#F3BE1D]">
+                        <span className="block font-sans text-[#F3BE1D]">
                             {activeSlide.titleGold1}
                         </span>
                     )}
@@ -295,12 +295,15 @@ export default function Slider({
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-2.5 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-3 text-[9px] sm:text-[10px] md:text-xs font-medium tracking-[0.12em] sm:tracking-[0.2em] text-white/90 uppercase text-center sm:text-left">
                     {/* Scroll cue & quality note */}
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-3 max-w-full">
-                        <span className="flex items-center gap-1.5 text-[#F3BE1D] shrink-0">
+                        <a
+                            href="#our-lumber"
+                            className="flex items-center gap-1.5 text-[#F3BE1D] hover:text-[#dfaa0d] transition-colors shrink-0 cursor-pointer"
+                        >
                             <svg className="w-3 h-3 animate-bounce shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                             </svg>
                             SCROLL TO EXPLORE
-                        </span>
+                        </a>
                         <span className="hidden sm:inline text-stone-600">|</span>
                         <span className="text-white/95 truncate sm:overflow-visible max-w-[260px] sm:max-w-none">{activeSlide.bottomLeft}</span>
                     </div>

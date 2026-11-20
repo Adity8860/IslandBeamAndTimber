@@ -35,7 +35,6 @@ export default function Home() {
         <Slider slides={SLIDES} />
       </section>
 
-      {/* Stats + ticker */}
       <section aria-label="Our lumber at a glance" className="w-full max-w-full overflow-hidden bg-[#eebf21] text-[#0b1a12]">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-2 divide-x divide-black/10 px-4 py-5 sm:grid-cols-4 sm:px-6 sm:py-7 md:px-8">
           {lumberStats.map((stat, index) => (

@@ -111,9 +111,9 @@ export default function About() {
               <a href={siteConfig.phoneLink} className="inline-flex items-center gap-5 rounded-full bg-[#EEBF21] px-6 py-4 text-sm font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B]">
                 Call our mill <ArrowUpRight className="size-4" />
               </a>
-              <a href={`mailto:${siteConfig.email}`} className="inline-flex items-center gap-5 rounded-full border border-white/30 px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+              {/* <a href={siteConfig.emailLink} target="_blank" className="inline-flex items-center gap-5 rounded-full border border-white/30 px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/10">
                 Email us <ArrowUpRight className="size-4" />
-              </a>
+              </a> */}
             </div>
           </div>
           <div data-reveal style={{ "--d": "250ms" }} className="space-y-3 text-sm text-white/85 lg:col-span-4 lg:pl-8">

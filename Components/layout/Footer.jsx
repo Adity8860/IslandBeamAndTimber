@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
 // import { connection } from 'next/server'
-import { siteConfig } from '@/lib/siteConfig';
+import { siteConfig, NavLinks } from '@/lib/siteConfig';
 import Image from 'next/image';
 
 
@@ -22,14 +22,21 @@ const colHeading =
     "relative pb-3 text-white font-bold text-xs uppercase tracking-[0.18em] after:absolute after:bottom-0 after:left-0 after:h-px after:w-8 after:bg-[#F4B323] after:content-['']";
 
 export default function Footer() {
-
-    const exploreLinks = [
-        { label: 'Custom lumber & cedar', href: '/custom-lumber' },
-        { label: 'Beams & timbers', href: '/beams-and-timbers' },
-        { label: 'Milling & delivery', href: '/milling-and-delivery' },
-        { label: 'Garden sheds', href: '/garden-sheds' },
-        { label: 'Firewood', href: '/firewood' },
-    ];
+    const getExploreLinks = () =>
+        NavLinks
+            .filter(({ name }) => name !== "Home" && name !== "Contact us")
+            .map(({ name, href }) => ({
+                label: name,
+                href,
+            }));
+    const exploreLinks = getExploreLinks()
+    // const exploreLinks = [
+    //     { label: 'Custom lumber & cedar', href: '/custom-lumber' },
+    //     { label: 'Beams & timbers', href: '/beams-and-timbers' },
+    //     { label: 'Milling & delivery', href: '/milling-and-delivery' },
+    //     { label: 'Garden sheds', href: '/garden-sheds' },
+    //     { label: 'Firewood', href: '/firewood' },
+    // ];
     const homeOverlay = []
     return (
         <footer className="w-full max-w-full overflow-hidden  bg-[#002b19] text-[#B7CDBF] font-sans">
@@ -127,7 +134,7 @@ export default function Footer() {
 
                             <div className="pt-2">
                                 <Link
-                                    href="/quote"
+                                    href="/Contact#enquiry"
                                     className={`${focusRing} inline-flex items-center gap-1.5 font-semibold text-sm text-[#F4B323] underline decoration-[#F4B323]/40 underline-offset-[6px] transition-colors group hover:text-[#FFC53D] hover:decoration-[#FFC53D]`}
                                 >
                                     <span>Text us your cut list</span>
