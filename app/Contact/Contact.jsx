@@ -198,6 +198,24 @@ export default function Contact() {
                                     <button
                                         key={service.value}
                                         type="button"
+                                        onClick={() => setSelectedService(service.value)}
+                                        className={`flex w-full items-center justify-between border-b border-transparent py-[18px] text-left text-sm transition-colors hover:text-[#A87B19] ${selectedService === service.value
+                                            ? "font-bold text-[#A87B19]"
+                                            : "text-[#173D2C]"
+                                            }`}
+                                    >
+                                        <span>{service.label}</span>
+
+                                        <ArrowUpRight
+                                            className="size-3 text-[#A87B19]"
+                                            aria-hidden="true"
+                                        />
+                                    </button>
+                                ))}
+                                {/* {displayServices?.map((service) => (
+                                    <button
+                                        key={service.value}
+                                        type="button"
                                         onClick={() => setSelectedService(service?.value)}
                                         className="flex w-full items-center justify-between py-[18px] text-left text-sm text-[#173D2C] transition-colors cursor-pointer"
                                     >
@@ -207,7 +225,7 @@ export default function Contact() {
                                             aria-hidden="true"
                                         />
                                     </button>
-                                ))}
+                                ))} */}
                             </div>
                             <div className="mt-7 border-l-2 border-[#E8B51E] pl-5 text-sm leading-relaxed text-[#697267]">
                                 <p className="font-bold text-[#173D2C]">We can help with delivery.</p>
@@ -218,13 +236,20 @@ export default function Contact() {
                         <div data-reveal style={{ "--d": "200ms" }} className="rounded-md bg-[#F5F3EB] p-6 shadow-sm sm:p-8 lg:p-10 xl:p-11">
                             <h3 className="text-2xl font-normal tracking-[-0.04em] text-[#173D2C] sm:text-3xl">Tell us what you need.</h3>
                             <p className="mt-3 text-xs text-[#697267]">* Required fields</p>
-
                             <EnquiryForm
+                                email={enquiryData?.email}
+                                services={displayServices}
+                                selectedService={selectedService}
+                                onServiceChange={setSelectedService}
+                                variant="default"
+                                buttonText="Submit enquiry"
+                            />
+                            {/* <EnquiryForm
                                 email={enquiryData?.email}
                                 services={enquiryData?.services}
                                 selectedService={selectedService}
                                 onServiceChange={setSelectedService}
-                            />
+                            /> */}
                         </div>
                     </div>
                 </section>

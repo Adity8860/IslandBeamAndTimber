@@ -17,11 +17,62 @@ export default function EnquiryForm({
     const [localSelectedService, setLocalSelectedService] = useState("");
     const selectedService = selectedServiceProp ?? localSelectedService;
 
-    if (!email) return null;
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
+        debugger
+        e.preventDefault();
+
+        const form = e.currentTarget;
+
+        const formData = new FormData(form);
+
+        const payload = {
+            formType: variant,
+            ...Object.fromEntries(formData.entries()),
+        };
+
+        try {
+            setLoading(true);
+
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Failed to submit enquiry");
+            }
+
+            alert("Your enquiry has been submitted successfully!");
+
+            form.reset();
+
+            setLocalSelectedService("");
+            onServiceChange?.("");
+
+        } catch (error) {
+            console.error("Enquiry submission error:", error);
+            alert(error.message || "Something went wrong. Please try again.");
+
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    // if (!email) return null;
 
     if (variant === "garden-shed") {
         return (
-            <form action={`mailto:${email}`} method="post" encType="text/plain" className={className}>
+            // <form action={`mailto:${email}`} method="post" encType="text/plain" className={className}>
+            <form onSubmit={handleSubmit} className={className}>
                 <h3 className="text-[clamp(2rem,3vw,3rem)] font-normal tracking-[-0.055em]">What would you like to build?</h3>
                 <div className="mt-7 grid gap-x-4 gap-y-5 sm:grid-cols-2">
                     <label className="text-xs font-semibold">Your name<input required name="Name" autoComplete="name" placeholder="Name" className={`${fieldClass} mt-2`} /></label>
@@ -41,7 +92,9 @@ export default function EnquiryForm({
 
     if (variant === "custom-lumber") {
         return (
-            <form action={`mailto:${email}`} method="post" encType="text/plain" className={`rounded-[3px] bg-[#fbfaf3] p-7 shadow-[0_20px_50px_-40px_rgba(7,61,40,.45)] sm:p-10 ${className}`}>
+            //        <form action={`mailto:${email}`} method="post" encType="text/plain" className={`rounded-[3px] bg-[#fbfaf3] p-7 shadow-[0_20px_50px_-40px_rgba(7,61,40,.45)] sm:p-10 ${className}`}>
+            <form onSubmit={handleSubmit} className={className}>
+
                 <h3 className="text-[clamp(2rem,3vw,3rem)] font-normal tracking-[-0.055em]">What are you building?</h3>
                 <div className="mt-8 grid gap-5 sm:grid-cols-2">
                     <label className="text-xs font-semibold">Your name<input required name="Name" placeholder="Name" className={`${fieldClass} mt-2`} /></label>
@@ -60,12 +113,14 @@ export default function EnquiryForm({
     }
 
     return (
-        <form
-            action={`mailto:${email}`}
-            method="post"
-            encType="text/plain"
-            className={`mt-8 grid gap-x-5 gap-y-5 sm:grid-cols-2 ${className}`}
-        >
+        // <form
+        //     action={`mailto:${email}`}
+        //     method="post"
+        //     encType="text/plain"
+        //     className={`mt-8 grid gap-x-5 gap-y-5 sm:grid-cols-2 ${className}`}
+        // >
+        <form onSubmit={handleSubmit} className={className}>
+
             {/* Name */}
             <label className="block text-[13px] font-normal text-[#173D2C]">
                 Your name *
@@ -110,7 +165,11 @@ export default function EnquiryForm({
                     name="Service"
                     required
                     value={selectedService}
-                    onChange={(e) => onServiceChange?.(e.target.value)}
+                    //    onChange={(e) => onServiceChange?.(e.target.value)}
+                    onChange={(e) => {
+                        setLocalSelectedService(e.target.value);
+                        onServiceChange?.(e.target.value);
+                    }}
                     className={`${fieldClass} mt-2`}
                 >
                     <option value="" disabled>
@@ -171,9 +230,11 @@ export default function EnquiryForm({
             <div className="sm:col-span-2">
                 <button
                     type="submit"
+                    disabled={loading}
                     className="group inline-flex min-h-[68px] items-center gap-6 rounded-full bg-[#F2BF1B] px-8 text-sm font-bold text-[#102D1F] transition-colors hover:bg-[#F5CC3B]"
                 >
-                    {buttonText}
+                    {loading ? "Submitting..." : buttonText}
+
                     <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
 
