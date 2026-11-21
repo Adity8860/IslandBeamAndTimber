@@ -251,7 +251,7 @@ export default function Home() {
         <div className="mx-auto grid w-full max-w-7xl overflow-hidden lg:grid-cols-2">
           <div data-reveal className="group relative h-[300px] overflow-hidden sm:h-[420px] lg:h-[620px]">
             <Image
-              src="/Images/pageImg/img8.png"
+              src="/Images/pageImg/IMG_5063.JPEG"
               alt="Premium Douglas Fir backyard garden shed"
               width={800}
               height={300}
@@ -324,7 +324,7 @@ export default function Home() {
           </div>
 
           {/* Right CTA */}
-          <a
+          {/* <a
             data-reveal="zoom"
             style={delay(200)}
             href={`tel:${siteConfig?.phone}`}
@@ -338,7 +338,7 @@ export default function Home() {
             >
               ↗
             </span>
-          </a>
+          </a> */}
 
         </div>
       </section>

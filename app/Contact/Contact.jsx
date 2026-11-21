@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { siteConfig } from "@/lib/siteConfig";
+import { siteConfig, Emailservices } from "@/lib/siteConfig";
 import { enquiryData } from "@/lib/contact";
 import EnquiryForm from "@/Components/layout/Form";
 import ScrollReveal from "@/Components/Ui/ScrollReveal";
@@ -66,6 +66,7 @@ export default function Contact() {
             "Firewood delivery",
         ].includes(service.label)
     );
+
 
     return (
         <>
@@ -249,7 +250,7 @@ export default function Contact() {
                             <p className="mt-3 text-xs text-[#697267]">* Required fields</p>
                             <EnquiryForm
                                 email={enquiryData?.email}
-                                services={displayServices}
+                                services={Emailservices}
                                 selectedService={selectedService}
                                 onServiceChange={setSelectedService}
                                 variant="default"

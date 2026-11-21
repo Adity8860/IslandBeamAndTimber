@@ -71,7 +71,7 @@ export default function Firewood() {
                             <span className="eyebrow-line inline-block h-[2px] w-8 bg-[#eabf20]" />
                             Keep the warmth coming
                         </p>
-                        <h2 data-reveal style={{ "--d": "120ms" }} className="mt-8 max-w-[7ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
+                        <h2 data-reveal style={{ "--d": "120ms" }} className="mt-8 max-w-[8ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
                             Tell us what
                             you need.
                         </h2>
