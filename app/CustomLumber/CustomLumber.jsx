@@ -12,7 +12,7 @@ export default function CustomLumber() {
         <div className="font-sans leading-relaxed text-[#073d28]">
             <ScrollReveal />
             <CustomLumberHero data={customLumberData} />
-            <section className="bg-[#f6f3e9] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+            <section id="services" className="bg-[#f6f3e9] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
                 <div className="mx-auto max-w-7xl">
                     <div className="grid gap-12 lg:grid-cols-2 lg:gap-24">
                         <div>

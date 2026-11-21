@@ -103,7 +103,7 @@ export default function Footer() {
                         <div className="space-y-3.5 text-sm sm:text-[0.95rem]">
                             <div>
                                 <Link
-                                    href="/contact"
+                                    href="/Contact"
                                     className={navLink}
                                 >
                                     Contact us
@@ -121,7 +121,7 @@ export default function Footer() {
 
                             <div>
                                 <a
-                                    href={`mailto:${siteConfig?.email}`}
+                                    href={siteConfig?.emailLink}
                                     className={`${navLink} break-words`}
                                 >
                                     {siteConfig?.email}
@@ -137,7 +137,7 @@ export default function Footer() {
                                     href="/Contact#enquiry"
                                     className={`${focusRing} inline-flex items-center gap-1.5 font-semibold text-sm text-[#F4B323] underline decoration-[#F4B323]/40 underline-offset-[6px] transition-colors group hover:text-[#FFC53D] hover:decoration-[#FFC53D]`}
                                 >
-                                    <span>Text us your cut list</span>
+                                    <span>Text send us your cut list</span>
                                     <span className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform motion-reduce:transition-none" aria-hidden="true">
                                         ↗
                                     </span>

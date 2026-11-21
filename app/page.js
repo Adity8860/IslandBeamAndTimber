@@ -163,7 +163,7 @@ export default function Home() {
             {/* CTA Button */}
             <div>
               <a
-                href="#enquiry"
+                href="/Contact#enquiry"
                 className="btn-shine group mt-8 inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[#F2C21A] hover:bg-[#FFD12B] text-[#073D2B] font-bold text-sm tracking-wide transition-all duration-300 hover:-translate-y-0.5 shadow-lg active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F2C21A] sm:px-8 sm:py-4"
               >
                 <span>Send us your cut list</span>
