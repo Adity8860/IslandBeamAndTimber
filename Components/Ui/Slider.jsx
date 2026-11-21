@@ -186,7 +186,7 @@ export default function Slider({
                 </div>
 
                 {/* Dynamic Titles */}
-                <h1 className="max-w-6xl break-normal text-[2.65rem] leading-[0.98] sm:text-6xl sm:leading-[0.94] md:text-7xl md:leading-[0.92] lg:text-8xl lg:leading-[0.9] xl:text-[6.5rem] font-normal tracking-[-0.05em] sm:tracking-[-0.06em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                <h1 className="max-w-6xl break-normal text-[3.65rem] leading-[0.98] sm:text-6xl sm:leading-[0.94] md:text-7xl md:leading-[0.92] lg:text-8xl lg:leading-[0.9] xl:text-[6.5rem] font-normal tracking-[-0.05em] sm:tracking-[-0.06em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                     <span className="block text-white font-sans">{activeSlide.titleWhite}</span>
                     <span className="block font-sans text-[#F3BE1D]">
                         {activeSlide.titleGold}
