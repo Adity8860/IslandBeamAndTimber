@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { servicesLinks, siteConfig, NavLinks } from '@/lib/siteConfig';
+import { ArrowUpRight } from "lucide-react";
+
 
 const emptySubscribe = () => () => { };
 
@@ -32,18 +34,18 @@ const Chevron = ({ open, active, className = 'w-3.5 h-3.5' }) => (
     </svg>
 );
 
-const ArrowUpRight = ({ className = 'w-3.5 h-3.5' }) => (
-    <svg
-        className={`${className} transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth="2.5"
-        stroke="currentColor"
-        aria-hidden="true"
-    >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5L19.5 4.5M19.5 4.5H8.25M19.5 4.5V15.75" />
-    </svg>
-);
+// const ArrowUpRight = ({ className = 'w-3.5 h-3.5' }) => (
+//     <svg
+//         className={`${className} transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}
+//         fill="none"
+//         viewBox="0 0 24 24"
+//         strokeWidth="2.5"
+//         stroke="currentColor"
+//         aria-hidden="true"
+//     >
+//         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5L19.5 4.5M19.5 4.5H8.25M19.5 4.5V15.75" />
+//     </svg>
+// );
 
 const PhoneIcon = ({ className = 'w-4 h-4' }) => (
     <svg
@@ -366,7 +368,11 @@ export default function Header() {
                     aria-label={`Call our mill at ${siteConfig.phone}`}
                 >
                     <span>Call our mill</span>
-                    <span className="text-sm font-extrabold leading-none" aria-hidden="true">↗</span>
+                    <span className="text-sm font-extrabold leading-none" aria-hidden="true">   <ArrowUpRight
+                        size={16}
+                        strokeWidth={1.8}
+                        className="shrink-0"
+                    /></span>
                 </a>
             )}
         </>

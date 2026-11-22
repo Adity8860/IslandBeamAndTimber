@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 
 // Default slides matching your screenshot
 const DEFAULT_SLIDES = [
@@ -211,7 +212,7 @@ export default function Slider({
                             className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4 rounded-full bg-[#F3BE1D] hover:bg-[#dfaa0d] text-stone-950 font-bold text-sm md:text-base tracking-wide transition-all duration-300 shadow-lg hover:shadow-[#F3BE1D]/20 hover:-translate-y-0.5 active:translate-y-0"
                         >
                             <span>{activeSlide.primaryBtn.text}</span>
-                            <svg
+                            {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                                 fill="none"
@@ -220,7 +221,12 @@ export default function Slider({
                                 strokeWidth={2.5}
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
+                            </svg> */}
+                            <ArrowUpRight
+                                size={16}
+                                strokeWidth={1.8}
+                                className="shrink-0"
+                            />
                         </Link>
                     )}
 
@@ -230,7 +236,7 @@ export default function Slider({
                             className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4 rounded-full bg-stone-900/60 hover:bg-stone-800/80 text-stone-100 font-medium text-sm md:text-base tracking-wide border border-white/20 hover:border-white/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
                         >
                             <span>{activeSlide.secondaryBtn.text}</span>
-                            <svg
+                            {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-4 h-4 text-stone-300"
                                 fill="none"
@@ -239,7 +245,12 @@ export default function Slider({
                                 strokeWidth={2.5}
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
+                            </svg> */}
+                            <ArrowUpRight
+                                size={16}
+                                strokeWidth={1.8}
+                                className="shrink-0"
+                            />
                         </Link>
                     )}
                 </div>

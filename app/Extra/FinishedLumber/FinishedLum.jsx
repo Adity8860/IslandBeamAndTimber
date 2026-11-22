@@ -1,5 +1,5 @@
 
-import Servicesection from "../../Components/Ui/Servicesection";
+import Servicesection from "../../../Components/Ui/Servicesection";
 import Cards from "@/Components/Ui/Cards";
 import { finishedLumberSections } from "@/lib/FinshedLumber";
 import Image from "next/image";

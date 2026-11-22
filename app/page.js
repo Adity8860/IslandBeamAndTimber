@@ -8,6 +8,7 @@ import FAQSection from "@/Components/Ui/FAQ";
 import ScrollReveal from "@/Components/Ui/ScrollReveal";
 import { SLIDES, SERVICE_CARDS } from "@/lib/pageConstant";
 import { siteConfig } from "@/lib/siteConfig";
+import { ArrowUpRight } from "lucide-react";
 
 const lumberStats = [
   { value: "Up to 32 ft", label: "Custom beam lengths" },
@@ -277,7 +278,13 @@ export default function Home() {
               className="btn-shine group mt-7 inline-flex min-h-[72px] w-fit items-center gap-8 rounded-full bg-[#EEBF21] px-7 text-sm font-bold text-[#003C24] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F5CC3B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003C24] sm:px-8"
             >
               Explore garden sheds
-              <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+              <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <ArrowUpRight
+                  size={16}
+                  strokeWidth={1.8}
+                  className="shrink-0"
+                />
+              </span>
             </a>
           </div>
         </div>
@@ -336,7 +343,11 @@ export default function Home() {
               aria-hidden="true"
               className="inline-block text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
             >
-              ↗
+                 <ArrowUpRight
+                size={16}
+                strokeWidth={1.8}
+                className="shrink-0"
+              />
             </span>
           </a> */}
 
