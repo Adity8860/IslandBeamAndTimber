@@ -1,169 +1,152 @@
+import CustomLumberHero from "@/Components/Ui/ServiceHro.jsx";
+import { ProductCards } from "@/Components/Ui/Cards.jsx";
+import EnquiryForm from "@/Components/layout/Form.jsx";
+import FAQSection from "@/Components/Ui/FAQ.jsx";
+import ScrollReveal from "@/Components/Ui/ScrollReveal.jsx";
 import Image from "next/image";
-import Link from "next/link";
-import Cards from "@/Components/Ui/Cards";
-import { services, values } from "@/lib/CustomLumberConst";
-import CustomLumberHero from "@/Components/Ui/ServiceHro.jsx"
-import { customLumberData } from "@/lib/CustomLumberConst.js"
-
-const padX = "px-5 sm:px-10 lg:px-16 mt-16";
-const padY = "py-12 md:py-24";
-const eyebrow = "block mb-3.5 text-[0.78rem] font-semibold tracking-[0.12em] text-[#a86f1c]";
-const h2 = "font-display font-bold leading-none tracking-[0.01em] text-balance text-[clamp(2rem,4.4vw,3.4rem)]";
-const focus = "focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[#c98a2b]";
+import { customLumberData, customLumberFaqs, enquiryDatCustomLumbera } from "@/lib/CustomLumberConst.js";
+import { siteConfig } from "@/lib/siteConfig.js";
 
 export default function CustomLumber() {
     return (
-        <div className="bg-[#eef0e8] font-body leading-relaxed text-[#17241d] [&_p]:max-w-[62ch] [&_p]:text-pretty">
-            {/* <section
-                className={`${padX} grid grid-cols-1 gap-6 bg-[#17241d] pt-8 pb-12 text-[#eef0e8] md:gap-10 md:pt-14 md:pb-24 lg:grid-cols-[5fr_6fr] lg:items-stretch`}
-                aria-labelledby="cl-title"
-            >
-                <div className="flex flex-col justify-between gap-8">
+        <div className="font-sans leading-relaxed text-[#073d28]">
+            <ScrollReveal />
+            <CustomLumberHero data={customLumberData} />
+            <section id="services" className="bg-[#f6f3e9] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+                <div className="mx-auto max-w-7xl">
+                    <div className="grid gap-12 lg:grid-cols-2 lg:gap-24">
+                        <div>
+                            <p data-reveal className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.19em] text-[#315343]">
+                                <span className="eyebrow-line inline-block h-[2px] w-8 bg-[#eabf20]" />
+                                Cut for your project
+                            </p>
+                            <h2 data-revea className="mt-8 max-w-[11ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
+                                From rough-sawn to ready for finishing.
+                            </h2>
+                        </div>
+                        <p data-reveal style={{ "--d": "220ms" }} className="self-start pt-2 text-base leading-[1.7] text-[#657369] sm:text-lg lg:mt-7">
+                            Custom lumber starts with clear specifications. We’ll confirm the cut size, finished size and surface you need before work begins.
+                        </p>
+                    </div>
+                    <ProductCards className="mt-16" itemClassName="min-h-[fit-content]" />
+                </div>
+                <div className="mx-auto mt-16 grid max-w-7xl gap-7 md:grid-cols-[1.5fr_1fr]">
+                    <figure data-reveal style={{ "--d": "100ms" }}>
+                        <div className="relative aspect-[1.83/1] overflow-hidden rounded-[3px]">
+                            <Image
+                                src="/Images/pageImg/IMG_0311.JPEG"
+                                alt="Sawmill equipment beneath a timber frame shelter"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 60vw"
+                                className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                            />
+                        </div>
+                        <figcaption className="mt-3 text-xs text-[#728076]">A working mill. Timber we’re proud to put to use.</figcaption>
+                    </figure>
+                    <figure data-reveal style={{ "--d": "250ms" }} className="md:mt-14">
+                        <div className="relative aspect-[1.28/1] overflow-hidden rounded-[3px]">
+                            <Image
+                                src="/Images/customlumberimg/IMG_4672.JPEG"
+                                alt="Logs ready for milling"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 40vw"
+                                className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                            />
+                        </div>
+                        <figcaption className="mt-3 text-xs text-[#728076]">Every order starts with the material.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="enquiry" className="bg-[#eeece2] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-36">
+                <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-2 lg:gap-20">
                     <div>
-                        <span className="mb-6 cl-rise inline-flex items-center gap-2.5 rounded-full border border-[#eef0e8]/30 px-3.5 py-1.5 text-sm">
-                            <span className="cl-pulse size-2 rounded-full bg-[#c98a2b]" /> Island Beam &amp; Timber
-                        </span>
-                        <h1 id="cl-title" className="cl-rise cl-delay-120 font-display font-extrabold leading-none tracking-[0.005em] text-balance text-[clamp(2.6rem,7.5vw,6rem)]">
-                            CUSTOM LUMBER &amp;<br />BEAM &amp; TIMBER SERVICES
-                        </h1>
+                        <p data-reveal className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.19em] text-[#315343]">
+                            <span className="eyebrow-line inline-block h-[2px] w-8 bg-[#eabf20]" />
+                            Let’s make a start
+                        </p>
+                        <h2 data-reveal style={{ "--d": "120ms" }} className="mt-8 max-w-[7ch] text-[clamp(3rem,5vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
+                            Send us your cut list.
+                        </h2>
+                        <p data-reveal style={{ "--d": "220ms" }} className="mt-8 max-w-[52ch] text-base leading-[1.7] text-[#66746a]">
+                            Have a drawing, a few measurements or a full material list? Tell us what you need, where it’s going and when you’re hoping to build.
+                        </p>
+                        <ol className="mt-10 divide-y divide-[#073d28]/15 border-y border-[#073d28]/15">
+                            {[
+                                ["Share the details.", "Species, dimensions, quantities and preferred finish."],
+                                ["We work through the options.", "Confirm sizes, availability, timing and delivery arrangements."],
+                                ["Agree on the order.", "Review the quote and specifications before cutting begins."]
+                            ].map(([title, copy], index) => (
+                                <li
+                                    key={title}
+                                    data-reveal
+                                    style={{ "--d": `${300 + index * 100}ms` }}
+                                    className="grid grid-cols-[25px_1fr] gap-4 py-5"
+                                >
+                                    <span className="text-xs text-[#52685b]">0{index + 1}</span>
+                                    <div>
+                                        <strong className="text-sm">{title}</strong>
+                                        <p className="mt-2 text-sm text-[#748078]">{copy}</p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ol>
+                        <p data-reveal style={{ "--d": "550ms" }} className="mt-12 max-w-[58ch] text-xs leading-relaxed text-[#68756d]">
+                            For structural applications, include any grading or engineering requirements. Drying condition and grading must be confirmed for your order.
+                        </p>
+                        <a
+                            data-reveal
+                            style={{ "--d": "620ms" }}
+                            href={siteConfig.phoneLink}
+                            className="group mt-6 flex items-center justify-between border-t border-[#073d28]/15 pt-6 text-sm font-bold transition-colors hover:text-[#b18a10]"
+                        >
+                            <span>Prefer to talk? {siteConfig.phone}</span>
+                            <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                        </a>
                     </div>
-                    <p className="cl-rise cl-delay-240 text-[clamp(1rem,1.4vw,1.15rem)] text-[#eef0e8]/80">
-                        Thoughtfully milled lumber, crafted to fit your project. From custom beams and live edge slabs to planed profiles, we bring local wood and skilled hands together.
-                    </p>
-                </div>
-                <div className="relative min-h-[clamp(280px,48vw,520px)] cl-wipe cl-delay-150 overflow-hidden rounded-md bg-[#3a2f26] lg:min-h-[560px]">
-                    <Image className="cl-settle cl-delay-150 object-cover" src="/Images/pageImg/img7.png" alt="Timber and lumber being processed at a Vancouver Island sawmill" fill priority sizes="(max-width: 1024px) 100vw, 55vw" />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#17241d]/70 via-transparent via-45% to-transparent" />
-                    <div className="absolute inset-x-4 top-4 z-10 flex cl-rise cl-delay-800 justify-between gap-4 text-sm text-[#eef0e8] [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]">
-                     </div>
-                    <div className="absolute bottom-4 left-4 z-10 inline-flex cl-rise cl-delay-950 items-center gap-3 rounded-md bg-[#c98a2b] px-4 py-2.5 font-display text-[1.05rem] font-bold tracking-[0.04em] text-[#17241d]">
-                        BUILT FROM THE GROUND UP <span>↗</span>
+                    <div data-reveal style={{ "--d": "200ms" }} className="rounded-[3px] bg-[#fbfaf3] p-7 shadow-[0_20px_50px_-40px_rgba(7,61,40,.45)] sm:p-10">
+                        <h3 className="text-[clamp(2rem,3vw,3rem)] font-normal tracking-[-0.055em]">What are you building?</h3>
+                        <EnquiryForm
+                            email={enquiryDatCustomLumbera?.email}
+                            services={enquiryDatCustomLumbera?.services}
+                            buttonText="Review my cut list"
+                        />
                     </div>
-                </div>
-            </section> */}
-
-            <CustomLumberHero
-                data={customLumberData}
-                padX={padX}
-            />
-
-            <section className={`${padX} ${padY}`} id="services">
-                <div className="mb-7 grid gap-4 md:mb-12 lg:grid-cols-[3fr_2fr] lg:items-end lg:gap-12">
-                    <div><span className={eyebrow}>OUR CRAFT &amp; SERVICES</span><h2 className={h2}>SPECIALIZED ISLAND BEAM &amp; TIMBER MANIFESTS</h2></div>
-                    <p className="text-[#3a2f26]">From raw timber to refined detail, we bring your custom lumber ideas to life with local expertise and a hands-on approach.</p>
-                </div>
-                <Cards type="crafted" items={services} className="!p-0" />
-            </section>
-
-            <section className={`${padX} grid grid-cols-2 bg-[#0b2117] py-0 text-[#eef0e8] md:grid-cols-4`} aria-label="Our experience">
-                {[["20+", "YEARS OF EXPERIENCE"], ["15M", "BOARD FEET OF LOGS"], ["15K", "CUSTOM CUTS & MILLING"], ["1.2M", "BOARD FEET MILLED"]].map(([value, label]) => (
-                    <div
-                        key={label}
-                        className="flex flex-col gap-1.5 border-b border-[#eef0e8]/15 px-4 py-6 odd:border-r md:border-b-0 md:px-7 md:py-10 md:odd:border-r-0 md:[&:not(:first-child)]:border-l"
-                    >
-                        <strong className="font-display text-[clamp(2.4rem,5vw,3.8rem)] font-bold leading-none tabular-nums text-[#c98a2b]">{value}</strong>
-                        <span className="text-[0.78rem] tracking-[0.1em] text-[#eef0e8]/75">{label}</span>
-                    </div>
-                ))}
-            </section>
-
-            <section className={`${padX} ${padY} relative grid gap-8 md:gap-16 lg:grid-cols-[6fr_5fr] lg:items-start`}>
-                <div className="grid content-start gap-5 text-[#3a2f26]">
-                    <span className={eyebrow}>ROOTED IN THE ISLAND</span>
-                    <h2 className={`${h2} text-[#17241d]`}>Rooted on Vancouver Island.<br />Growing with Every Cut.</h2>
-                    <p>We’re a local lumber yard and sawmill built around good wood, careful work, and relationships that last. Our team helps turn Island timber into something made for your home, your project, and your place.</p>
-                    <p>From choosing the right species to milling a custom profile, we’re here to make the process feel straightforward—and the finished piece feel like it belongs.</p>
-                    <div className="cl-zoom relative mt-3 aspect-[4/3] overflow-hidden rounded-md bg-[#3a2f26]">
-                        <Image className="object-cover" src="/Images/pageImg/img8.png" alt="Craftsperson working with timber in the Island Beam & Timber workshop" fill sizes="(max-width: 800px) 100vw, 50vw" />
-                    </div>
-                    <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-[#17241d]/15 pt-3 text-xs font-semibold tracking-wider text-[#17241d]/75 uppercase">
-                        <span>Hand-Selected Island Logs</span>
-                        <span>Comox Valley Facility</span>
-                    </div>
-                </div>
-                <div className="grid content-start self-start lg:sticky lg:top-24 xl:top-28">
-                    {values.map((value) => (
-                        <article key={value.title} className="grid grid-cols-[auto_1fr] gap-4 border-t border-[#17241d]/15 py-6 last:border-b">
-                            <span className="grid size-10 place-items-center rounded-full bg-[#17241d] text-[1.1rem] text-[#c98a2b]">✳</span>
-                            <div>
-                                <h3 className="mb-1.5 font-display text-[1.6rem] font-bold leading-none">{value.title}</h3>
-                                <p className="text-[0.98rem] text-[#3a2f26]">{value.copy}</p>
-                            </div>
-                        </article>
-                    ))}
                 </div>
             </section>
-
-            <section className={`${padX} ${padY} grid items-end gap-8 bg-[#17241d] text-[#eef0e8] lg:grid-cols-[1fr_auto] lg:gap-16`}>
-                <div className="grid gap-4">
-                    <span className={eyebrow}>LET’S MAKE SOMETHING LAST</span>
-                    <h2 className={h2}>Ready to start your custom lumber<br className="hidden lg:inline" /> order or request milling specifications?</h2>
-                    <p className="text-[#eef0e8]/80">Talk with our team about your project, your wood, and what you’d like to build.</p>
+            <section className="bg-[#f6f3e9] px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+                <div className="mx-auto max-w-4xl">
+                    <h2 data-reveal className="text-[clamp(2.5rem,4vw,4rem)] font-normal tracking-[-0.065em]">
+                        A few useful details.
+                    </h2>
+                    <div data-reveal style={{ "--d": "150ms" }}>
+                        <FAQSection
+                            data={customLumberFaqs}
+                            defaultOpenIds={["dry-or-graded", "delivery"]}
+                            allowMultiple
+                            className="mt-9"
+                        />
+                    </div>
                 </div>
-                <Link
-                    href="/Contact"
-                    className={`${focus} cl-nudge inline-flex items-center justify-self-start gap-3 rounded-md bg-[#c98a2b] px-6 py-4 font-display text-xl font-bold tracking-[0.04em] text-[#17241d] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-[#dba043] active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0`}
-                >
-                    Contact our team <span className="cl-arrow">↗</span>
-                </Link>
             </section>
+            <section className="bg-[#004329] px-6 py-20 text-[#f6f3e9] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+                <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1.45fr_0.85fr] lg:items-center lg:gap-20">
+                    <div>
+                        <h2 data-reveal className="text-[clamp(3rem,4vw,5.5rem)] font-normal leading-[0.95] tracking-[-0.07em]">
+                            Let’s talk timber.
+                        </h2>
+                        <p data-reveal className="mt-7 max-w-[58ch] text-base leading-[1.7] text-white/80 sm:text-lg">
+                            Custom lumber, personal service and a practical conversation about your project.
+                        </p>
+                    </div>
+                    <address data-reveal className="not-italic text-base leading-[1.65] sm:text-lg">
+                        <a href={siteConfig.phoneLink} className="block text-[clamp(2rem,2vw,3rem)] leading-none tracking-[-0.05em] transition-colors hover:text-[#f2c31b]">{siteConfig.phone}</a>
+                        <a href={`mailto:${siteConfig.email}`} className="mt-7 block font-semibold transition-colors hover:text-[#f2c31b]">{siteConfig.email}</a>
+                        <p className="mt-7 whitespace-pre-line text-white/90">{siteConfig.address.replace(", ", "\n")}</p>
+                    </address>
+                </div>
+            </section>
+            {/* <CustomLumberContent /> */}
         </div>
     );
 }
-
-
-// import Image from "next/image";
-// import Link from "next/link";
-// import Cards from "@/Components/Ui/Cards";
-// import { services, values } from "@/lib/CustomLumberConst";
-
-
-
-// export default function CustomLumber() {
-//     return (
-//         <main className="custom-lumber">
-//             <section className="cl-hero" aria-labelledby="cl-title">
-//                 <div className="cl-hero-copy">
-//                     <div>
-//                         <span className="cl-pill"><span /> Island Beam &amp; Timber</span>
-//                         <h1 id="cl-title">CUSTOM LUMBER &amp;<br />BEAM &amp; TIMBER SERVICES</h1>
-//                     </div>
-//                     <p>Thoughtfully milled lumber, crafted to fit your project. From custom beams and live edge slabs to planed profiles, we bring local wood and skilled hands together.</p>
-//                 </div>
-//                 <div className="cl-hero-image">
-//                     <Image src="/Images/pageImg/img7.png" alt="Timber and lumber being processed at a Vancouver Island sawmill" fill priority sizes="100vw" />
-//                     <div className="cl-image-caption"><span>⌖ &nbsp;Locally milled</span><span>Vancouver Island, BC</span></div>
-//                     <div className="cl-image-cta">BUILT FROM THE GROUND UP <span>↗</span></div>
-//                 </div>
-//             </section>
-
-//             <section className="cl-services" id="services">
-//                 <div className="cl-section-heading">
-//                     <div><span className="cl-eyebrow">OUR CRAFT &amp; SERVICES</span><h2>SPECIALIZED ISLAND BEAM &amp; TIMBER MANIFESTS</h2></div>
-//                     <p>From raw timber to refined detail, we bring your custom lumber ideas to life with local expertise and a hands-on approach.</p>
-//                 </div>
-//                 <Cards type="crafted" items={services} className="!p-0" />
-//             </section>
-
-//             <section className="cl-stats" aria-label="Our experience">
-//                 {[["20+", "YEARS OF EXPERIENCE"], ["15M", "BOARD FEET OF LOGS"], ["15K", "CUSTOM CUTS & MILLING"], ["1.2M", "BOARD FEET MILLED"]].map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
-//             </section>
-
-//             <section className="cl-story">
-//                 <div className="cl-story-main">
-//                     <span className="cl-eyebrow">ROOTED IN THE ISLAND</span>
-//                     <h2>Rooted on Vancouver Island.<br />Growing with Every Cut.</h2>
-//                     <p>We’re a local lumber yard and sawmill built around good wood, careful work, and relationships that last. Our team helps turn Island timber into something made for your home, your project, and your place.</p>
-//                     <p>From choosing the right species to milling a custom profile, we’re here to make the process feel straightforward—and the finished piece feel like it belongs.</p>
-//                     <div className="cl-story-image"><Image src="/Images/pageImg/img8.png" alt="Craftsperson working with timber in the Island Beam & Timber workshop" fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
-//                 </div>
-//                 <div className="cl-values">{values.map((value) => <article key={value.title}><span className="cl-value-mark">✳</span><div><h3>{value.title}</h3><p>{value.copy}</p></div></article>)}</div>
-//             </section>
-
-//             <section className="cl-contact">
-//                 <div><span className="cl-eyebrow">LET’S MAKE SOMETHING LAST</span><h2>Ready to start your custom lumber<br className="cl-desktop" /> order or request milling specifications?</h2><p>Talk with our team about your project, your wood, and what you’d like to build.</p></div>
-//                 <Link href="/Contact">Contact our team <span>↗</span></Link>
-//             </section>
-//         </main>
-//     );
-// }

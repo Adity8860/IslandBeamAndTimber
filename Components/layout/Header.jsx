@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { servicesLinks, siteConfig } from '@/lib/siteConfig';
+import { servicesLinks, siteConfig, NavLinks } from '@/lib/siteConfig';
+import { ArrowUpRight } from "lucide-react";
 
-const ACTIVE = '#E5A84B';
 
-const productLinks = [];
+const emptySubscribe = () => () => { };
+
+const primaryNavLinks = NavLinks
 
 // Case-insensitive route match ("/About" and "/about" both work)
 const isActive = (pathname, href) => {
@@ -21,7 +23,7 @@ const isActive = (pathname, href) => {
 
 const Chevron = ({ open, active, className = 'w-3.5 h-3.5' }) => (
     <svg
-        className={`${className} transition-all duration-300 ${active ? 'text-[#E5A84B]' : 'text-white/80'} ${open ? 'rotate-180' : ''}`}
+        className={`${className} transition-all duration-300 ${active ? 'text-[#B98216]' : 'text-[#173D2C]/70'} ${open ? 'rotate-180' : ''}`}
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth="2.5"
@@ -32,18 +34,18 @@ const Chevron = ({ open, active, className = 'w-3.5 h-3.5' }) => (
     </svg>
 );
 
-const ArrowUpRight = ({ className = 'w-3.5 h-3.5' }) => (
-    <svg
-        className={`${className} transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth="2.5"
-        stroke="currentColor"
-        aria-hidden="true"
-    >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5L19.5 4.5M19.5 4.5H8.25M19.5 4.5V15.75" />
-    </svg>
-);
+// const ArrowUpRight = ({ className = 'w-3.5 h-3.5' }) => (
+//     <svg
+//         className={`${className} transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}
+//         fill="none"
+//         viewBox="0 0 24 24"
+//         strokeWidth="2.5"
+//         stroke="currentColor"
+//         aria-hidden="true"
+//     >
+//         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5L19.5 4.5M19.5 4.5H8.25M19.5 4.5V15.75" />
+//     </svg>
+// );
 
 const PhoneIcon = ({ className = 'w-4 h-4' }) => (
     <svg
@@ -59,91 +61,87 @@ const PhoneIcon = ({ className = 'w-4 h-4' }) => (
 );
 
 const navLinkBase =
-    'relative text-sm font-semibold tracking-wide transition-colors duration-200 ' +
+    'relative text-md font-bold tracking-normal transition-colors duration-200 ' +
     'after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:origin-left ' +
-    'after:bg-[#E5A84B] after:transition-transform after:duration-300 ' +
+    'after:bg-[#E8B51E] after:transition-transform after:duration-300 ' +
     'focus-visible:outline-none focus-visible:after:scale-x-100';
-const navLinkIdle = 'text-white hover:text-white after:scale-x-0 hover:after:scale-x-100';
-const navLinkActive = 'text-[#E5A84B] after:scale-x-100';
+const navLinkIdle = 'text-[#173D2C] hover:text-[#003C24] after:scale-x-0 hover:after:scale-x-100';
+const navLinkActive = 'text-[#173D2C] after:scale-x-100';
 
-function NavLink({ href, pathname, children }) {
+function NavLink({ href, pathname, children, light = false }) {
     const active = isActive(pathname, href);
+    const themeClass = light
+        ? (active ? 'text-white after:scale-x-100' : 'text-white/90 hover:text-white after:scale-x-0 hover:after:scale-x-100')
+        : (active ? navLinkActive : navLinkIdle);
     return (
         <Link
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={`${navLinkBase} ${active ? navLinkActive : navLinkIdle}`}
+            className={`${navLinkBase} ${themeClass}`}
         >
             {children}
         </Link>
     );
 }
 
-function Dropdown({ id, label, links, active, setActive, pathname }) {
-    const open = active === id;
-    const selected = links.some((l) => isActive(pathname, l.href));
-    return (
-        <div
-            className="relative"
-            onMouseEnter={() => setActive(id)}
-            onMouseLeave={() => setActive(null)}
-            onKeyDown={(e) => e.key === 'Escape' && setActive(null)}
-        >
-            <button
-                type="button"
-                className={`${navLinkBase} flex items-center gap-1.5 py-2 ${selected ? navLinkActive : navLinkIdle} after:bottom-0`}
-                aria-expanded={open}
-                aria-haspopup="true"
-                onClick={() => setActive(open ? null : id)}
-            >
-                <span>{label}</span>
-                <Chevron open={open} active={selected} />
-            </button>
-
-            <div
-                className={`absolute top-full left-1/2 z-50 w-64 -translate-x-1/2 pt-3 transition-all duration-300 ease-out ${open ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'
-                    }`}
-            >
-                <div className="rounded-2xl border border-white/15 bg-[#07110b]/85 p-2 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150">
-                    {links.map((item) => {
-                        const itemActive = isActive(pathname, item.href);
-                        return (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                onClick={() => setActive(null)}
-                                aria-current={itemActive ? 'page' : undefined}
-                                tabIndex={open ? 0 : -1}
-                                className={`block rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-200 hover:translate-x-1 hover:bg-white/10 ${itemActive ? 'bg-white/10 text-[#E5A84B]' : 'text-white hover:text-[#E5A84B]'
-                                    }`}
-                            >
-                                {item.name}
-                            </Link>
-                        );
-                    })}
-                </div>
-            </div>
-        </div>
-    );
-}
-
 export default function Header() {
     const currentPathname = usePathname();
-    const [hasMounted, setHasMounted] = useState(false);
+    const isHomepage = currentPathname === '/';
+    const hasMounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
     const pathname = hasMounted ? currentPathname : null;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [scrollProgress, setScrollProgress] = useState(0);
+    const [routeProgress, setRouteProgress] = useState(0);
+    const [isRouteLoading, setIsRouteLoading] = useState(false);
     const headerRef = useRef(null);
     const previousScrollY = useRef(0);
+    const [prevPathname, setPrevPathname] = useState(currentPathname);
+
+    if (prevPathname !== currentPathname) {
+        setPrevPathname(currentPathname);
+        setMobileMenuOpen(false);
+        setActiveDropdown(null);
+    }
 
     useEffect(() => {
-        setHasMounted(true);
-    }, []);
+        if (!isRouteLoading) return undefined;
+        const timer = window.setInterval(() => {
+            setRouteProgress((progress) => progress >= 88 ? progress : Math.min(progress + Math.random() * 8 + 3, 88));
+        }, 180);
+        return () => window.clearInterval(timer);
+    }, [isRouteLoading]);
 
     useEffect(() => {
+        if (!isRouteLoading) return undefined;
+        const frame = window.requestAnimationFrame(() => setRouteProgress(100));
+        const timer = window.setTimeout(() => {
+            setIsRouteLoading(false);
+            setRouteProgress(0);
+        }, 320);
+        return () => {
+            window.cancelAnimationFrame(frame);
+            window.clearTimeout(timer);
+        };
+    }, [currentPathname, isRouteLoading]);
+
+    const startRouteLoading = (event) => {
+        const link = event.target.closest('a[href]');
+        if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const target = link.getAttribute('target');
+        const href = link.getAttribute('href');
+        if (target === '_blank' || !href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        const destination = new URL(href, window.location.href);
+        if (destination.origin !== window.location.origin || destination.pathname === currentPathname) return;
+        setRouteProgress(12);
+        setIsRouteLoading(true);
+    };
+
+    useEffect(() => {
+        if (mobileMenuOpen) return undefined;
+
         const onScroll = () => {
             const currentScrollY = window.scrollY;
             setIsScrolled(currentScrollY > 20);
@@ -152,7 +150,7 @@ export default function Header() {
 
             if (currentScrollY <= 80 || currentScrollY < previousScrollY.current - 4) {
                 setIsVisible(true);
-            } else if (currentScrollY > previousScrollY.current + 4 && !mobileMenuOpen) {
+            } else if (currentScrollY > previousScrollY.current + 4) {
                 setIsVisible(false);
             }
 
@@ -187,107 +185,77 @@ export default function Header() {
         return () => document.removeEventListener('mousedown', onClick);
     }, []);
 
-    // Close menus on route change
-    useEffect(() => {
-        setMobileMenuOpen(false);
-        setActiveDropdown(null);
-    }, [pathname]);
-
-    const solid = true;
     const visible = isVisible || mobileMenuOpen;
-
-    const mobileLink = (href) =>
-        `block rounded-lg px-4 py-3 text-base font-semibold transition-colors hover:bg-white/10 ${isActive(pathname, href) ? 'bg-white/5 text-[#E5A84B]' : 'text-white'
-        }`;
+    const homeOverlay = isHomepage && !isScrolled && !mobileMenuOpen;
 
     return (
         <>
             <header
                 ref={headerRef}
-                className={`fixed top-0 inset-x-0 z-50 w-full max-w-full
-  transition-all duration-300
-  ${visible ? 'translate-y-0' : '-translate-y-full'}
-  bg-[#07110b]/95
-  backdrop-blur-2xl
-  backdrop-saturate-150
-  border-b border-white/10
-  shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)]
-`}
+                onClickCapture={startRouteLoading}
+                className={`fixed top-0 inset-x-0 z-50 w-full max-w-full transition-all duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'
+                    } ${homeOverlay ? 'border-b border-white/10 bg-transparent' : 'border-b border-[#E5E2DA] bg-[#f5f2e9]'}`}
             >
-                <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-                    <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-14 sm:h-16' : 'h-16 sm:h-20'}`}>
+                <div className="mx-auto max-w-[1350px] px-4 sm:px-6 lg:px-10">
+                    <div className={`flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18' : 'h-18 sm:h-20 xl:h-20'}`}>
 
                         {/* Logo & Branding */}
-                        <Link href="/" className="flex items-center gap-2 sm:gap-3 group focus-visible:outline-none min-w-0 shrink">
-                            <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center p-1 sm:p-1.5 transition-all duration-300 group-hover:scale-105 group-hover:border-[#E5A84B]/60 shrink-0">
+                        <Link href="/" className="group flex shrink-0 items-center gap-3 focus-visible:outline-none sm:gap-4">
+                            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-sm transition-transform duration-300 group-hover:scale-105 sm:h-16 sm:w-16">
                                 {siteConfig?.Logo && (
                                     <Image
                                         src={siteConfig.Logo}
                                         alt={`${siteConfig.name} logo`}
-                                        width={44}
-                                        height={44}
-                                        className="h-full w-full object-contain"
+                                        width={64}
+                                        height={64}
+                                        className="h-full w-full object-cover"
                                     />
                                 )}
                             </div>
 
-                            <div className="flex flex-col drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)] min-w-0">
-                                <span className="text-white font-extrabold tracking-wider text-xs sm:text-base lg:text-lg leading-tight truncate">
-                                    ISLAND BEAM &amp; TIMBER
+                            <div className="flex flex-col">
+                                <span className={`text-[16px] font-black leading-[0.9] tracking-[0.01em] sm:text-[15px] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
+                                    <span className="block">ISLAND BEAM</span>
+                                    <span className="block">&amp; TIMBER</span>
                                 </span>
-                                <span className="text-[#E5A84B] font-bold text-[9px] sm:text-[11px] lg:text-xs tracking-widest uppercase truncate">
+                                <span className={`mt-1 text-[7px] font-black uppercase tracking-[0.19em] sm:text-[8px] sm:tracking-[0.2em] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
                                     Lumber Yard &amp; Sawmill
                                 </span>
                             </div>
                         </Link>
 
-                        {/* Desktop Nav — hidden below lg (1024px) */}
-                        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]" aria-label="Main">
-                            <NavLink href="/" pathname={pathname}>Home</NavLink>
-                            <NavLink href="/About" pathname={pathname}>About</NavLink>
-                            <Dropdown id="services" label="Services" links={servicesLinks} active={activeDropdown} setActive={setActiveDropdown} pathname={pathname} />
-                            <NavLink href="/Contact" pathname={pathname}>Contact</NavLink>
+                        {/* Desktop Nav — hidden below xl */}
+                        <nav className="hidden items-center gap-4 xl:flex 2xl:gap-7" aria-label="Main">
+                            {primaryNavLinks.filter((item) => !(isHomepage && item.href === '/')).map((item) => (
+                                <NavLink key={item.href} href={item.href} pathname={pathname} light={homeOverlay}>{item.name}</NavLink>
+                            ))}
                         </nav>
 
-                        {/* Desktop CTA + Phone */}
-                        <div className="hidden lg:flex items-center gap-3">
-                            {siteConfig?.phone && (
-                                <a
-                                    href={siteConfig.phoneLink}
-                                    className="flex items-center gap-2 rounded-full border border-white/20 px-4 py-2.5 text-sm font-medium text-white/90 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
-                                    aria-label={`Call ${siteConfig.phone}`}
-                                >
-                                    <PhoneIcon className="w-4 h-4" />
-                                    <span className="hidden xl:inline">{siteConfig.phone}</span>
-                                </a>
-                            )}
+                        <div className="hidden shrink-0 items-center gap-3 xl:flex">
                             <Link
-                                href="/request-quote"
-                                className={`group inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold tracking-wide backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E5A84B] hover:bg-[#E5A84B] hover:text-[#0d1612] hover:shadow-lg hover:shadow-[#E5A84B]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E5A84B]/60 ${isActive(pathname, '/request-quote')
-                                    ? 'border-[#E5A84B] bg-[#E5A84B] text-[#0d1612]'
-                                    : 'border-white/40 bg-white/10 text-white'
+                                href="/Contact#enquiry"
+                                className={`group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay
+                                    ? 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20'
+                                    : 'bg-[#3C5A47] text-white hover:bg-[#2E4A39]'
                                     }`}
                             >
                                 <span>Request a quote</span>
-                                <ArrowUpRight />
+
+                                <span className={`grid h-10 w-10 place-items-center rounded-full transition-colors duration-300 ${homeOverlay
+                                    ? 'bg-white/15'
+                                    : 'bg-[#2E4A39] group-hover:bg-[#1E3A29]'
+                                    }`}>
+                                    <ArrowUpRight className="w-4 h-4" />
+                                </span>
                             </Link>
                         </div>
 
-                        {/* Mobile: Phone + Hamburger */}
-                        <div className="flex lg:hidden items-center gap-2">
-                            {siteConfig?.phoneLink && (
-                                <a
-                                    href={siteConfig.phoneLink}
-                                    className="p-2 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-colors"
-                                    aria-label={`Call ${siteConfig.phone}`}
-                                >
-                                    <PhoneIcon className="w-5 h-5" />
-                                </a>
-                            )}
+                        {/* Mobile: Hamburger toggle only */}
+                        <div className="flex items-center xl:hidden">
                             <button
                                 type="button"
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className="p-2 rounded-lg text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E5A84B]/60"
+                                className={`rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B51E]/60 ${homeOverlay ? 'text-white hover:bg-white/10 drop-shadow-sm' : 'text-[#173D2C] hover:bg-[#173D2C]/5'}`}
                                 aria-label="Toggle menu"
                                 aria-expanded={mobileMenuOpen}
                             >
@@ -302,90 +270,41 @@ export default function Header() {
                     </div>
                 </div>
 
-                {/* Mobile Drawer — slide-down animation */}
+                {/* Mobile Full Screen Menu */}
                 <div
-                    className={`lg:hidden overflow-hidden transition-all duration-300 ease-out ${mobileMenuOpen
-                        ? 'max-h-[calc(100vh-4rem)] opacity-100'
-                        : 'max-h-0 opacity-0'
+                    className={`xl:hidden overflow-hidden transition-all duration-300 ease-out ${mobileMenuOpen
+                        ? 'h-[calc(100dvh-4.5rem)] sm:h-[calc(100dvh-5rem)] opacity-100'
+                        : 'h-0 opacity-0 pointer-events-none'
                         }`}
                 >
-                    <div className="overflow-y-auto max-h-[calc(100vh-4rem)] border-t border-white/10 bg-[#07110b]/95 px-4 sm:px-6 pt-4 pb-8 space-y-1 backdrop-blur-2xl">
-                        {[
-                            { name: 'Home', href: '/' },
-                            { name: 'About', href: '/About' },
-                        ].map((l) => (
-                            <Link
-                                key={l.name}
-                                href={l.href}
-                                onClick={() => setMobileMenuOpen(false)}
-                                aria-current={isActive(pathname, l.href) ? 'page' : undefined}
-                                className={mobileLink(l.href)}
-                            >
-                                {l.name}
-                            </Link>
-                        ))}
+                    <div className="flex h-full flex-col justify-between overflow-y-auto overscroll-contain border-t border-[#173D2C]/10 bg-[#f5f2e9] px-6 pt-5 pb-8 sm:px-8">
 
-                        {[
-                            { id: 'mobile-services', label: 'Services', links: servicesLinks },
-                        ].map((group) => {
-                            const open = activeDropdown === group.id;
-                            const selected = group.links.some((l) => isActive(pathname, l.href));
-                            return (
-                                <div key={group.id}>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveDropdown(open ? null : group.id)}
-                                        aria-expanded={open}
-                                        className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-base font-semibold transition-colors hover:bg-white/10 ${selected ? 'text-[#E5A84B]' : 'text-white'
+                        {/* Navigation Links */}
+                        <nav className="flex flex-col space-y-1">
+                            {primaryNavLinks
+                                .filter((item) => !(isHomepage && item.href === '/'))
+                                .map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                                        className={`rounded-xl px-4 py-3 text-lg font-bold tracking-tight transition-colors ${isActive(pathname, item.href)
+                                            ? 'bg-[#173D2C]/10 text-[#8B5E1A]'
+                                            : 'text-[#173D2C] hover:bg-[#173D2C]/5'
                                             }`}
                                     >
-                                        <span>{group.label}</span>
-                                        <Chevron open={open} active={selected} className="w-4 h-4" />
-                                    </button>
-                                    <div
-                                        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                                            }`}
-                                    >
-                                        <div className="overflow-hidden">
-                                            <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-white/15 pl-4">
-                                                {group.links.map((item) => {
-                                                    const itemActive = isActive(pathname, item.href);
-                                                    return (
-                                                        <Link
-                                                            key={item.name}
-                                                            href={item.href}
-                                                            onClick={() => setMobileMenuOpen(false)}
-                                                            tabIndex={open ? 0 : -1}
-                                                            aria-current={itemActive ? 'page' : undefined}
-                                                            className={`block rounded-md py-2.5 px-3 text-sm font-medium transition-colors hover:bg-white/5 hover:text-[#E5A84B] ${itemActive ? 'text-[#E5A84B] bg-white/5' : 'text-white/80'
-                                                                }`}
-                                                        >
-                                                            {item.name}
-                                                        </Link>
-                                                    );
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
+                                        {item.name}
+                                    </Link>
+                                ))}
+                        </nav>
 
-                        <Link
-                            href="/Contact"
-                            onClick={() => setMobileMenuOpen(false)}
-                            aria-current={isActive(pathname, '/contact') ? 'page' : undefined}
-                            className={mobileLink('/contact')}
-                        >
-                            Contact
-                        </Link>
-
-                        {/* Mobile CTA buttons */}
-                        <div className="pt-4 space-y-3">
+                        {/* Mobile Bottom Section: CTAs & Contact Details */}
+                        <div className="pt-6 space-y-3 border-t border-[#173D2C]/10 mt-auto">
                             <Link
-                                href="/request-quote"
+                                href="/Contact#enquiry"
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#E5A84B] bg-[#E5A84B] py-3 font-semibold text-[#0d1612] transition-all duration-300 hover:bg-[#d4963f] active:scale-[0.98]"
+                                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#003C24] bg-[#003C24] py-3.5 font-bold text-white transition-all duration-300 hover:bg-[#09271B] active:scale-[0.98] shadow-md"
                             >
                                 <span>Request a quote</span>
                                 <ArrowUpRight className="w-4 h-4" />
@@ -394,39 +313,68 @@ export default function Header() {
                             {siteConfig?.phone && (
                                 <a
                                     href={siteConfig.phoneLink}
-                                    className="flex w-full items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 py-3 font-semibold text-white backdrop-blur-md transition-all duration-300 hover:border-white/50 hover:bg-white/15 active:scale-[0.98]"
+                                    className="flex w-full items-center justify-center gap-2 rounded-full border border-[#173D2C]/25 bg-white/70 py-3 font-semibold text-[#173D2C] transition-all duration-300 hover:bg-white active:scale-[0.98]"
                                 >
-                                    <PhoneIcon className="w-4 h-4" />
-                                    <span>{siteConfig.phone}</span>
+                                    <PhoneIcon className="w-4 h-4 text-[#8B5E1A]" />
+                                    <span>Call our mill: {siteConfig.phone}</span>
                                 </a>
                             )}
+
+                            <div className="pt-2 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-[#173D2C]/60">
+                                Lumber Yard &amp; Sawmill · Vancouver Island, BC
+                            </div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            {/* Scroll progress bar */}
+            {/* Spacer for non-homepage pages to prevent fixed header from covering content */}
+            {!isHomepage && (
+                <div
+                    className="h-18 w-full shrink-0 sm:h-20"
+                    aria-hidden="true"
+                />
+            )}
+
             <div
-                className={`fixed inset-x-0 z-[51] h-[3px] bg-white/15 pointer-events-none transition-[top] duration-300 ${
-                    visible
-                        ? (isScrolled ? 'top-14 sm:top-16' : 'top-16 sm:top-20')
-                        : 'top-0'
-                }`}
-                aria-hidden="true"
+                className={`fixed inset-x-0 top-0 z-[60] h-[3px] pointer-events-none transition-opacity duration-200 ${isRouteLoading || scrollProgress > 0 ? 'opacity-100' : 'opacity-0'}`}
+                role="progressbar"
+                aria-label={isRouteLoading ? "Loading page" : "Page scroll progress"}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(isRouteLoading ? routeProgress : scrollProgress)}
+                aria-hidden={!isRouteLoading && scrollProgress <= 0}
             >
                 <div
-                    className="h-full bg-[#E5A84B] shadow-[0_0_8px_rgba(229,168,75,0.8)] transition-[width] duration-100"
-                    style={{ width: `${scrollProgress}%` }}
+                    className="h-full bg-[#E8B51E] shadow-[0_0_10px_rgba(232,181,30,.55)] transition-[width] duration-200 ease-out"
+                    style={{ width: `${isRouteLoading ? routeProgress : scrollProgress}%` }}
                 />
             </div>
 
             {/* Mobile overlay backdrop */}
             <div
-                className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                     }`}
                 onClick={() => setMobileMenuOpen(false)}
                 aria-hidden="true"
             />
+
+            {/* Mobile Floating "Call our mill" Button — Bottom Right across all pages */}
+            {siteConfig?.phoneLink && (
+                <a
+                    href={siteConfig.phoneLink}
+                    className={`fixed bottom-4 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-[#EEBF21] px-4 py-2.5 text-xs sm:text-sm font-bold tracking-wide text-[#073D2B] shadow-[0_4px_18px_rgba(0,0,0,0.25)] border border-[#073D2B]/10 transition-all duration-300 hover:bg-[#dfaa0d] active:scale-95 xl:hidden ${mobileMenuOpen ? 'pointer-events-none opacity-0' : 'opacity-100'
+                        }`}
+                    aria-label={`Call our mill at ${siteConfig.phone}`}
+                >
+                    <span>Call our mill</span>
+                    <span className="text-sm font-extrabold leading-none" aria-hidden="true">   <ArrowUpRight
+                        size={16}
+                        strokeWidth={1.8}
+                        className="shrink-0"
+                    /></span>
+                </a>
+            )}
         </>
     );
 }

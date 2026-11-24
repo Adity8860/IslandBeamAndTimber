@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 
 // Default slides matching your screenshot
 const DEFAULT_SLIDES = [
@@ -23,7 +24,7 @@ const DEFAULT_SLIDES = [
         bottomLeft: 'QUALITY LUMBER, ROOTED ON VANCOUVER ISLAND.',
         bottomRight: 'OUR SAWMILL - VANCOUVER ISLAND, BC',
         bgImage:
-           '/Images/pageImg/IMG_0311.JPEG',
+            '/Images/pageImg/IMG_0311.JPEG',
     },
     {
         id: 2,
@@ -85,18 +86,20 @@ export default function Slider({
     showControls = true,
     className = '',
 }) {
+    // Accept either one slide object (banner mode) or an array of slides.
+    const slideList = Array.isArray(slides) ? slides : slides ? [slides] : [];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
     const touchStartX = useRef(0);
     const touchEndX = useRef(0);
 
     const nextSlide = useCallback(() => {
-        setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, [slides.length]);
+        setCurrentIndex((prev) => (prev + 1) % slideList.length);
+    }, [slideList.length]);
 
     const prevSlide = useCallback(() => {
-        setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
-    }, [slides.length]);
+        setCurrentIndex((prev) => (prev - 1 + slideList.length) % slideList.length);
+    }, [slideList.length]);
 
     const goToSlide = (idx) => {
         setCurrentIndex(idx);
@@ -104,13 +107,13 @@ export default function Slider({
 
     // Autoplay timer
     useEffect(() => {
-        if (!autoPlay || isPaused || slides.length <= 1) return;
+        if (!autoPlay || isPaused || slideList.length <= 1) return;
         const timer = setInterval(() => {
             nextSlide();
         }, autoPlayInterval);
 
         return () => clearInterval(timer);
-    }, [autoPlay, autoPlayInterval, isPaused, nextSlide, slides.length]);
+    }, [autoPlay, autoPlayInterval, isPaused, nextSlide, slideList.length]);
 
     // Keyboard navigation
     useEffect(() => {
@@ -139,7 +142,9 @@ export default function Slider({
         }
     };
 
-    const activeSlide = slides[currentIndex];
+    const activeSlide = slideList[currentIndex];
+
+    if (!activeSlide) return null;
 
     return (
         <section
@@ -154,7 +159,7 @@ export default function Slider({
         >
             {/* Background Images with smooth crossfade */}
             <div className="absolute inset-0 z-0">
-                {slides.map((slide, index) => (
+                {slideList.map((slide, index) => (
                     <div
                         key={slide.id || index}
                         className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
@@ -164,11 +169,9 @@ export default function Slider({
                             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                             style={{ backgroundImage: `url(${slide.bgImage})` }}
                         />
-                        {/* Atmospheric overlay: Dark forest vignette with warm undertone */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-stone-950/50 to-transparent mix-blend-multiply" />
-                        <div className="absolute inset-0 bg-black/30" />
-                        {/* <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-stone-950/75 mix-blend-multiply" />
-                        <div className="absolute inset-0 bg-black/45" /> */}
+                        {/* Atmospheric overlay: Allows background photo to be clearly seen while keeping text crisp */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/65 via-stone-950/20 to-stone-950/45 mix-blend-multiply" />
+                        <div className="absolute inset-0 bg-black/25 sm:bg-black/20" />
                     </div>
                 ))}
             </div>
@@ -177,22 +180,27 @@ export default function Slider({
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 pt-24 pb-10 sm:pt-28 sm:pb-14 md:pt-40 md:pb-16 flex-1 flex flex-col justify-center overflow-hidden">
                 {/* Eyebrow / Tagline */}
                 <div className="flex items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6 animate-fadeIn max-w-full">
-                    <span className="w-5 sm:w-6 h-[2px] bg-[#E5A84B] shrink-0" />
-                    <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold tracking-[0.12em] sm:tracking-[0.25em] text-[#E5A84B] uppercase break-words">
+                    <span className="w-5 sm:w-6 h-[2px] bg-[#F3BE1D] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold tracking-[0.12em] sm:tracking-[0.25em] text-[#F3BE1D] uppercase break-words drop-shadow-sm">
                         {activeSlide.tagline}
                     </span>
                 </div>
 
                 {/* Dynamic Titles */}
-                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.05] max-w-4xl break-words">
+                <h1 className="max-w-6xl break-normal text-[3.65rem] leading-[0.98] sm:text-6xl sm:leading-[0.94] md:text-7xl md:leading-[0.92] lg:text-8xl lg:leading-[0.9] xl:text-[6.5rem] font-normal tracking-[-0.05em] sm:tracking-[-0.06em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                     <span className="block text-white font-sans">{activeSlide.titleWhite}</span>
-                    <span className="block italic font-serif font-medium text-[#E5A84B]">
+                    <span className="block font-sans text-[#F3BE1D]">
                         {activeSlide.titleGold}
                     </span>
+                    {activeSlide.titleGold1 && (
+                        <span className="block font-sans text-[#F3BE1D]">
+                            {activeSlide.titleGold1}
+                        </span>
+                    )}
                 </h1>
 
                 {/* Description Paragraph */}
-                <p className="mt-4 sm:mt-5 text-xs sm:text-sm md:text-lg text-white font-normal leading-relaxed max-w-2xl">
+                <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-white/95 font-normal leading-relaxed max-w-2xl drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                     {activeSlide.description}
                 </p>
 
@@ -201,10 +209,10 @@ export default function Slider({
                     {activeSlide.primaryBtn && (
                         <Link
                             href={activeSlide.primaryBtn.href || '#'}
-                            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4 rounded-full bg-[#E5A84B] hover:bg-[#d8983e] text-stone-950 font-bold text-sm md:text-base tracking-wide transition-all duration-300 shadow-lg hover:shadow-[#E5A84B]/20 hover:-translate-y-0.5 active:translate-y-0"
+                            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4 rounded-full bg-[#F3BE1D] hover:bg-[#dfaa0d] text-stone-950 font-bold text-sm md:text-base tracking-wide transition-all duration-300 shadow-lg hover:shadow-[#F3BE1D]/20 hover:-translate-y-0.5 active:translate-y-0"
                         >
                             <span>{activeSlide.primaryBtn.text}</span>
-                            <svg
+                            {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                                 fill="none"
@@ -213,7 +221,12 @@ export default function Slider({
                                 strokeWidth={2.5}
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
+                            </svg> */}
+                            <ArrowUpRight
+                                size={16}
+                                strokeWidth={1.8}
+                                className="shrink-0"
+                            />
                         </Link>
                     )}
 
@@ -223,7 +236,7 @@ export default function Slider({
                             className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4 rounded-full bg-stone-900/60 hover:bg-stone-800/80 text-stone-100 font-medium text-sm md:text-base tracking-wide border border-white/20 hover:border-white/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
                         >
                             <span>{activeSlide.secondaryBtn.text}</span>
-                            <svg
+                            {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-4 h-4 text-stone-300"
                                 fill="none"
@@ -232,24 +245,29 @@ export default function Slider({
                                 strokeWidth={2.5}
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
+                            </svg> */}
+                            <ArrowUpRight
+                                size={16}
+                                strokeWidth={1.8}
+                                className="shrink-0"
+                            />
                         </Link>
                     )}
                 </div>
             </div>
 
             {/* Slide Navigation Controls & Indicators */}
-            {showControls && slides.length > 1 && (
+            {showControls && slideList.length > 1 && (
                 <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 pb-3 sm:pb-4 flex items-center justify-between gap-3 overflow-hidden">
                     {/* Slide dots / bars */}
                     <div className="flex items-center gap-2.5">
-                        {slides.map((_, idx) => (
+                        {slideList.map((_, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => goToSlide(idx)}
                                 aria-label={`Go to slide ${idx + 1}`}
                                 className={`transition-all duration-500 rounded-full ${idx === currentIndex
-                                    ? 'w-10 h-1.5 bg-[#E5A84B]'
+                                    ? 'w-10 h-1.5 bg-[#F3BE1D]'
                                     : 'w-2 h-1.5 bg-stone-600/70 hover:bg-stone-400'
                                     }`}
                             />
@@ -268,7 +286,7 @@ export default function Slider({
                             </svg>
                         </button>
                         <span className="text-[11px] sm:text-xs tracking-wider text-white/90 font-mono">
-                            0{currentIndex + 1} / 0{slides.length}
+                            0{currentIndex + 1} / 0{slideList.length}
                         </span>
                         <button
                             onClick={nextSlide}
@@ -284,16 +302,19 @@ export default function Slider({
             )}
 
             {/* Bottom Footer Bar */}
-            <div className="relative z-10 w-full border-t border-white/10 bg-black/30 backdrop-blur-sm overflow-hidden">
+            <div className="relative z-10 w-full border-t border-white/10 bg-black/40 sm:bg-black/30 backdrop-blur-sm overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-2.5 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-3 text-[9px] sm:text-[10px] md:text-xs font-medium tracking-[0.12em] sm:tracking-[0.2em] text-white/90 uppercase text-center sm:text-left">
                     {/* Scroll cue & quality note */}
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-3 max-w-full">
-                        <span className="flex items-center gap-1.5 text-[#E5A84B] shrink-0">
+                        <a
+                            href="#our-lumber"
+                            className="flex items-center gap-1.5 text-[#F3BE1D] hover:text-[#dfaa0d] transition-colors shrink-0 cursor-pointer"
+                        >
                             <svg className="w-3 h-3 animate-bounce shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                             </svg>
                             SCROLL TO EXPLORE
-                        </span>
+                        </a>
                         <span className="hidden sm:inline text-stone-600">|</span>
                         <span className="text-white/95 truncate sm:overflow-visible max-w-[260px] sm:max-w-none">{activeSlide.bottomLeft}</span>
                     </div>

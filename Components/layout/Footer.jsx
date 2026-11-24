@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
 // import { connection } from 'next/server'
-import { siteConfig } from '@/lib/siteConfig';
+import { siteConfig, NavLinks } from '@/lib/siteConfig';
 import Image from 'next/image';
 
 
@@ -22,38 +22,48 @@ const colHeading =
     "relative pb-3 text-white font-bold text-xs uppercase tracking-[0.18em] after:absolute after:bottom-0 after:left-0 after:h-px after:w-8 after:bg-[#F4B323] after:content-['']";
 
 export default function Footer() {
-    const exploreLinks = [
-        { label: 'Custom lumber & cedar', href: '/custom-lumber' },
-        { label: 'Beams & timbers', href: '/beams-and-timbers' },
-        { label: 'Milling & delivery', href: '/milling-and-delivery' },
-        { label: 'Garden sheds', href: '/garden-sheds' },
-        { label: 'Firewood', href: '/firewood' },
-    ];
-
+    const getExploreLinks = () =>
+        NavLinks
+            .filter(({ name }) => name !== "Home" && name !== "Contact us")
+            .map(({ name, href }) => ({
+                label: name,
+                href,
+            }));
+    const exploreLinks = getExploreLinks()
+    // const exploreLinks = [
+    //     { label: 'Custom lumber & cedar', href: '/custom-lumber' },
+    //     { label: 'Beams & timbers', href: '/beams-and-timbers' },
+    //     { label: 'Milling & delivery', href: '/milling-and-delivery' },
+    //     { label: 'Garden sheds', href: '/garden-sheds' },
+    //     { label: 'Firewood', href: '/firewood' },
+    // ];
+    const homeOverlay = []
     return (
-        <footer className="w-full max-w-full overflow-hidden border-t-2 border-[#F4B323] bg-[#061A11] text-[#B7CDBF] font-sans">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-14 pb-10 sm:pt-20">
+        <footer className="w-full max-w-full overflow-hidden  bg-[#002b19] text-[#B7CDBF] font-sans">
+            <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10 pt-14 pb-10 sm:pt-20">
                 {/* Main Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 pb-14 border-b border-white/10">
 
                     {/* Column 1: Brand / Logo & Tagline (5 cols) */}
                     <div className="md:col-span-5 space-y-5">
                         <Link href="/" className={`${focusRing} flex w-fit items-center gap-3 group`} >
-                            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center p-1.5 transition-all duration-300 group-hover:scale-105 group-hover:border-[#F4B323]/70 motion-reduce:transition-none motion-reduce:group-hover:scale-100">
+                            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-sm transition-transform duration-300 group-hover:scale-105 sm:h-16 sm:w-16">
                                 {siteConfig?.Logo && (
                                     <Image
                                         src={siteConfig.Logo}
                                         alt={`${siteConfig.name} logo`}
-                                        width={44}
-                                        height={44}
-                                        className="h-full w-full object-contain"
+                                        width={64}
+                                        height={64}
+                                        className="h-full w-full object-cover"
                                     />
                                 )}
-                            </div>   <div className="flex flex-col">
-                                <span className="text-white font-extrabold text-base tracking-wider uppercase leading-tight group-hover:text-[#F4B323] transition-colors">
-                                    {siteConfig?.name} &amp; {siteConfig?.name1}
+                            </div>
+                            <div className="flex flex-col">
+                                <span className={`text-[16px] font-black leading-[0.9] tracking-[0.01em] sm:text-[15px] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
+                                    <span className="block">ISLAND BEAM</span>
+                                    <span className="block">&amp; TIMBER</span>
                                 </span>
-                                <span className="text-[#F4B323] text-[11px] font-bold tracking-[0.2em] uppercase leading-tight mt-1">
+                                <span className={`mt-1 text-[7px] font-black uppercase tracking-[0.19em] sm:text-[8px] sm:tracking-[0.2em] ${homeOverlay ? 'text-white' : 'text-[#173D2C]'}`}>
                                     Lumber Yard &amp; Sawmill
                                 </span>
                             </div>
@@ -63,6 +73,20 @@ export default function Footer() {
                         <div className="text-base leading-relaxed text-[#B7CDBF]/80 pt-2 max-w-[32ch]">
                             <p>Quality lumber and custom timber.</p>
                             <p>Rooted on Vancouver Island.</p>
+                        </div>
+                        <div className="flex items-center gap-3 pt-2">
+                            {siteConfig.socialLinks?.map(({ name, href, icon: Icon }) => (
+                                <a
+                                    key={name}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={name}
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-[#B7CDBF] transition-colors duration-300 hover:border-[#F4B323] hover:bg-[#F4B323] hover:text-[#002b19]"
+                                >
+                                    <Icon size={19} />
+                                </a>
+                            ))}
                         </div>
                     </div>
 
@@ -93,7 +117,7 @@ export default function Footer() {
                         <div className="space-y-3.5 text-sm sm:text-[0.95rem]">
                             <div>
                                 <Link
-                                    href="/contact"
+                                    href="/Contact"
                                     className={navLink}
                                 >
                                     Contact us
@@ -102,7 +126,7 @@ export default function Footer() {
 
                             <div>
                                 <a
-                                    href="tel:2507033473"
+                                    href={siteConfig?.phoneLink}
                                     className={`${focusRing} text-xl font-bold tabular-nums text-white transition-colors duration-200 hover:text-[#F4B323]`}
                                 >
                                     {siteConfig?.phone}
@@ -111,7 +135,7 @@ export default function Footer() {
 
                             <div>
                                 <a
-                                    href={`mailto:${siteConfig?.email}`}
+                                    href={siteConfig?.emailLink}
                                     className={`${navLink} break-words`}
                                 >
                                     {siteConfig?.email}
@@ -124,10 +148,10 @@ export default function Footer() {
 
                             <div className="pt-2">
                                 <Link
-                                    href="/quote"
+                                    href="/Contact#enquiry"
                                     className={`${focusRing} inline-flex items-center gap-1.5 font-semibold text-sm text-[#F4B323] underline decoration-[#F4B323]/40 underline-offset-[6px] transition-colors group hover:text-[#FFC53D] hover:decoration-[#FFC53D]`}
                                 >
-                                    <span>Text us your cut list</span>
+                                    <span>Text send us your cut list</span>
                                     <span className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform motion-reduce:transition-none" aria-hidden="true">
                                         ↗
                                     </span>

@@ -6,39 +6,36 @@ export default function FAQSection({
     data = [],
     className = '',
     defaultOpenId = null,
+    defaultOpenIds = [],
+    allowMultiple = false,
     tone = 'light',
-    revealItems = true,
 }) {
     const [activeId, setActiveId] = useState(defaultOpenId);
+    const [activeIds, setActiveIds] = useState(defaultOpenIds);
     const isDark = tone === 'dark';
 
     if (!data?.length) return null;
 
     const handleToggle = (id) => {
+        if (allowMultiple) {
+            setActiveIds((previous) => previous.includes(id)
+                ? previous.filter((activeItemId) => activeItemId !== id)
+                : [...previous, id]);
+            return;
+        }
         setActiveId((prev) => (prev === id ? null : id));
     };
 
     return (
         <div className={`bg-transparent ${className}`}>
-            {data.map((item, index) => {
-                const isOpen = activeId === item.id;
+            {data.map((item) => {
+                const isOpen = allowMultiple ? activeIds.includes(item.id) : activeId === item.id;
 
                 return (
                     <div
                         key={item.id}
-                        data-reveal={revealItems ? '' : undefined}
-                        style={{ '--d': `${index * 70}ms` }}
-                        //  className={`group/item relative border-t ${isDark ? 'border-white/15' : 'border-[#D5D2CC]'} last:border-b`}
-                        className="group/item relative border-t border-[#D5D2CC] last:border-b"
-
+                        className={`border-t last:border-b ${isDark ? 'border-white/20' : 'border-[#D0D2C8]'}`}
                     >
-                        {/* Accent bar that grows when open */}
-                        <span
-                            aria-hidden="true"
-                            className={`absolute left-0 top-0 h-full w-[3px] origin-top ${isDark ? 'bg-[#D9B258]' : 'bg-[#E87900]'} transition-transform duration-500 ease-out ${isOpen ? 'scale-y-100' : 'scale-y-0'
-                                }`}
-                        />
-
                         <h3>
                             <button
                                 type="button"
@@ -46,69 +43,30 @@ export default function FAQSection({
                                 onClick={() => handleToggle(item.id)}
                                 aria-expanded={isOpen}
                                 aria-controls={`faq-answer-${item.id}`}
-                                className={`flex w-full items-center gap-4 py-6 text-left transition-[padding,color] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E87900] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:gap-6 sm:py-7 ${isOpen ? 'pl-5 sm:pl-6' : 'pl-0 hover:pl-2'
-                                    }`}
+                                className={`flex w-full items-center justify-between gap-6 py-7 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B98216] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:py-8 ${isDark ? 'text-white' : 'text-[#002B2B]'}`}
                             >
-                                <span
-                                    className={`hidden w-8 shrink-0 text-sm font-bold tabular-nums tracking-wider transition-colors duration-300 sm:block ${isOpen
-                                        ? (isDark ? 'text-[#D9B258]' : 'text-[#E87900]')
-                                        : (isDark ? 'text-white/50 group-hover/item:text-[#D9B258]' : 'text-[#98A2B3] group-hover/item:text-[#E87900]')
-                                        }`}
-                                >
-                                    {String(index + 1).padStart(2, '0')}
-                                </span>
-
-                                <span
-                                    className={`flex-1 text-lg font-semibold transition-colors duration-300 sm:text-xl ${isOpen
-                                        ? (isDark ? 'text-white' : 'text-[#002B2B]')
-                                        : (isDark ? 'text-white group-hover/item:text-[#D9B258]' : 'text-[#002B2B] group-hover/item:text-[#E87900]')
-                                        }`}
-                                >
+                                <span className="text-lg font-normal leading-snug sm:text-xl">
                                     {item.question}
                                 </span>
-
-                                {/* Animated plus → cross */}
-                                <span
+                                <span data-reveal style={{ "--d": "220ms" }}
                                     aria-hidden="true"
-                                    className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${isOpen
-                                        ? (isDark ? 'border-[#D9B258] bg-[#D9B258] text-[#1d3024]' : 'border-[#E87900] bg-[#E87900] text-white')
-                                        : (isDark ? 'border-white/25 text-[#D9B258] group-hover/item:border-[#D9B258]' : 'border-[#D5D2CC] text-[#E87900] group-hover/item:border-[#E87900]')
-                                        }`}
+                                    className={`relative grid size-4 shrink-0 place-items-center text-xl font-light leading-none ${isDark ? 'text-[#D9B258]' : 'text-[#B98216]'}`}
                                 >
-                                    <span className="absolute h-[2px] w-3.5 rounded bg-current" />
-                                    <span
-                                        className={`absolute h-[2px] w-3.5 rounded bg-current transition-transform duration-300 ${isOpen ? 'rotate-0' : 'rotate-90'
-                                            }`}
-                                    />
-                                    <span
-                                        className={`absolute inset-0 rounded-full transition-transform duration-500 ${isOpen ? 'rotate-45' : 'rotate-0'
-                                            }`}
-                                    />
+                                    <span className="absolute h-[1.5px] w-3.5 bg-current" />
+                                    {!isOpen && <span className="absolute h-3.5 w-[1.5px] bg-current" />}
                                 </span>
                             </button>
                         </h3>
 
-                        {/* Smooth height animation via grid rows */}
                         <div
+                            data-reveal
                             id={`faq-answer-${item.id}`}
                             role="region"
                             aria-labelledby={`faq-question-${item.id}`}
-                            aria-hidden={!isOpen}
-                            className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isOpen
-                                ? 'grid-rows-[1fr] opacity-100'
-                                : 'invisible grid-rows-[0fr] opacity-0 [transition:grid-template-rows_500ms_cubic-bezier(0.22,1,0.36,1),opacity_300ms,visibility_0s_500ms]'
-                                }`}
+                            hidden={!isOpen}
+                            className={`pb-7 pr-10 text-base leading-relaxed sm:pr-12 sm:text-lg ${isDark ? 'text-[#D4DED5]' : 'text-[#344054]'}`}
                         >
-                            <div className="overflow-hidden">
-                                <p
-                                    className={`pb-7 pr-12 text-base font-light leading-relaxed ${isDark ? 'text-[#d4ded5]' : 'text-[#344054]'} transition-all duration-500 sm:pr-16 sm:text-lg ${isOpen
-                                        ? 'translate-y-0 pl-5 delay-100 sm:pl-[3.75rem]'
-                                        : '-translate-y-2 pl-5 sm:pl-[3.75rem]'
-                                        }`}
-                                >
-                                    {item.answer}
-                                </p>
-                            </div>
+                            {item.answer}
                         </div>
                     </div>
                 );
