@@ -1,3 +1,4 @@
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/Components/layout/Header";
@@ -12,19 +13,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-// export const metadata = {
-//   title: "Island Beam & Timber Ltd. | Lumber Yard & Sawmill",
-//   description: "Quality lumber and custom timber rooted on Vancouver Island.",
-
-//   icons: {
-//     icon: "/Icons/LOGO.svg",
-//     shortcut: "/Icons/LOGO.svg",
-//     apple: "/Icons/LOGO.svg",
-//   },
-// };
 
 export const metadata = {
   metadataBase: new URL("https://islandbeamandtimber.com"),
+
+  // Canonical URL for homepage
+  alternates: {
+    canonical: "/",
+  },
 
   title: {
     default: "Island Beam & Timber | Custom Lumber & Sawmill in Comox Valley",
@@ -35,6 +31,7 @@ export const metadata = {
     "Island Beam & Timber provides custom lumber, Douglas fir beams, cedar timber, mobile milling and sawmill services in Courtenay and the Comox Valley, Vancouver Island, BC.",
 
   keywords: [
+    "island beam and timber",
     "Island Beam and Timber",
     "custom lumber Comox Valley",
     "lumber yard Courtenay BC",
