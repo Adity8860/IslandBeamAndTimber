@@ -74,6 +74,20 @@ export default function Footer() {
                             <p>Quality lumber and custom timber.</p>
                             <p>Rooted on Vancouver Island.</p>
                         </div>
+                        <div className="flex items-center gap-3 pt-2">
+                            {siteConfig.socialLinks?.map(({ name, href, icon: Icon }) => (
+                                <a
+                                    key={name}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={name}
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-[#B7CDBF] transition-colors duration-300 hover:border-[#F4B323] hover:bg-[#F4B323] hover:text-[#002b19]"
+                                >
+                                    <Icon size={19} />
+                                </a>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Column 2: Explore Links (3 cols) */}
@@ -112,7 +126,7 @@ export default function Footer() {
 
                             <div>
                                 <a
-                                    href="tel:2507033473"
+                                    href={siteConfig?.phoneLink}
                                     className={`${focusRing} text-xl font-bold tabular-nums text-white transition-colors duration-200 hover:text-[#F4B323]`}
                                 >
                                     {siteConfig?.phone}
