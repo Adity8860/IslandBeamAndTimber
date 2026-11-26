@@ -150,6 +150,7 @@ export default function MobileMilling() {
                         <EnquiryForm
                             email={mobileMillingEnquiry.email}
                             services={mobileMillingEnquiry.services}
+                            defaultService="Milling services"
                             buttonText="Review my enquiry"
                         />
                     </div>

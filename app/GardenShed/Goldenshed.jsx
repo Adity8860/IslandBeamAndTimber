@@ -196,6 +196,7 @@ export default function Goldenshed() {
                         <EnquiryForm
                             email={GoldenshedEnquiry?.email}
                             services={GoldenshedEnquiry?.services}
+                            defaultService="Garden sheds"
                             buttonText="Review my enquiry"
                         />
                     </div>

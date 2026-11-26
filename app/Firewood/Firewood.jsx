@@ -118,6 +118,7 @@ export default function Firewood() {
                         <EnquiryForm
                             email={firewoodEnquiry?.email}
                             services={firewoodEnquiry?.services}
+                            defaultService="Firewood delivery"
                             buttonText="Review my enquiry"
                         />
                     </div>

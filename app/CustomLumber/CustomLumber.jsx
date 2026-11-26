@@ -111,6 +111,7 @@ export default function CustomLumber() {
                         <EnquiryForm
                             email={enquiryDatCustomLumbera?.email}
                             services={enquiryDatCustomLumbera?.services}
+                            defaultService="Custom Lumber"
                             buttonText="Review my cut list"
                         />
                     </div>

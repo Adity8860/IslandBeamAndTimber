@@ -58,11 +58,12 @@ export default function EnquiryForm({
     className = "",
     fieldClass = "w-full min-h-[57px] rounded-[3px] border-0 bg-[#EAE8DE] px-4 py-4 text-sm font-normal text-[#173D2C] placeholder:text-[#747B73] outline-none transition focus:bg-white focus:ring-2 focus:ring-[#E8B51E] disabled:cursor-not-allowed disabled:opacity-60",
     selectedService: selectedServiceProp,
+    defaultService = "",
     onServiceChange,
     buttonText = "Review my enquiry",
     variant = "default",
 }) {
-    const [localSelectedService, setLocalSelectedService] = useState("");
+    const [localSelectedService, setLocalSelectedService] = useState(defaultService);
     const selectedService = selectedServiceProp ?? localSelectedService;
 
     const [loading, setLoading] = useState(false);
