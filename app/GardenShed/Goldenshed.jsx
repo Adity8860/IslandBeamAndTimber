@@ -131,8 +131,8 @@ export default function Goldenshed() {
                     </div>
 
                     <div className="mt-24 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-                        <figure className="relative aspect-[1.05/1] overflow-hidden bg-[#d8d5c8] lg:aspect-auto lg:min-h-[660px]">
-                            <Image src="/Images/DFSImg/IMG_5460.JPEG" alt="Douglas fir lumber and equipment at the mill" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+                        <figure className="relative aspect-[1.05/1] rotate-90 overflow-hidden bg-[#d8d5c8] lg:aspect-auto lg:min-h-[660px]">
+                            <Image src="/Images/DFSImg/IMG_5460.webp" alt="Douglas fir lumber and equipment at the mill" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
                             <figcaption className="absolute bottom-6 left-6 bg-[#f6f3e9] px-4 py-3 text-[9px] font-bold uppercase tracking-[0.15em]">Built at our mill. Delivered to you.</figcaption>
                         </figure>
                         <div>

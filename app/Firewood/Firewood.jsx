@@ -41,7 +41,7 @@ export default function Firewood() {
                     <figure data-reveal style={{ "--d": "100ms" }}>
                         <div className="relative aspect-[1.83/1] overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/pageImg/IMG_0311.JPEG"
+                                src="/Images/pageImg/IMG_0311.webp"
                                 alt="Sawmill equipment beneath a timber frame shelter"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 60vw"
@@ -53,11 +53,12 @@ export default function Firewood() {
                     <figure data-reveal style={{ "--d": "250ms" }} className="md:mt-14">
                         <div className="relative aspect-[1.28/1] overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/customlumberimg/IMG_4672.JPEG"
+                                src="/Images/customlumberimg/IMG_4672.webp"
                                 alt="Logs ready for milling"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 40vw"
                                 className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                                loading="lazy"
                             />
                         </div>
                         <figcaption className="mt-3 text-xs text-[#728076]">Every order starts with the material.</figcaption>

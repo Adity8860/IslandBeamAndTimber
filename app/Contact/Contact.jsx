@@ -106,12 +106,13 @@ export default function Contact() {
 
                     <figure data-reveal style={{ "--d": "300ms" }} className="relative min-h-[360px] overflow-hidden bg-[#20362A] sm:min-h-[480px] lg:min-h-0">
                         <Image
-                            src="/Images/contact/IMG_4604.JPEG"
+                            src="/Images/contact/IMG_4604.webp"
                             alt="Island Beam & Timber sawmill yard in the Comox Valley"
                             fill
-                            priority
+                            // priority
                             sizes="(max-width: 1024px) 100vw, 50vw"
                             className="object-cover object-center"
+                            loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#003C24]/70 via-transparent to-transparent" />
                         <figcaption className="absolute bottom-7 left-7 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/90 sm:bottom-9 sm:left-9">
@@ -269,7 +270,7 @@ export default function Contact() {
                 {/* ── Bottom image CTA ── */}
                 <section className="px-5 py-14 sm:px-8 sm:py-20 lg:px-10">
                     <div data-reveal className="group relative mx-auto h-[380px] max-w-7xl overflow-hidden rounded-md bg-[#173D2C] sm:h-[440px] lg:h-[31rem]">
-                        <Image src="/Images/contact/IMG_4841.JPEG" alt="The sawmill taking shape at the Island Beam & Timber yard" fill sizes="100vw" className="object-cover" />
+                        <Image src="/Images/contact/IMG_4841.webp" alt="The sawmill taking shape at the Island Beam & Timber yard" fill sizes="100vw" className="object-cover" loading="lazy" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#003C24]/75 via-[#003C24]/10 to-transparent" />
                         <div data-reveal style={{ "--d": "250ms" }} className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-5 sm:inset-x-10 sm:bottom-10">
                             <div className="text-[#F4F2E9]">

@@ -9,6 +9,7 @@ import ScrollReveal from "@/Components/Ui/ScrollReveal";
 import { SLIDES, SERVICE_CARDS } from "@/lib/pageConstant";
 import { siteConfig } from "@/lib/siteConfig";
 import { ArrowUpRight } from "lucide-react";
+import { lazy } from "react";
 
 const lumberStats = [
   { value: "Up to 32 ft", label: "Custom beam lengths" },
@@ -107,11 +108,12 @@ export default function Home() {
           <div data-reveal className="lg:col-span-6 relative group overflow-hidden">
             <div className="relative overflow-hidden aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/5] bg-stone-900 border border-white/10 shadow-2xl transition-shadow duration-500 group-hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
               <Image
-                src="/Images/pageImg/IMG_0280.JPEG"
+                src="/Images/pageImg/IMG_0280.webp"
                 alt="Sawmill yard with lumber beams"
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
                 className="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+                loading="lazy"
               />
 
               {/* Floating Mill Badge at Bottom-Left */}
@@ -252,12 +254,13 @@ export default function Home() {
         <div className="mx-auto grid w-full max-w-7xl overflow-hidden lg:grid-cols-2">
           <div data-reveal className="group relative h-[300px] overflow-hidden sm:h-[420px] lg:h-[620px]">
             <Image
-              src="/Images/pageImg/IMG_5063.JPEG"
+              src="/Images/pageImg/IMG_5063.webp"
               alt="Premium Douglas Fir backyard garden shed"
               width={800}
               height={300}
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              loading="lazy"
             />
           </div>
           <div data-reveal className="flex flex-col justify-center bg-[#EAE7DC] px-7 py-10 sm:px-10 sm:py-12 lg:px-[8.5%] lg:py-16">

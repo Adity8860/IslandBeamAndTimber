@@ -33,11 +33,12 @@ export default function MobileMilling() {
                 <div className="mx-auto mt-20 grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
                     <figure data-reveal className="relative aspect-[0.97/1] overflow-hidden bg-[#d8d5c8] lg:aspect-auto lg:min-h-[800px]">
                         <Image
-                            src="/Images/milling/milling-log.jpg"
+                            src="/Images/milling/milling-log.webp"
                             alt="Logs being moved for mobile milling"
                             fill
                             sizes="(max-width: 1024px) 100vw, 50vw"
                             className="object-cover"
+                            loading="lazy"
                         />
                         <figcaption className="absolute bottom-7 left-7 bg-[#fbfaf3] px-6 py-4 text-[10px] font-bold uppercase tracking-[0.19em] text-[#073d28]">Your logs. Your next project.</figcaption>
                     </figure>
@@ -59,11 +60,12 @@ export default function MobileMilling() {
                     <figure data-reveal style={{ "--d": "100ms" }}>
                         <div className="relative aspect-square overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/milling/IMG_4734.JPEG"
+                                src="/Images/milling/IMG_4734.webp"
                                 alt="Forklift loading lumber at the yard"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 30vw"
                                 className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                                loading="eager"
                             />
                         </div>
                         <figcaption className="mt-3 text-xs text-[#728076]">Loading assistance at the yard.</figcaption>
@@ -71,11 +73,12 @@ export default function MobileMilling() {
                     <figure data-reveal style={{ "--d": "100ms" }} className="md:mt-16">
                         <div className="relative aspect-[1.5/1] overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/pageImg/IMG_4841.JPEG"
+                                src="/Images/pageImg/IMG_4841.webp"
                                 alt="Sawmill equipment beneath a timber frame shelter"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 40vw"
                                 className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                                loading="lazy"
                             />
                         </div>
                         <figcaption className="mt-3 text-xs text-[#728076]">A working mill, built around real projects.</figcaption>
@@ -83,11 +86,12 @@ export default function MobileMilling() {
                     <figure data-reveal style={{ "--d": "260ms" }}>
                         <div className="relative aspect-square overflow-hidden rounded-[3px]">
                             <Image
-                                src="/Images/milling/IMG_0208 (1).JPEG"
+                                src="/Images/milling/IMG_0208 (1).webp"
                                 alt="Freshly milled lumber stacked at the yard"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 30vw"
                                 className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                                loading="lazy"
                             />
                         </div>
                         <figcaption className="mt-3 text-xs text-[#728076]">From the log to a useful stack of lumber.</figcaption>

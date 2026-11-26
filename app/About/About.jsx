@@ -28,6 +28,7 @@ function StorySection({ data, title, reverse = false, tone = "light" }) {
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
+            loading="lazy"
           />
         </div>
 
@@ -77,12 +78,14 @@ export default function About() {
 
           <div data-reveal style={{ "--d": "350ms" }} className="relative aspect-[4/3] overflow-hidden rounded-[3px] bg-[#26382E] sm:aspect-[2.4/1] xl:aspect-[3.2/1]">
             <Image
-              src="/Images/About/yard.jpg"
+              src="/Images/About/yard.webp"
               alt="The Island Beam & Timber sawmill yard surrounded by Vancouver Island forest"
               fill
-              priority
+              //priority
               sizes="100vw"
               className="object-cover object-center"
+              loading="lazy"
+
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#071D14]/75 via-transparent to-transparent" />
             <div data-reveal style={{ "--d": "550ms" }} className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4 text-[8px] font-semibold uppercase tracking-[0.16em] text-white sm:inset-x-8 sm:bottom-7 sm:text-[10px] sm:tracking-[0.2em]">
