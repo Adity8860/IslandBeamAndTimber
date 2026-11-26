@@ -51,7 +51,7 @@ export default function CustomLumber() {
                                 alt="Logs ready for milling"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 40vw"
-                                className="object-cover rotate-90 transition-transform duration-700 ease-out hover:scale-105"
+                                className="object-cover  transition-transform duration-700 ease-out hover:scale-105"
                                 loading="lazy"
                             />
                         </div>
